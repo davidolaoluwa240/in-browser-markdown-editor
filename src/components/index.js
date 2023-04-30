@@ -1,6 +1,6 @@
 // Re-Export Components
 export * from "./button/button.component";
 export * from "./theme-toggle/theme-toggle.component";
-export * from "./document-base/document-base.component";
-export * from "./document-base/document-list/document-list.component";
-export * from "./document-base/document-item/document-item.component";
+export * from "./document-file-base/document-file-base.component";
+export * from "./document-file-base/document-file-list/document-file-list.component";
+export * from "./document-file-base/document-file-item/document-file-item.component";

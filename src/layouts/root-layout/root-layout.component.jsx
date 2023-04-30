@@ -5,9 +5,7 @@ import React from "react";
 import { useState } from "react";
 
 // Components
-import { Button, ThemeToggle, DocumentBase } from "../../components";
-
-// Layouts
+import { Button, ThemeToggle, DocumentFileBase } from "../../components";
 
 // Style
 import {
@@ -25,13 +23,13 @@ export const RootLayout = () => {
       <DocumentSideBar>
         <DocumentTitle>MY DOCUMENTS</DocumentTitle>
         <Button widthFull>+ New Document</Button>
-        <DocumentBase />
+
+        <DocumentFileBase />
+
         <DocumentFooter>
           <ThemeToggle theme={theme} setTheme={setTheme} />
         </DocumentFooter>
       </DocumentSideBar>
-
-      {/* <EditorLayout /> */}
     </RootLayoutWrapper>
   );
 };
