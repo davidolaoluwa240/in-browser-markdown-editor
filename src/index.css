@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600;700;800;900&display=swap");
+
 *,
 *::after,
 *::before {
@@ -18,6 +20,11 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
     Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+::selection {
+  background: #e46643;
+  color: #212529;
 }
 
 @media screen and (max-width: 900px) {

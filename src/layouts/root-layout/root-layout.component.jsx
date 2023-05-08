@@ -5,7 +5,12 @@ import React from "react";
 import { useState } from "react";
 
 // Components
-import { Button, ThemeToggle, DocumentFileBase } from "../../components";
+import {
+  Button,
+  ThemeToggle,
+  DocumentFileBase,
+  Navbar,
+} from "../../components";
 
 // Style
 import {
@@ -13,6 +18,7 @@ import {
   DocumentSideBar,
   DocumentTitle,
   DocumentFooter,
+  MainContent,
 } from "./root-layout.styles";
 
 export const RootLayout = () => {
@@ -30,6 +36,10 @@ export const RootLayout = () => {
           <ThemeToggle theme={theme} setTheme={setTheme} />
         </DocumentFooter>
       </DocumentSideBar>
+
+      <MainContent>
+        <Navbar />
+      </MainContent>
     </RootLayoutWrapper>
   );
 };

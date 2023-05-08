@@ -26,3 +26,7 @@ export const DocumentTitle = styled.h6`
 export const DocumentFooter = styled.div`
   margin-top: auto;
 `;
+
+export const MainContent = styled.div`
+  flex: 1;
+`;
