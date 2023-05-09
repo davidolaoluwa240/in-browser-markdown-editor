@@ -12,6 +12,27 @@ export const ButtonBase = styled.button`
   border: none;
   transition: background 0.3s ease-out;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: "${({ successText }) => `${successText}`}";
+    width: 73%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: inherit;
+    position: absolute;
+    background: #e46643;
+    top: -100%;
+    right: 0;
+    transition: top 0.3s ease-out;
+
+    ${({ showSuccessText }) => showSuccessText && "top: 0;"}
+  }
 
   &:disabled {
     cursor: not-allowed;

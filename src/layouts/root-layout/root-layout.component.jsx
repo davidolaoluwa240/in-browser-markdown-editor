@@ -5,6 +5,7 @@ import React from "react";
 import { useState } from "react";
 
 // Components
+import { Outlet } from "react-router-dom";
 import {
   Button,
   ThemeToggle,
@@ -39,6 +40,7 @@ export const RootLayout = () => {
 
       <MainContent>
         <Navbar />
+        <Outlet />
       </MainContent>
     </RootLayoutWrapper>
   );

@@ -4,6 +4,9 @@ import styled, { css } from "styled-components";
 // Components
 import { IoMdClose } from "react-icons/io";
 import { IoMenuOutline } from "react-icons/io5";
+import { TbTrash } from "react-icons/tb";
+import { BiSave } from "react-icons/bi";
+import { ButtonBase } from "../button/button.styles";
 
 export const NavbarWrapper = styled.div`
   background: #343a40;
@@ -67,4 +70,37 @@ export const NavbarBrandTitle = styled.h1`
     top: 50%;
     transform: translateY(-50%);
   }
+`;
+
+export const NavbarAction = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 2.4rem;
+
+  ${ButtonBase} {
+    &:hover {
+      background: #e46643;
+    }
+  }
+`;
+
+export const NavbarDocumentDeleteIcon = styled(TbTrash)`
+  font-size: 2.6rem;
+  margin-right: 2.4rem;
+  cursor: pointer;
+  color: rgb(124, 129, 135);
+  transition: color 0.3s ease-out;
+
+  &:hover {
+    color: #e46643;
+  }
+`;
+
+export const SaveIcon = styled(BiSave)`
+  margin-right: 0.8rem;
+  font-size: 2.3rem;
+  color: #ffffff;
+  vertical-align: middle;
 `;

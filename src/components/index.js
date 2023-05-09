@@ -6,3 +6,5 @@ export * from "./document-file-base/document-file-list/document-file-list.compon
 export * from "./document-file-base/document-file-item/document-file-item.component";
 export * from "./navbar/navbar.component";
 export * from "./document-name-editor/document-name-editor.component";
+export * from "./editor/editor-header/editor-header.component";
+export * from "./editor/editor.component";
