@@ -8,3 +8,5 @@ export * from "./navbar/navbar.component";
 export * from "./document-name-editor/document-name-editor.component";
 export * from "./editor/editor-header/editor-header.component";
 export * from "./editor/editor.component";
+export * from "./editor/markdown-editor/markdown-editor.component";
+export * from "./editor/preview-editor/preview-editor.component";

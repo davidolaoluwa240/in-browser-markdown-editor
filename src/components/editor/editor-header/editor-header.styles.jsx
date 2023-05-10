@@ -1,5 +1,5 @@
 // Modules
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 // Components
 import { MdOutlineFullscreen, MdOutlineFullscreenExit } from "react-icons/md";
@@ -9,6 +9,7 @@ export const EditorHeaderGroup = styled.div`
   width: 100%;
   height: 42px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -21,6 +22,24 @@ export const EditorHeaderTitle = styled.p`
   color: #f8f9fa;
 `;
 
-export const EditorHeaderFullScreenIcon = styled(MdOutlineFullscreen)``;
+export const EditorIconBaseStyle = css`
+  color: rgb(124, 129, 135);
+  font-size: 2.5rem;
+  cursor: pointer;
+  margin-right: 1.8rem;
+  transition: transform 0.3s ease-out;
 
-export const EditorHeaderFullScreenExitIcon = styled(MdOutlineFullscreenExit)``;
+  &:hover {
+    transform: scaleX(1.2);
+  }
+`;
+
+export const EditorHeaderFullScreenIcon = styled(MdOutlineFullscreen)`
+  ${EditorIconBaseStyle};
+  ${({ isFullScreen }) => isFullScreen && "display: none"}
+`;
+
+export const EditorHeaderFullScreenExitIcon = styled(MdOutlineFullscreenExit)`
+  ${EditorIconBaseStyle};
+  ${({ isFullScreen }) => !isFullScreen && "display: none"}
+`;

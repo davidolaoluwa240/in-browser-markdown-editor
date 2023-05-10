@@ -2,7 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Components
 import { Editor } from "../../components";
@@ -11,10 +11,28 @@ import { Editor } from "../../components";
 import { EditorLayoutWrapper, EditorPanel } from "./editor-layout.styles";
 
 export const EditorLayout = () => {
-  const [editorFullScreenState, setEditorFullScreenState] = useState({
-    markdown: false,
-    preview: false,
-  });
+  const [isMarkdownEditorFullScreen, setIsMarkdownEditorFullScreen] =
+    useState(false);
+  const [isPreviewEditorFullScreen, setIsPreviewEditorFullScreen] =
+    useState(false);
+
+  useEffect(() => {
+    // Handle Key Press
+    const handleKeyPress = (event) => {
+      const { key } = event;
+
+      if (key === "m" || key === "p") {
+        const editorType = key === "m" ? "markdown" : "preview";
+        toggleEditorFullScreen(editorType);
+      }
+    };
+
+    // Add Event Listener
+    document.addEventListener("keydown", handleKeyPress);
+
+    // Remove Event Listener
+    return () => document.removeEventListener("keydown", handleKeyPress);
+  }, []);
 
   /**
    * Toggle Editor Full Screen Mode
@@ -23,32 +41,30 @@ export const EditorLayout = () => {
   const toggleEditorFullScreen = (editorType) => {
     switch (editorType) {
       case "preview":
-        return setEditorFullScreenState(({ preview }) => ({
-          markdown: false,
-          preview: !preview,
-        }));
+        setIsPreviewEditorFullScreen((prevState) => !prevState);
+        setIsMarkdownEditorFullScreen(false);
+        break;
       case "markdown":
-        return setEditorFullScreenState(({ markdown }) => ({
-          preview: false,
-          markdown: !markdown,
-        }));
+        setIsMarkdownEditorFullScreen((prevState) => !prevState);
+        setIsPreviewEditorFullScreen(false);
+        break;
     }
   };
 
   return (
     <EditorLayoutWrapper>
-      <EditorPanel isFullScreen={editorFullScreenState.markdown}>
+      <EditorPanel shrink={isPreviewEditorFullScreen}>
         <Editor
           type="markdown"
-          isFullScreen={editorFullScreenState.markdown}
+          isFullScreen={isMarkdownEditorFullScreen}
           onToggleFullScreen={toggleEditorFullScreen}
         />
       </EditorPanel>
 
-      <EditorPanel isFullScreen={editorFullScreenState.preview}>
+      <EditorPanel shrink={isMarkdownEditorFullScreen}>
         <Editor
           type="preview"
-          isFullScreen={editorFullScreenState.preview}
+          isFullScreen={isPreviewEditorFullScreen}
           onToggleFullScreen={toggleEditorFullScreen}
         />
       </EditorPanel>

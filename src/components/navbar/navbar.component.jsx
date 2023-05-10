@@ -18,6 +18,7 @@ import {
   NavbarAction,
   NavbarDocumentDeleteIcon,
   SaveIcon,
+  LogoutIcon,
 } from "./navbar.styles";
 
 export const Navbar = () => {
@@ -55,6 +56,7 @@ export const Navbar = () => {
           <SaveIcon />
           Save Changes
         </Button>
+        <LogoutIcon title="logout" />
       </NavbarAction>
     </NavbarWrapper>
   );

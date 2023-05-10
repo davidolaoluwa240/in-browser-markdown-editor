@@ -6,6 +6,7 @@ import { IoMdClose } from "react-icons/io";
 import { IoMenuOutline } from "react-icons/io5";
 import { TbTrash } from "react-icons/tb";
 import { BiSave } from "react-icons/bi";
+import { MdLogout } from "react-icons/md";
 import { ButtonBase } from "../button/button.styles";
 
 export const NavbarWrapper = styled.div`
@@ -86,9 +87,8 @@ export const NavbarAction = styled.div`
   }
 `;
 
-export const NavbarDocumentDeleteIcon = styled(TbTrash)`
+export const NavbarIconStyleBase = css`
   font-size: 2.6rem;
-  margin-right: 2.4rem;
   cursor: pointer;
   color: rgb(124, 129, 135);
   transition: color 0.3s ease-out;
@@ -98,9 +98,19 @@ export const NavbarDocumentDeleteIcon = styled(TbTrash)`
   }
 `;
 
+export const NavbarDocumentDeleteIcon = styled(TbTrash)`
+  ${NavbarIconStyleBase};
+  margin-right: 2.4rem;
+`;
+
 export const SaveIcon = styled(BiSave)`
   margin-right: 0.8rem;
   font-size: 2.3rem;
   color: #ffffff;
   vertical-align: middle;
+`;
+
+export const LogoutIcon = styled(MdLogout)`
+  ${NavbarIconStyleBase};
+  margin-left: 2.4rem;
 `;

@@ -10,7 +10,7 @@ export const DocumentSideBar = styled.aside`
   height: 100vh;
   padding: 2.7rem 2.4rem;
   background: #212529;
-  display: flex;
+  display: none;
   flex-direction: column;
 `;
 
