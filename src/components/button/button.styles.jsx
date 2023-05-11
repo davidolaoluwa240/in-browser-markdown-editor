@@ -42,6 +42,8 @@ export const ButtonBase = styled.button`
 
   ${({ color }) => {
     switch (color) {
+      case "secondary":
+        return css``;
       default:
         return css`
           background: #e46643;

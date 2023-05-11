@@ -10,3 +10,4 @@ export * from "./editor/editor-header/editor-header.component";
 export * from "./editor/editor.component";
 export * from "./editor/markdown-editor/markdown-editor.component";
 export * from "./editor/preview-editor/preview-editor.component";
+export * from "./toast-container/toast-container.component";
