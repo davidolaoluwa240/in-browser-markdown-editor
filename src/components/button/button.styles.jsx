@@ -1,5 +1,5 @@
 // Modules
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const ButtonBase = styled.button`
   text-decoration: none;
@@ -10,26 +10,31 @@ export const ButtonBase = styled.button`
   font-size: 1.5rem;
   line-height: inherit;
   border: none;
+  background: #e46643;
+  color: #fff;
   transition: background 0.3s ease-out;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: #f39765;
+  }
 
   &:disabled {
     cursor: not-allowed;
   }
 
   ${({ widthFull }) => widthFull && "width: 100%"};
-
-  ${({ color }) => {
-    switch (color) {
-      default:
-        return css`
-          background: #e46643;
-          color: #fff;
-
-          &:hover {
-            background: #f39765;
-          }
-        `;
-    }
-  }}
 `;
+
+export const buttonSpinnerStyle = {
+  alignItems: "center",
+  justifyContent: "center",
+  position: "absolute",
+  background: "#e46643",
+  top: "0",
+  left: "0",
+  width: "100%",
+  height: "100%",
+};
