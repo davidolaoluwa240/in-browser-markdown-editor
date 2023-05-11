@@ -6,7 +6,6 @@ export const RootLayoutWrapper = styled.div`
   flex-wrap: nowrap;
   transition: transform 0.4s ease-in;
   transform: translateX(-250px);
-  /* overflow-x: hidden; */
   ${({ showSideBar }) => showSideBar && "transform: translateX(0%);"}
 `;
 
