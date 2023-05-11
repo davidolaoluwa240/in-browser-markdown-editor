@@ -7,14 +7,10 @@ import { useAuth } from "../hooks";
 
 // Components
 import { Fragment } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "../components";
 
-// Routes
-import { Auth } from "../routes";
-
-// Layouts
-import { RootLayout, EditorLayout } from "../layouts";
+// App Routes
+import { Routes } from "../routes.component";
 
 const App = () => {
   const { dispatch, onInitializeAuth } = useAuth();
@@ -27,14 +23,7 @@ const App = () => {
   return (
     <Fragment>
       {/* Application Routes Configuration */}
-      <Routes>
-        <Route path="/" element={<RootLayout />}>
-          <Route index element={<Navigate to="/welcome" replace />} />
-          <Route path=":documentId" element={<EditorLayout />} />
-        </Route>
-
-        <Route path="/auth" element={<Auth />} />
-      </Routes>
+      <Routes />
 
       {/* Register Toast Container */}
       <ToastContainer />
