@@ -9,4 +9,5 @@ export const MarkdownEditorInput = styled.div`
   color: #ced4da;
   font-family: Roboto Mono, monospace;
   font-size: 14px;
+  direction: ltr;
 `;

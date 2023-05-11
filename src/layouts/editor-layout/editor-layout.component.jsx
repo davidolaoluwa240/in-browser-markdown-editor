@@ -15,6 +15,7 @@ export const EditorLayout = () => {
     useState(false);
   const [isPreviewEditorFullScreen, setIsPreviewEditorFullScreen] =
     useState(false);
+  const [markdownEditorScrollTop, setMarkdownEditorScrollTop] = useState(0);
 
   useEffect(() => {
     // Handle Key Press
@@ -57,6 +58,17 @@ export const EditorLayout = () => {
     }
   };
 
+  /**
+   * Handle Scroll Markdown Editor With Preview Editor
+   * @param {Event} event Event
+   */
+  const scrollMarkdownEditorWithPreviewEditor = (event) => {
+    const { scrollTop } = event.target;
+
+    // Update Markdown Scroll Position State
+    setMarkdownEditorScrollTop(scrollTop);
+  };
+
   return (
     <EditorLayoutWrapper>
       <EditorPanel shrink={isPreviewEditorFullScreen}>
@@ -64,6 +76,7 @@ export const EditorLayout = () => {
           type="markdown"
           isFullScreen={isMarkdownEditorFullScreen}
           onToggleFullScreen={toggleEditorFullScreen}
+          onScroll={scrollMarkdownEditorWithPreviewEditor}
         />
       </EditorPanel>
 
@@ -72,6 +85,7 @@ export const EditorLayout = () => {
           type="preview"
           isFullScreen={isPreviewEditorFullScreen}
           onToggleFullScreen={toggleEditorFullScreen}
+          scrollTo={markdownEditorScrollTop}
         />
       </EditorPanel>
     </EditorLayoutWrapper>

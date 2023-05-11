@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 // Styles
 import { EditorHeaderGroup } from "../../components/editor/editor-header/editor-header.styles";
+import { EditorContent } from "../../components/editor/editor.styles";
 
 export const EditorLayoutWrapper = styled.div`
   width: 100%;
@@ -18,7 +19,8 @@ export const EditorPanel = styled.div`
   ${({ shrink }) => shrink && "width: 0%"};
 
   &:first-child {
-    ${EditorHeaderGroup} {
+    ${EditorHeaderGroup},
+    ${EditorContent} {
       border-right: 1px solid rgba(255, 255, 255, 0.6);
       ${({ shrink }) => shrink && "border: none"}
     }

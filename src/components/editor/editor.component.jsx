@@ -2,7 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 // Components
 import { Fragment } from "react";
@@ -11,12 +11,26 @@ import { EditorHeader, MarkdownEditor, PreviewEditor } from "../";
 // Style
 import { EditorContent } from "./editor.styles";
 
-export const Editor = ({ type, isFullScreen, onToggleFullScreen }) => {
+export const Editor = ({
+  type,
+  isFullScreen,
+  onToggleFullScreen,
+  onScroll,
+  scrollTo,
+}) => {
   const previewRef = useRef();
+  const markdownRef = useRef();
 
-  const handleMarkdownEditorScroll = (event) => {
-    const { scrollTop } = event.target;
-  };
+  useEffect(() => {
+    if (scrollTo) {
+      // Get Element To Scroll
+      const elementToScroll =
+        type === "markdown" ? markdownRef.current : previewRef.current;
+
+      // Perform Scrolling
+      elementToScroll.scrollTop = scrollTo;
+    }
+  }, [scrollTo]);
 
   return (
     <Fragment>
@@ -27,15 +41,26 @@ export const Editor = ({ type, isFullScreen, onToggleFullScreen }) => {
       />
 
       <EditorContent
+        direction="rtl"
         show={type === "markdown"}
-        onScroll={handleMarkdownEditorScroll}
+        onScroll={onScroll}
       >
         <MarkdownEditor />
       </EditorContent>
 
-      <EditorContent ref={previewRef} show={type === "preview"}>
+      <EditorContent
+        ref={previewRef}
+        show={type === "preview"}
+        onScroll={onScroll}
+      >
         <PreviewEditor />
       </EditorContent>
     </Fragment>
   );
+};
+
+Editor.defaultProps = {
+  type: "markdown",
+  onScroll: () => null,
+  scrollTo: 0,
 };
