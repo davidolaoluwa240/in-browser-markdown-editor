@@ -23,3 +23,6 @@ export const setCheckedAuth = (bool) =>
 // Set Is Loading
 export const setIsLoading = (bool) =>
   createAction(AUTH_ACTION_TYPES.SET_IS_LOADING, bool);
+
+// Logout User
+export const logoutUser = () => createAction(AUTH_ACTION_TYPES.LOGOUT_USER);

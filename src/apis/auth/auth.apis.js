@@ -4,6 +4,7 @@ import {
   signInWithPopup,
   getAdditionalUserInfo,
   onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import {
   googleProvider,
@@ -105,3 +106,10 @@ export const initializeAuth = () =>
       reject
     );
   });
+
+/**
+ * Logout Authenticated User
+ */
+export const logoutUser = catchAsync(async () => {
+  await signOut(auth);
+});

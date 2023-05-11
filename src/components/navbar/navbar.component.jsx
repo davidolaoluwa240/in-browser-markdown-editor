@@ -2,8 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useState } from "react";
-import { useUi } from "../../hooks";
+import { useUi, useAuth } from "../../hooks";
 
 // Components
 import { DocumentNameEditor, Button } from "../";
@@ -24,13 +23,18 @@ import {
 
 export const Navbar = () => {
   const { dispatch, isSideBarOpen, setSideBarVisibility } = useUi();
-  const [showSavedSuccessText, setShowSavedSuccessText] = useState(false);
+  const { logoutUser } = useAuth();
 
   /**
    * Toggle Menu Visibility
    */
   const toggleMenuVisibility = () =>
     dispatch(setSideBarVisibility(!isSideBarOpen));
+
+  /**
+   * Handle Logout User
+   */
+  const handleLogoutUser = () => dispatch(logoutUser());
 
   /**
    * Handle Save File Changes
@@ -50,15 +54,11 @@ export const Navbar = () => {
 
       <NavbarAction>
         <NavbarDocumentDeleteIcon />
-        <Button
-          successText="Changes Saved"
-          showSuccessText={showSavedSuccessText}
-          onClick={handleSaveFileChanges}
-        >
+        <Button onClick={handleSaveFileChanges}>
           <SaveIcon />
           Save Changes
         </Button>
-        <LogoutIcon title="logout" />
+        <LogoutIcon title="logout" onClick={handleLogoutUser} />
       </NavbarAction>
     </NavbarWrapper>
   );

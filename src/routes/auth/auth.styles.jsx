@@ -33,6 +33,7 @@ export const AuthenticationButton = styled(Button)`
 
 export const IconBaseStyle = css`
   margin-right: 0.6rem;
+  vertical-align: middle;
   font-size: 1.8rem;
 `;
 
