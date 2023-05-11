@@ -19,10 +19,16 @@ export const EditorLayout = () => {
   useEffect(() => {
     // Handle Key Press
     const handleKeyPress = (event) => {
-      const { key } = event;
+      const { key, ctrlKey } = event;
 
-      if (key === "m" || key === "p") {
+      if ((key === "m" || key === "p") && ctrlKey) {
+        // Prevent Browser Default
+        event.preventDefault();
+
+        // Get Editor Type Based On Key
         const editorType = key === "m" ? "markdown" : "preview";
+
+        // Toggle Either Markdown/Preview Editor Full Screen Visibility
         toggleEditorFullScreen(editorType);
       }
     };

@@ -2,7 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useState } from "react";
+import { useUi } from "../../hooks";
 
 // Components
 import { Outlet } from "react-router-dom";
@@ -23,10 +23,17 @@ import {
 } from "./root-layout.styles";
 
 export const RootLayout = () => {
-  const [theme, setTheme] = useState("dark");
+  const { dispatch, setTheme, theme, isSideBarOpen } = useUi();
+  const mainContentStyle = { width: window.innerWidth };
+
+  /**
+   * Update Page Theme
+   * @param {string} theme Theme
+   */
+  const handleUpdateTheme = (theme) => dispatch(setTheme(theme));
 
   return (
-    <RootLayoutWrapper>
+    <RootLayoutWrapper showSideBar={isSideBarOpen}>
       <DocumentSideBar>
         <DocumentTitle>MY DOCUMENTS</DocumentTitle>
         <Button widthFull>+ New Document</Button>
@@ -34,11 +41,11 @@ export const RootLayout = () => {
         <DocumentFileBase />
 
         <DocumentFooter>
-          <ThemeToggle theme={theme} setTheme={setTheme} />
+          <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
         </DocumentFooter>
       </DocumentSideBar>
 
-      <MainContent>
+      <MainContent style={mainContentStyle}>
         <Navbar />
         <Outlet />
       </MainContent>

@@ -3,6 +3,7 @@ import React from "react";
 
 // Hooks
 import { useState } from "react";
+import { useUi } from "../../hooks";
 
 // Components
 import { DocumentNameEditor, Button } from "../";
@@ -22,13 +23,14 @@ import {
 } from "./navbar.styles";
 
 export const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { dispatch, isSideBarOpen, setSideBarVisibility } = useUi();
   const [showSavedSuccessText, setShowSavedSuccessText] = useState(false);
 
   /**
    * Toggle Menu Visibility
    */
-  const toggleMenuVisibility = () => setIsMenuOpen(!isMenuOpen);
+  const toggleMenuVisibility = () =>
+    dispatch(setSideBarVisibility(!isSideBarOpen));
 
   /**
    * Handle Save File Changes
@@ -39,8 +41,8 @@ export const Navbar = () => {
     <NavbarWrapper>
       <NavbarBrand>
         <NavbarMenu onClick={toggleMenuVisibility}>
-          <NavbarMenuIcon isMenuOpen={isMenuOpen} />
-          <NavbarMenuCloseIcon isMenuOpen={isMenuOpen} />
+          <NavbarMenuIcon isMenuOpen={isSideBarOpen} />
+          <NavbarMenuCloseIcon isMenuOpen={isSideBarOpen} />
         </NavbarMenu>
         <NavbarBrandTitle>Markdown</NavbarBrandTitle>
         <DocumentNameEditor />

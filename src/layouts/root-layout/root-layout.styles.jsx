@@ -3,6 +3,11 @@ import styled from "styled-components";
 
 export const RootLayoutWrapper = styled.div`
   display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.4s ease-in;
+  transform: translateX(-250px);
+  /* overflow-x: hidden; */
+  ${({ showSideBar }) => showSideBar && "transform: translateX(0%);"}
 `;
 
 export const DocumentSideBar = styled.aside`
@@ -10,8 +15,10 @@ export const DocumentSideBar = styled.aside`
   height: 100vh;
   padding: 2.7rem 2.4rem;
   background: #212529;
-  display: none;
+  flex-shrink: 0;
+  display: flex;
   flex-direction: column;
+  overflow: hidden;
 `;
 
 export const DocumentTitle = styled.h6`
@@ -28,5 +35,5 @@ export const DocumentFooter = styled.div`
 `;
 
 export const MainContent = styled.div`
-  flex: 1;
+  flex-shrink: 0;
 `;

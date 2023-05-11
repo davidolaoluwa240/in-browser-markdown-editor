@@ -40,12 +40,12 @@ const NavbarMenuIconBase = css`
 
 export const NavbarMenuIcon = styled(IoMenuOutline)`
   ${NavbarMenuIconBase}
-  ${({ isMenuOpen }) => !isMenuOpen && "display: none"}
+  ${({ isMenuOpen }) => isMenuOpen && "display: none"}
 `;
 
 export const NavbarMenuCloseIcon = styled(IoMdClose)`
   ${NavbarMenuIconBase}
-  ${({ isMenuOpen }) => isMenuOpen && "display: none"}
+  ${({ isMenuOpen }) => !isMenuOpen && "display: none"}
 `;
 
 export const NavbarBrandTitle = styled.h1`
