@@ -13,6 +13,9 @@ import {
   Navbar,
 } from "../../components";
 
+// Hocs
+import { preventIfNotAuth } from "../../hocs/preventIfNotAuth.hocs";
+
 // Style
 import {
   RootLayoutWrapper,
@@ -22,7 +25,7 @@ import {
   MainContent,
 } from "./root-layout.styles";
 
-export const RootLayout = () => {
+const _RootLayout = () => {
   const { dispatch, setTheme, theme, isSideBarOpen } = useUi();
   const mainContentStyle = { width: window.innerWidth };
 
@@ -52,3 +55,6 @@ export const RootLayout = () => {
     </RootLayoutWrapper>
   );
 };
+
+// Prevent Access If User Is Not Authenticated
+export const RootLayout = preventIfNotAuth(_RootLayout);

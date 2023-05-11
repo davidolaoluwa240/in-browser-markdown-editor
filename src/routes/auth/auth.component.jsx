@@ -4,6 +4,9 @@ import React from "react";
 // Hooks
 import { useAuth } from "../../hooks";
 
+// Hocs
+import { preventIfAuth } from "../../hocs/preventIfAuth.hocs";
+
 // Style
 import {
   AuthenticationWrapper,
@@ -13,7 +16,7 @@ import {
   GoogleIcon,
 } from "./auth.styles";
 
-export const Auth = () => {
+const _Auth = () => {
   const { dispatch, startOAuth } = useAuth();
 
   /**
@@ -44,3 +47,6 @@ export const Auth = () => {
     </AuthenticationWrapper>
   );
 };
+
+// Prevent Access If User Is Authenticated
+export const Auth = preventIfAuth(_Auth);
