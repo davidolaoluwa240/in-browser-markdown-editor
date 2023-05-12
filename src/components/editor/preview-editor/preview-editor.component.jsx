@@ -1,9 +1,28 @@
 // Modules
 import React from "react";
+import { marked } from "marked";
+import * as DOMPurify from "dompurify";
+
+// Hooks
+import { useEffect, useState } from "react";
+import { useDocument } from "../../../hooks";
 
 // Style
 import { PreviewEditorWrapper } from "./preview-editor.styles";
 
 export const PreviewEditor = () => {
-  return <PreviewEditorWrapper></PreviewEditorWrapper>;
+  const { document } = useDocument();
+  const [compiledMarkdownContent, setCompiledMarkdownContent] = useState();
+
+  useEffect(() => {
+    setCompiledMarkdownContent(
+      DOMPurify.sanitize(marked.parse(document?.content || ""))
+    );
+  }, [document]);
+
+  return (
+    <PreviewEditorWrapper
+      dangerouslySetInnerHTML={{ __html: compiledMarkdownContent }}
+    />
+  );
 };

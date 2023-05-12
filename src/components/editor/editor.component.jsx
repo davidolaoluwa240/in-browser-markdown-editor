@@ -41,6 +41,7 @@ export const Editor = ({
       />
 
       <EditorContent
+        ref={markdownRef}
         direction="rtl"
         show={type === "markdown"}
         onScroll={onScroll}

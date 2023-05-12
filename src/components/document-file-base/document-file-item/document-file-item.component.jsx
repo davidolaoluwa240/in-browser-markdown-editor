@@ -12,9 +12,9 @@ import {
   DocumentFileIcon,
 } from "./document-file-item.styles";
 
-export const DocumentFileItem = ({ fileName, createdAt }) => {
+export const DocumentFileItem = ({ id, fileName, createdAt }) => {
   return (
-    <DocumentFileItemWrapper to={`/${fileName}`}>
+    <DocumentFileItemWrapper to={`/${id}/${fileName}`}>
       <DocumentFileIcon aria-label={`${fileName} markdown`} />
       <DocumentFileContent>
         <DocumentFileCreatedTime>

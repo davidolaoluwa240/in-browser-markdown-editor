@@ -15,6 +15,8 @@ export const authReducer = (state = INITIAL_STATE, action = {}) => {
   switch (type) {
     case AUTH_ACTION_TYPES.SET_IS_LOADING:
       return { ...state, isLoading: payload };
+    case AUTH_ACTION_TYPES.SET_CHECKED_AUTH:
+      return { ...state, checkedAuth: payload };
     case AUTH_ACTION_TYPES.SET_CURRENT_USER:
       return {
         ...state,
@@ -22,8 +24,6 @@ export const authReducer = (state = INITIAL_STATE, action = {}) => {
         isLoading: false,
         checkedAuth: true,
       };
-    case AUTH_ACTION_TYPES.SET_CHECKED_AUTH:
-      return { ...state, checkedAuth: payload };
     default:
       return type.includes("auth/START")
         ? { ...state, isLoading: true }

@@ -2,8 +2,8 @@
 import React from "react";
 
 // Hooks
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { useDocument } from "../../hooks";
 
 // Style
 import { DocumentFileIcon } from "../document-file-base/document-file-item/document-file-item.styles";
@@ -16,23 +16,41 @@ import {
 } from "./document-name-editor.styles";
 
 export const DocumentNameEditor = () => {
-  const { documentName } = useParams();
-  const [documentNameControl, setDocumentNameControl] = useState(documentName);
+  const documentControlRef = useRef();
+  const { dispatch, documents, document, setDocuments } = useDocument();
+
+  useEffect(() => {
+    if (document?.fileName && !documentControlRef.current.innerText) {
+      documentControlRef.current.innerText = document?.fileName || "";
+    }
+  }, [document]);
 
   /**
    * Handle Document Name Change
-   * @param {Event} event Input event
+   * @param {Event} event Event
    */
-  const handleDocumentNameChange = (event) => console.log(event.target.value);
+  const handleDocumentNameChange = (event) => {
+    dispatch(
+      setDocuments(
+        documents.map((doc) =>
+          doc.id === document.id
+            ? { ...doc, fileName: event.target.innerText }
+            : doc
+        )
+      )
+    );
+  };
 
   return (
     <DocumentNameEditorWrapper>
       <DocumentFileIcon />
       <DocumentNameEditorInputGroup>
         <DocumentNameEditorLabel>Document Name</DocumentNameEditorLabel>
-        <DocumentNameEditorInput contentEditable>
-          {documentNameControl}
-        </DocumentNameEditorInput>
+        <DocumentNameEditorInput
+          ref={documentControlRef}
+          contentEditable
+          onInput={handleDocumentNameChange}
+        />
         <DocumentNameExtension>.md</DocumentNameExtension>
       </DocumentNameEditorInputGroup>
     </DocumentNameEditorWrapper>

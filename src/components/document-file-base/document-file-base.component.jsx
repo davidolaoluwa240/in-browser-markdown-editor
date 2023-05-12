@@ -1,8 +1,8 @@
 // Modules
 import React from "react";
 
-// Data
-import { DOCUMENT_ITEMS } from "../../data";
+// Hooks
+import { useDocument } from "../../hooks";
 
 // Components
 import { DocumentFileList } from "../";
@@ -11,9 +11,11 @@ import { DocumentFileList } from "../";
 import { DocumentFileBaseWrapper } from "./document-file-base.styles";
 
 export const DocumentFileBase = () => {
+  const { documents } = useDocument();
+
   return (
     <DocumentFileBaseWrapper>
-      <DocumentFileList items={DOCUMENT_ITEMS} />
+      <DocumentFileList items={documents} />
     </DocumentFileBaseWrapper>
   );
 };

@@ -7,13 +7,13 @@ import { useAuth } from "../hooks";
 
 // Components
 import { Fragment } from "react";
-import { ToastContainer } from "../components";
+import { ToastContainer, PageLoader } from "../components";
 
 // App Routes
 import { Routes } from "../routes.component";
 
 const App = () => {
-  const { dispatch, onInitializeAuth } = useAuth();
+  const { dispatch, onInitializeAuth, checkedAuth } = useAuth();
 
   useEffect(() => {
     // Initialize Authentication
@@ -22,11 +22,16 @@ const App = () => {
 
   return (
     <Fragment>
-      {/* Application Routes Configuration */}
-      <Routes />
+      {/* Register Page Loader Spinner */}
+      {!checkedAuth && <PageLoader />}
 
-      {/* Register Toast Container */}
-      <ToastContainer />
+      {/* Register App Routes And Toast Container */}
+      {checkedAuth && (
+        <Fragment>
+          <Routes />
+          <ToastContainer />
+        </Fragment>
+      )}
     </Fragment>
   );
 };
