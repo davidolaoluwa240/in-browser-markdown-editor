@@ -20,8 +20,19 @@ export const DocumentNameEditor = () => {
   const { dispatch, documents, document, setDocuments } = useDocument();
 
   useEffect(() => {
-    if (document?.fileName && !documentControlRef.current.innerText) {
-      documentControlRef.current.innerText = document?.fileName || "";
+    // Get Document Name Active Document Id
+    const documentNameActiveDocumentId =
+      documentControlRef.current.dataset.activeDocumentId;
+
+    if (document?.fileName && document.id !== documentNameActiveDocumentId) {
+      // Update Document Name Editor Input InnerText
+      documentControlRef.current.innerText = document.fileName;
+
+      // Set Document Name Editor Active Document Id
+      documentControlRef.current.setAttribute(
+        "data-active-document-id",
+        document.id
+      );
     }
   }, [document]);
 

@@ -29,7 +29,9 @@ export const db = getFirestore(app);
 
 // Google Provider
 export const googleProvider = new GoogleAuthProvider();
-googleProvider.setCustomParameters({ prompt: "select_account" });
+googleProvider.setCustomParameters({
+  prompt: "select_account",
+});
 
 // Github Provider
 export const githubProvider = new GithubAuthProvider();

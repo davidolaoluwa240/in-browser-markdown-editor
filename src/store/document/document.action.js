@@ -23,3 +23,7 @@ export const startUpdatingDocument = (newDocumentData) =>
 // Start Deleting Document Action
 export const startDeletingDocument = (documentId) =>
   createAction(DOCUMENT_ACTION_TYPES.START_DELETING_DOCUMENT, documentId);
+
+// Start Syncing Documents Action
+export const startSyncingDocuments = (documents) =>
+  createAction(DOCUMENT_ACTION_TYPES.START_SYNCING_DOCUMENTS, documents);

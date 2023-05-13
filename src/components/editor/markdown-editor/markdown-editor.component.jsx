@@ -14,10 +14,16 @@ export const MarkdownEditor = () => {
   const markdownRef = useRef();
 
   useEffect(() => {
-    if (document?.content && !markdownRef.current.innerText) {
-      markdownRef.current.innerText = DOMPurify.sanitize(
-        document?.content || ""
-      );
+    // Get Markdown Editor Active Document Id
+    const mardownEditorActiveDocumentId =
+      markdownRef.current.dataset.activeDocumentId;
+
+    if (document?.content && document.id !== mardownEditorActiveDocumentId) {
+      // Update Markdown Editor InnerText
+      markdownRef.current.innerText = DOMPurify.sanitize(document.content);
+
+      // Set Markdown Editor Active Document Id
+      markdownRef.current.setAttribute("data-active-document-id", document.id);
     }
   }, [document]);
 
