@@ -1,8 +1,8 @@
 // Modules
-import React from "react";
+import React, { forwardRef } from "react";
 
 // Hooks
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 
 // Components
 import { Fragment } from "react";
@@ -11,57 +11,54 @@ import { EditorHeader, MarkdownEditor, PreviewEditor } from "../";
 // Style
 import { EditorContent } from "./editor.styles";
 
-export const Editor = ({
-  type,
-  isFullScreen,
-  onToggleFullScreen,
-  onScroll,
-  scrollTo,
-}) => {
-  const previewRef = useRef();
-  const markdownRef = useRef();
+export const Editor = forwardRef(
+  ({ type, isFullScreen, onToggleFullScreen, scrollWithRef }, ref) => {
+    useEffect(() => {
+      const scrollWithRefElm = scrollWithRef?.current;
+      const refElm = ref?.current;
 
-  useEffect(() => {
-    if (scrollTo) {
-      // Get Element To Scroll
-      const elementToScroll =
-        type === "markdown" ? markdownRef.current : previewRef.current;
+      const handleEditorScrolling = (event) => {
+        const { scrollTop } = event.target;
+        refElm.scrollTop = scrollTop;
+      };
 
-      // Perform Scrolling
-      elementToScroll.scrollTop = scrollTo;
-    }
-  }, [scrollTo]);
+      if (!scrollWithRefElm) return;
 
-  return (
-    <Fragment>
-      <EditorHeader
-        type={type}
-        isFullScreen={isFullScreen}
-        onToggleFullScreen={onToggleFullScreen}
-      />
+      scrollWithRefElm.addEventListener("scroll", handleEditorScrolling);
 
-      <EditorContent
-        ref={markdownRef}
-        direction="rtl"
-        show={type === "markdown"}
-        onScroll={onScroll}
-      >
-        <MarkdownEditor />
-      </EditorContent>
+      return () => {
+        if (scrollWithRefElm)
+          scrollWithRefElm.removeEventListener("scroll", handleEditorScrolling);
+      };
+    }, [ref, scrollWithRef]);
 
-      <EditorContent
-        ref={previewRef}
-        show={type === "preview"}
-        onScroll={onScroll}
-      >
-        <PreviewEditor />
-      </EditorContent>
-    </Fragment>
-  );
-};
+    return (
+      <Fragment>
+        <EditorHeader
+          type={type}
+          isFullScreen={isFullScreen}
+          onToggleFullScreen={onToggleFullScreen}
+        />
+
+        <EditorContent
+          ref={type === "markdown" ? ref : null}
+          direction="rtl"
+          show={type === "markdown"}
+        >
+          <MarkdownEditor />
+        </EditorContent>
+
+        <EditorContent
+          ref={type === "preview" ? ref : null}
+          show={type === "preview"}
+        >
+          <PreviewEditor />
+        </EditorContent>
+      </Fragment>
+    );
+  }
+);
 
 Editor.defaultProps = {
   type: "markdown",
-  onScroll: () => null,
-  scrollTo: 0,
 };

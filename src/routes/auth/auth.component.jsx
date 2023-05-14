@@ -32,12 +32,12 @@ const _Auth = () => {
    * Handle Login/Signup With OAuth
    * @param {string} provider Provider
    */
-  const handleLoginWithOAuth = async (provider) => {
+  const handleLoginWithOAuth = (provider) => {
     // Update Loading Provider Name
     setLoadingProviderName(provider);
 
     // Perform OAuth Authentication
-    await dispatch(startOAuth(provider));
+    dispatch(startOAuth(provider));
   };
 
   return (

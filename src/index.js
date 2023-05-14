@@ -11,6 +11,9 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import App from "./app/app.component";
 
+// Firebase
+import "./utils/firebase/firebase-config.utils";
+
 // Store
 import store from "./store/store";
 import { persistor } from "./store/store";

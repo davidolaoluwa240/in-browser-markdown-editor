@@ -1,17 +1,21 @@
 // Document Actions
 import { startSyncingDocuments } from "../document";
 
+// Auth Action Types
+import { AUTH_ACTION_TYPES } from "../auth/auth.type";
 /**
  * Auto Sync Documents To Cloud
  */
-export const autoSyncDocumentsToCloud = (store) => (next) => (action) => {
-  // If Action Does Not Have A Type, Then Go The Next Middleware
-  if (!action?.type || action.type !== "persist/REHYDRATE") return next(action);
+export const autoSyncDocumentsToCloud =
+  ({ getState, dispatch }) =>
+  (next) =>
+  (action) => {
+    // Dispatch New Action To Sync Documents To Cloud As Soon As Auth Is Checked
+    if (action.type === AUTH_ACTION_TYPES.SET_CHECKED_AUTH) {
+      next(action);
+      const documents = getState().document.documents;
+      return documents.length && dispatch(startSyncingDocuments(documents));
+    }
 
-  // Dispatch New Action To Sync Documents To Cloud As Soon As Redux Persist Re-hydrate
-  if (action.type === "persist/REHYDRATE") {
-    next(action);
-    const documents = store.getState().document.documents;
-    documents.length && next(startSyncingDocuments(documents));
-  }
-};
+    return next(action);
+  };

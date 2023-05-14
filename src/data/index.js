@@ -40,4 +40,5 @@ export const DEFAULT_DOCUMENT_ITEM = {
   `,
   createdAt: new Date(),
   updatedAt: new Date(),
+  isActive: true,
 };

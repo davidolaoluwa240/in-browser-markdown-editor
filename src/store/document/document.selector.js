@@ -7,7 +7,7 @@ const documentReducer = (state) => state.document;
 // Select Documents
 export const selectDocuments = createSelector(
   [documentReducer],
-  (documentSlice) => documentSlice.documents
+  (documentSlice) => documentSlice.documents.filter((doc) => doc.isActive)
 );
 
 // Select IsLoading

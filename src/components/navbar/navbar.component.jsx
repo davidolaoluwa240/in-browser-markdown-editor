@@ -2,7 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useUi, useAuth } from "../../hooks";
+import { useUi, useAuth, useDocument } from "../../hooks";
 
 // Components
 import { DocumentNameEditor, Button } from "../";
@@ -24,6 +24,13 @@ import {
 export const Navbar = () => {
   const { dispatch, isSideBarOpen, setSideBarVisibility } = useUi();
   const { logoutUser } = useAuth();
+  const {
+    document,
+    startUpdatingDocument,
+    isLoading,
+    setDocuments,
+    documents,
+  } = useDocument();
 
   /**
    * Toggle Menu Visibility
@@ -37,9 +44,23 @@ export const Navbar = () => {
   const handleLogoutUser = () => dispatch(logoutUser());
 
   /**
-   * Handle Save File Changes
+   * Handle Save File Changes To Cloud
    */
-  const handleSaveFileChanges = () => {};
+  const handleSaveFileChangesToCloud = () => {
+    if (document) {
+      dispatch(startUpdatingDocument(document));
+    }
+  };
+
+  // Handle Deleting Document
+  const onHandleDeleteDocument = () =>
+    dispatch(
+      setDocuments(
+        documents.map((doc) =>
+          doc.id === document.id ? { ...doc, isActive: false } : doc
+        )
+      )
+    );
 
   return (
     <NavbarWrapper>
@@ -53,10 +74,10 @@ export const Navbar = () => {
       </NavbarBrand>
 
       <NavbarAction>
-        <NavbarDocumentDeleteIcon />
-        <Button onClick={handleSaveFileChanges}>
+        <NavbarDocumentDeleteIcon onClick={onHandleDeleteDocument} />
+        <Button isLoading={isLoading} onClick={handleSaveFileChangesToCloud}>
           <SaveIcon />
-          Save Changes
+          Sync Cloud
         </Button>
         <LogoutIcon title="logout" onClick={handleLogoutUser} />
       </NavbarAction>

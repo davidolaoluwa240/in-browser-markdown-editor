@@ -19,6 +19,6 @@ export const catchAsync =
       console.log(err);
 
       // Handle Asynchronous Error
-      handleAsyncError(err);
+      await handleAsyncError(err);
     }
   };

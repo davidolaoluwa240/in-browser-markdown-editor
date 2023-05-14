@@ -20,19 +20,34 @@ export const DocumentNameEditor = () => {
   const { dispatch, documents, document, setDocuments } = useDocument();
 
   useEffect(() => {
-    // Get Document Name Active Document Id
-    const documentNameActiveDocumentId =
-      documentControlRef.current.dataset.activeDocumentId;
+    // Get Document Name Mounted Document Id
+    const documentNameMountedDocumentId =
+      documentControlRef.current.dataset.mountedDocumentId;
 
-    if (document?.fileName && document.id !== documentNameActiveDocumentId) {
+    // Get Document Control Ref Element
+    const documentControlRefElm = documentControlRef.current;
+
+    if (
+      document?.fileName &&
+      document.id !== documentNameMountedDocumentId &&
+      documentControlRefElm
+    ) {
       // Update Document Name Editor Input InnerText
-      documentControlRef.current.innerText = document.fileName;
+      documentControlRefElm.innerText = document.fileName;
 
-      // Set Document Name Editor Active Document Id
-      documentControlRef.current.setAttribute(
-        "data-active-document-id",
+      // Set Document Name Editor Mounted Document Id Attribute
+      documentControlRefElm.setAttribute(
+        "data-mounted-document-id",
         document.id
       );
+    }
+
+    if (!document?.content && documentControlRefElm) {
+      // Reset Document Name Editor InnerText
+      documentControlRefElm.innerText = "";
+
+      // Remove Document Name Editor Mounted Document Id Attribute
+      documentControlRefElm.removeAttribute("data-mounted-document-id");
     }
   }, [document]);
 

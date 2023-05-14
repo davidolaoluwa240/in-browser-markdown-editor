@@ -2,7 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDocument } from "../../hooks";
 
@@ -20,9 +20,10 @@ export const EditorLayout = () => {
     useState(false);
   const [isPreviewEditorFullScreen, setIsPreviewEditorFullScreen] =
     useState(false);
-  const [markdownEditorScrollTop, setMarkdownEditorScrollTop] = useState(0);
-  const navigate = useNavigate();
   const { documents, dispatch, setDocuments } = useDocument();
+  const navigate = useNavigate();
+  const markdownEditorRef = useRef();
+  const previewEditorRef = useRef();
 
   useEffect(() => {
     // Handle Key Press
@@ -77,34 +78,24 @@ export const EditorLayout = () => {
     }
   };
 
-  /**
-   * Handle Scroll Markdown Editor With Preview Editor
-   * @param {Event} event Event
-   */
-  const scrollMarkdownEditorWithPreviewEditor = (event) => {
-    const { scrollTop } = event.target;
-
-    // Update Markdown Scroll Position State
-    setMarkdownEditorScrollTop(scrollTop);
-  };
-
   return (
     <EditorLayoutWrapper>
       <EditorPanel shrink={isPreviewEditorFullScreen}>
         <Editor
           type="markdown"
+          ref={markdownEditorRef}
           isFullScreen={isMarkdownEditorFullScreen}
           onToggleFullScreen={toggleEditorFullScreen}
-          onScroll={scrollMarkdownEditorWithPreviewEditor}
         />
       </EditorPanel>
 
       <EditorPanel shrink={isMarkdownEditorFullScreen}>
         <Editor
           type="preview"
+          ref={previewEditorRef}
           isFullScreen={isPreviewEditorFullScreen}
           onToggleFullScreen={toggleEditorFullScreen}
-          scrollTo={markdownEditorScrollTop}
+          scrollWithRef={markdownEditorRef}
         />
       </EditorPanel>
     </EditorLayoutWrapper>

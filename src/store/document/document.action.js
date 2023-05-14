@@ -17,8 +17,11 @@ export const startFetchingDocuments = () =>
   createAction(DOCUMENT_ACTION_TYPES.START_FETCHING_DOCUMENTS);
 
 // Start Updating Document Action
-export const startUpdatingDocument = (newDocumentData) =>
-  createAction(DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT, newDocumentData);
+export const startUpdatingDocument = (updatedDocumentData) =>
+  createAction(
+    DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT,
+    updatedDocumentData
+  );
 
 // Start Deleting Document Action
 export const startDeletingDocument = (documentId) =>

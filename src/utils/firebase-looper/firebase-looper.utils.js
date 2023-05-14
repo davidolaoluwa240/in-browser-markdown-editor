@@ -9,8 +9,11 @@ export const dataFromSnapshot = (snapshot) => {
     ...snapshot.data(),
   };
 
-  // Convert Created At Field To Date String
+  // Convert CreatedAt Field To Date String
   if (data.createdAt) data.createdAt = data.createdAt.toDate().toISOString();
+
+  // Convert UpdatedAt Field To Date String
+  if (data.updatedAt) data.updatedAt = data.updatedAt.toDate().toISOString();
 
   //  Return Data
   return data;

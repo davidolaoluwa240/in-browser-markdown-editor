@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { useDocument } from "../../../hooks";
 
 // Style
+import "github-markdown-css";
 import { PreviewEditorWrapper } from "./preview-editor.styles";
 
 export const PreviewEditor = () => {

@@ -22,7 +22,6 @@ export const authReducer = (state = INITIAL_STATE, action = {}) => {
         ...state,
         currentUser: payload,
         isLoading: false,
-        checkedAuth: true,
       };
     default:
       return type.includes("auth/START")

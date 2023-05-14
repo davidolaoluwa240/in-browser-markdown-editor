@@ -25,13 +25,11 @@ const App = () => {
       {/* Register Page Loader Spinner */}
       {!checkedAuth && <PageLoader />}
 
-      {/* Register App Routes And Toast Container */}
-      {checkedAuth && (
-        <Fragment>
-          <Routes />
-          <ToastContainer />
-        </Fragment>
-      )}
+      {/* Register App Routes */}
+      {checkedAuth && <Routes />}
+
+      {/* Register Toast Container  */}
+      <ToastContainer />
     </Fragment>
   );
 };

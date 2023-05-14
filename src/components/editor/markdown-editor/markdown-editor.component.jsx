@@ -14,16 +14,31 @@ export const MarkdownEditor = () => {
   const markdownRef = useRef();
 
   useEffect(() => {
-    // Get Markdown Editor Active Document Id
-    const mardownEditorActiveDocumentId =
-      markdownRef.current.dataset.activeDocumentId;
+    // Get Markdown Editor Mounted Document Id
+    const markdownEditorMountedDocumentId =
+      markdownRef.current.dataset.mountedDocumentId;
 
-    if (document?.content && document.id !== mardownEditorActiveDocumentId) {
+    // Get Markdown Ref Element
+    const markdownRefElm = markdownRef.current;
+
+    if (
+      document?.content &&
+      document.id !== markdownEditorMountedDocumentId &&
+      markdownRefElm
+    ) {
       // Update Markdown Editor InnerText
-      markdownRef.current.innerText = DOMPurify.sanitize(document.content);
+      markdownRefElm.innerText = DOMPurify.sanitize(document.content.trim());
 
-      // Set Markdown Editor Active Document Id
-      markdownRef.current.setAttribute("data-active-document-id", document.id);
+      // Set Markdown Editor Mounted Document Id Attribute
+      markdownRefElm.setAttribute("data-mounted-document-id", document.id);
+    }
+
+    if (!document?.content && markdownRefElm) {
+      // Reset Markdown Editor InnerText
+      markdownRefElm.innerText = "";
+
+      // Remove Markdown Editor Mounted Document Id Attribute
+      markdownRefElm.removeAttribute("data-mounted-document-id");
     }
   }, [document]);
 

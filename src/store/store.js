@@ -24,7 +24,7 @@ const persistConfig = {
 // Middlewares
 const sagaMiddleware = createSagaMiddleware();
 const middlewares = [
-  // process.env.NODE_ENV === "development" && logger,
+  process.env.NODE_ENV === "development" && logger,
   sagaMiddleware,
   autoSyncDocumentsToCloud,
 ].filter(Boolean);
