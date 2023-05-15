@@ -104,6 +104,7 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
   await updateDoc(documentDocRef, {
     ...updatedDocumentData,
     user: userRef,
+    createdAt: Timestamp.fromDate(new Date(updatedDocumentData.createdAt)),
     updatedAt: serverTimestamp(),
   });
 
