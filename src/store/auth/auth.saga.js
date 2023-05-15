@@ -13,7 +13,7 @@ import * as Apis from "../../apis";
 export function* onInitializeAuth() {
   const userProfile = yield call(Apis.initializeAuth);
   yield put(setCurrentUser(userProfile));
-  yield put(setCheckedAuth(!!userProfile));
+  yield put(setCheckedAuth(true));
 }
 
 export function* onSignupWithOAuth({ payload: provider }) {

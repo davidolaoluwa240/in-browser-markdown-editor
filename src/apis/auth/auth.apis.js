@@ -98,11 +98,11 @@ export const initializeAuth = () =>
   new Promise((resolve, reject) => {
     const unSubscribe = onAuthStateChanged(
       auth,
-      catchAsync(async (userAuth) => {
+      async (userAuth) => {
         unSubscribe();
         !userAuth && resolve(userAuth);
         userAuth && resolve(await getUser());
-      }),
+      },
       reject
     );
   });
