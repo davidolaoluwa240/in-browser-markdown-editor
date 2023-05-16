@@ -1,5 +1,6 @@
 // Modules
 import React from "react";
+import { toast } from "react-toastify";
 
 // Hooks
 import { useUi, useAuth, useDocument } from "../../hooks";
@@ -53,14 +54,19 @@ export const Navbar = () => {
   };
 
   // Handle Deleting Document
-  const onHandleDeleteDocument = () =>
-    dispatch(
-      setDocuments(
-        documents.map((doc) =>
-          doc.id === document.id ? { ...doc, isActive: false } : doc
+  const onHandleDeleteDocument = () => {
+    if (document.id !== "default") {
+      dispatch(
+        setDocuments(
+          documents.map((doc) =>
+            doc.id === document.id ? { ...doc, isActive: false } : doc
+          )
         )
-      )
-    );
+      );
+    } else {
+      toast.warning("Default Document Cannot Be Deleted");
+    }
+  };
 
   return (
     <NavbarWrapper>
@@ -77,7 +83,7 @@ export const Navbar = () => {
         <NavbarDocumentDeleteIcon onClick={onHandleDeleteDocument} />
         <Button isLoading={isLoading} onClick={handleSaveFileChangesToCloud}>
           <SaveIcon />
-          Sync Cloud
+          Save Changes
         </Button>
         <LogoutIcon title="logout" onClick={handleLogoutUser} />
       </NavbarAction>

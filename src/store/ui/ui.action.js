@@ -17,3 +17,10 @@ export const setSideBarVisibility = (bool) =>
  */
 export const setTheme = (theme) =>
   createAction(UI_ACTION_TYPES.SET_THEME, theme);
+
+/**
+ * Set Page Loading
+ * @param {boolean} bool
+ */
+export const setIsLoading = (bool) =>
+  createAction(UI_ACTION_TYPES.SET_IS_LOADING, bool);

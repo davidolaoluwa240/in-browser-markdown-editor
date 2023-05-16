@@ -60,7 +60,11 @@ export const DocumentNameEditor = () => {
       setDocuments(
         documents.map((doc) =>
           doc.id === document.id
-            ? { ...doc, fileName: event.target.innerText }
+            ? {
+                ...doc,
+                fileName: event.target.innerText,
+                lastSavedLocal: Date.now(),
+              }
             : doc
         )
       )

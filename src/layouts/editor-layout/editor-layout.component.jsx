@@ -20,7 +20,8 @@ export const EditorLayout = () => {
     useState(false);
   const [isPreviewEditorFullScreen, setIsPreviewEditorFullScreen] =
     useState(false);
-  const { documents, dispatch, setDocuments } = useDocument();
+  const { documents, allDocuments, dispatch, setDocuments, document } =
+    useDocument();
   const navigate = useNavigate();
   const markdownEditorRef = useRef();
   const previewEditorRef = useRef();
@@ -43,23 +44,28 @@ export const EditorLayout = () => {
     };
 
     // Add Event Listener
-    document.addEventListener("keydown", handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
 
     // Remove Event Listener
-    return () => document.removeEventListener("keydown", handleKeyPress);
+    return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
 
   useEffect(() => {
-    let id, fileName;
-    if (documents.length) {
-      ({ id, fileName } = documents[0]);
-    } else {
-      dispatch(setDocuments([DEFAULT_DOCUMENT_ITEM]));
-      id = DEFAULT_DOCUMENT_ITEM.id;
-      fileName = DEFAULT_DOCUMENT_ITEM.fileName;
+    if (!document) {
+      let id, fileName;
+
+      if (documents.length) {
+        ({ id, fileName } = documents[0]);
+      } else {
+        const newDocuments = allDocuments.slice();
+        newDocuments.push(DEFAULT_DOCUMENT_ITEM);
+        dispatch(setDocuments(newDocuments));
+        id = DEFAULT_DOCUMENT_ITEM.id;
+        fileName = DEFAULT_DOCUMENT_ITEM.fileName;
+      }
+      navigate(`/${id}/${fileName}`, { replace: true });
     }
-    navigate(`/${id}/${fileName}`, { replace: true });
-  }, []);
+  }, [document]);
 
   /**
    * Toggle Editor Full Screen Mode

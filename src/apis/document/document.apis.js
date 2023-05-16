@@ -3,7 +3,7 @@ import {
   getDocs,
   query,
   where,
-  updateDoc,
+  setDoc,
   doc,
   writeBatch,
   serverTimestamp,
@@ -22,57 +22,65 @@ import { catchAsync } from "../../utils";
 
 // Fetch Documents
 export const fetchDocuments = catchAsync(async () => {
-  // Get Auth User
-  const { currentUser } = auth;
+  // Get Auth User Uid
+  const { uid } = auth.currentUser;
 
-  if (currentUser) {
-    const { uid } = currentUser;
+  // User Doc Ref
+  const userRef = doc(userCollectionRef, uid);
 
-    // User Doc Ref
-    const userRef = doc(userCollectionRef, uid);
+  // Create Document Query
+  const documentQuery = query(
+    documentCollectionRef,
+    where("user", "==", userRef),
+    where("isActive", "==", true)
+  );
 
-    // Create Document Query
-    const documentQuery = query(
-      documentCollectionRef,
-      where("user", "==", userRef),
-      where("isActive", "==", true)
-    );
+  // Get Documents
+  const documentQuerySnapshot = await getDocs(documentQuery);
 
-    // Get Documents
-    const documentQuerySnapshot = await getDocs(documentQuery);
-
-    // Return Documents
-    return firebaseLooper(documentQuerySnapshot);
-  }
-
-  // Return Empty Array
-  return [];
+  // Return Documents
+  return firebaseLooper(documentQuerySnapshot);
 });
 
 // Sync Documents
 export const syncDocuments = catchAsync(async (documents) => {
-  // Create New Batch Transaction
-  const batch = writeBatch(db);
+  if (documents.length) {
+    // Fetch Documents
+    const allDocuments = await fetchDocuments();
 
-  // Get Auth User
-  const { currentUser } = auth;
+    // Create New Batch Transaction
+    const batch = writeBatch(db);
 
-  if (currentUser) {
-    const { uid } = currentUser;
+    // Get Auth User Uid
+    const { uid } = auth.currentUser;
 
     // User Doc Ref
     const userRef = doc(userCollectionRef, uid);
 
     // Add Document To Batch
     documents.forEach((document) => {
-      const docRef = doc(documentCollectionRef, document.id);
+      const docRef =
+        document.id !== "default"
+          ? doc(documentCollectionRef, document.id)
+          : doc(documentCollectionRef);
 
-      batch.set(docRef, {
-        ...document,
-        user: userRef,
-        createdAt: Timestamp.fromDate(new Date(document.createdAt)),
-        updatedAt: Timestamp.fromDate(new Date(document.updatedAt)),
-      });
+      // Get Cloud Document
+      const cloudDocument = allDocuments.find((doc) => doc.id === document.id);
+
+      // Determine If Current Document Should Sync
+      const shouldSync = cloudDocument
+        ? new Date(document.lastSavedLocal).getTime() >
+          new Date(cloudDocument.updatedAt).getTime()
+        : true;
+
+      shouldSync &&
+        batch.set(docRef, {
+          ...document,
+          user: userRef,
+          id: null,
+          createdAt: Timestamp.fromDate(new Date(document.createdAt)),
+          updatedAt: Timestamp.fromDate(new Date(document.updatedAt)),
+        });
     });
 
     // Commit Batch Transaction
@@ -98,15 +106,23 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
   const userRef = doc(userCollectionRef, uid);
 
   // Document Doc Ref
-  const documentDocRef = doc(documentCollectionRef, documentId);
+  const documentDocRef =
+    documentId !== "default"
+      ? doc(documentCollectionRef, documentId)
+      : doc(documentCollectionRef);
 
   // Perform Update
-  await updateDoc(documentDocRef, {
-    ...updatedDocumentData,
-    user: userRef,
-    createdAt: Timestamp.fromDate(new Date(updatedDocumentData.createdAt)),
-    updatedAt: serverTimestamp(),
-  });
+  await setDoc(
+    documentDocRef,
+    {
+      ...updatedDocumentData,
+      user: userRef,
+      id: null,
+      createdAt: Timestamp.fromDate(new Date(updatedDocumentData.createdAt)),
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
 
   // Get Documents
   const allDocuments = await fetchDocuments();

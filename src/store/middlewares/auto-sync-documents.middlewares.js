@@ -13,8 +13,9 @@ export const autoSyncDocumentsToCloud =
     // Dispatch New Action To Sync Documents To Cloud As Soon As Auth Is Checked
     if (action.type === AUTH_ACTION_TYPES.SET_CHECKED_AUTH) {
       next(action);
-      const documents = getState().document.documents;
-      return documents.length && dispatch(startSyncingDocuments(documents));
+      const { documents } = getState().document;
+      const { currentUser } = getState().auth;
+      return currentUser && dispatch(startSyncingDocuments(documents));
     }
 
     return next(action);

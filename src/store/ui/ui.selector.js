@@ -15,3 +15,9 @@ export const selectIsSideBarOpen = createSelector(
   [selectUiReducer],
   (uiSlice) => uiSlice.isSideBarOpen
 );
+
+// Select IsLoading State
+export const selectIsLoading = createSelector(
+  [selectUiReducer],
+  (uiSlice) => uiSlice.isLoading
+);

@@ -6,6 +6,7 @@ import { DOCUMENT_ACTION_TYPES } from "./document.type";
 
 // Actions
 import { setDocuments } from "./document.action";
+import { setIsLoading as uiIsLoading } from "../ui";
 
 // Apis
 import * as Apis from "../../apis";
@@ -21,8 +22,10 @@ export function* updateDocument({ payload: updatedDocumentData }) {
 }
 
 export function* syncDocuments({ payload: documents }) {
+  yield put(uiIsLoading(true));
   const allDocuments = yield call(Apis.syncDocuments, documents);
   yield put(setDocuments(allDocuments));
+  yield put(uiIsLoading(false));
 }
 
 export function* deleteDocument({ payload: documentId }) {

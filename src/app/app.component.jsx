@@ -3,7 +3,7 @@ import React from "react";
 
 // Hooks
 import { useEffect } from "react";
-import { useAuth } from "../hooks";
+import { useAuth, useUi } from "../hooks";
 
 // Components
 import { Fragment } from "react";
@@ -14,6 +14,7 @@ import { Routes } from "../routes.component";
 
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth } = useAuth();
+  const { isLoading } = useUi();
 
   useEffect(() => {
     // Initialize Authentication
@@ -23,10 +24,10 @@ const App = () => {
   return (
     <Fragment>
       {/* Register Page Loader Spinner */}
-      {!checkedAuth && <PageLoader />}
+      {(!checkedAuth || isLoading) && <PageLoader />}
 
       {/* Register App Routes */}
-      {checkedAuth && <Routes />}
+      {checkedAuth && !isLoading && <Routes />}
 
       {/* Register Toast Container  */}
       <ToastContainer />

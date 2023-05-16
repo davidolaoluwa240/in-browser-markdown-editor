@@ -5,8 +5,8 @@
 export const dataFromSnapshot = (snapshot) => {
   // Get Data From Snapshot
   const data = {
-    id: snapshot.id,
     ...snapshot.data(),
+    id: snapshot.id,
   };
 
   // Convert CreatedAt Field To Date String

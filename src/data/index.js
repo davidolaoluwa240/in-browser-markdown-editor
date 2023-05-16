@@ -1,6 +1,6 @@
 // Default Document Item
 export const DEFAULT_DOCUMENT_ITEM = {
-  id: "1",
+  id: "default",
   fileName: "welcome",
   content: `
   # Welcome to Markdown

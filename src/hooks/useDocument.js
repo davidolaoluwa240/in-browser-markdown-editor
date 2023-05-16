@@ -7,13 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { documentSA } from "../store";
 
 // Destructure Redux Imports
-const { selectDocuments, selectIsLoading } = documentSA;
+const { selectDocuments, selectIsLoading, selectAllDocuments } = documentSA;
 
 // Document Hook
 export const useDocument = () => {
   const dispatch = useDispatch();
   const { documentId } = useParams();
   const documents = useSelector(selectDocuments);
+  const allDocuments = useSelector(selectAllDocuments);
   const isLoading = useSelector(selectIsLoading);
   const [document, setDocument] = useState(documents[0]);
 
@@ -29,6 +30,7 @@ export const useDocument = () => {
     paramDocumentId: documentId,
     documents,
     isLoading,
+    allDocuments,
     document,
     ...documentSA,
   };

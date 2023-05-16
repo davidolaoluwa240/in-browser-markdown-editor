@@ -51,7 +51,11 @@ export const MarkdownEditor = () => {
       setDocuments(
         documents.map((doc) =>
           doc.id === document.id
-            ? { ...doc, content: event.target.innerText }
+            ? {
+                ...doc,
+                content: event.target.innerText,
+                lastSavedLocal: Date.now(),
+              }
             : doc
         )
       )

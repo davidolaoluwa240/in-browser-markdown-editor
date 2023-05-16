@@ -15,3 +15,9 @@ export const selectIsLoading = createSelector(
   [documentReducer],
   (documentSlice) => documentSlice.isLoading
 );
+
+// Select All Documents
+export const selectAllDocuments = createSelector(
+  [documentReducer],
+  (documentSlice) => documentSlice.documents
+);
