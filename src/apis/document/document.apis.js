@@ -73,6 +73,10 @@ export const syncDocuments = catchAsync(async (documents) => {
           new Date(cloudDocument.updatedAt).getTime()
         : true;
 
+      // Delete Inactive Documents
+      !document.isActive && batch.update(docRef, { isActive: false });
+
+      // Create Documents
       shouldSync &&
         batch.set(docRef, {
           ...document,
