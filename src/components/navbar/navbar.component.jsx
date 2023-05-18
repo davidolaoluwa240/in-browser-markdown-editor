@@ -31,6 +31,8 @@ export const Navbar = () => {
     isLoading,
     setDocuments,
     documents,
+    activeDocuments,
+    startDeletingDocument,
   } = useDocument();
 
   /**
@@ -48,14 +50,15 @@ export const Navbar = () => {
    * Handle Save File Changes To Cloud
    */
   const handleSaveFileChangesToCloud = () => {
-    if (document) {
-      dispatch(startUpdatingDocument(document));
-    }
+    document && dispatch(startUpdatingDocument(document));
   };
 
-  // Handle Deleting Document
+  /**
+   * Handle Deleting Document
+   */
   const onHandleDeleteDocument = () => {
-    if (document.id !== "default") {
+    if (activeDocuments.length > 1) {
+      // Perform Deletion
       dispatch(
         setDocuments(
           documents.map((doc) =>
@@ -63,8 +66,11 @@ export const Navbar = () => {
           )
         )
       );
+
+      // Save Changes To Cloud
+      dispatch(startDeletingDocument(document));
     } else {
-      toast.warning("Default Document Cannot Be Deleted");
+      toast.error("Operation denied: default document cannot be deleted");
     }
   };
 

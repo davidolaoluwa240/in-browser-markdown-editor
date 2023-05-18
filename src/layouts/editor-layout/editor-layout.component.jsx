@@ -6,11 +6,11 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDocument } from "../../hooks";
 
-// Data
-import { DEFAULT_DOCUMENT_ITEM } from "../../data";
-
 // Components
 import { Editor } from "../../components";
+
+// Utils
+import { createNewDocument } from "../../utils";
 
 // Style
 import { EditorLayoutWrapper, EditorPanel } from "./editor-layout.styles";
@@ -20,8 +20,14 @@ export const EditorLayout = () => {
     useState(false);
   const [isPreviewEditorFullScreen, setIsPreviewEditorFullScreen] =
     useState(false);
-  const { documents, allDocuments, dispatch, setDocuments, document } =
-    useDocument();
+  const {
+    documents,
+    activeDocuments,
+    dispatch,
+    setDocuments,
+    document,
+    startUpdatingDocument,
+  } = useDocument();
   const navigate = useNavigate();
   const markdownEditorRef = useRef();
   const previewEditorRef = useRef();
@@ -54,14 +60,18 @@ export const EditorLayout = () => {
     if (!document) {
       let id, fileName;
 
-      if (documents.length) {
-        ({ id, fileName } = documents[0]);
+      if (activeDocuments.length) {
+        ({ id, fileName } = activeDocuments[0]);
       } else {
-        const newDocuments = allDocuments.slice();
-        newDocuments.push(DEFAULT_DOCUMENT_ITEM);
-        dispatch(setDocuments(newDocuments));
-        id = DEFAULT_DOCUMENT_ITEM.id;
-        fileName = DEFAULT_DOCUMENT_ITEM.fileName;
+        // Create New Document
+        const newDocument = createNewDocument();
+
+        // Update Documents
+        dispatch(setDocuments([...documents, newDocument]));
+        ({ id, fileName } = newDocument);
+
+        // Sync Created Document To Cloud
+        dispatch(startUpdatingDocument(newDocument));
       }
       navigate(`/${id}/${fileName}`, { replace: true });
     }

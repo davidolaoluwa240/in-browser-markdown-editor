@@ -21,7 +21,7 @@ import {
 import { catchAsync } from "../../utils";
 
 // Fetch Documents
-export const fetchDocuments = catchAsync(async () => {
+export const fetchDocuments = catchAsync(async (activeDocuments = false) => {
   // Get Auth User Uid
   const { uid } = auth.currentUser;
 
@@ -29,11 +29,13 @@ export const fetchDocuments = catchAsync(async () => {
   const userRef = doc(userCollectionRef, uid);
 
   // Create Document Query
-  const documentQuery = query(
-    documentCollectionRef,
-    where("user", "==", userRef),
-    where("isActive", "==", true)
-  );
+  const documentQuery = activeDocuments
+    ? query(
+        documentCollectionRef,
+        where("user", "==", userRef),
+        where("isActive", "==", true)
+      )
+    : query(documentCollectionRef, where("user", "==", userRef));
 
   // Get Documents
   const documentQuerySnapshot = await getDocs(documentQuery);
@@ -59,32 +61,28 @@ export const syncDocuments = catchAsync(async (documents) => {
 
     // Add Document To Batch
     documents.forEach((document) => {
-      const docRef =
-        document.id !== "default"
-          ? doc(documentCollectionRef, document.id)
-          : doc(documentCollectionRef);
+      // Create Document Doc Ref
+      const docRef = doc(documentCollectionRef, document.id);
 
-      // Get Cloud Document
+      // Get Single Cloud Document
       const cloudDocument = allDocuments.find((doc) => doc.id === document.id);
 
       // Determine If Current Document Should Sync
-      const shouldSync = cloudDocument
-        ? new Date(document.lastSavedLocal).getTime() >
+      if (!document.isActive) return;
+      if (
+        cloudDocument &&
+        new Date(document.lastSavedLocal).getTime() <
           new Date(cloudDocument.updatedAt).getTime()
-        : true;
-
-      // Delete Inactive Documents
-      !document.isActive && batch.update(docRef, { isActive: false });
+      )
+        return;
 
       // Create Documents
-      shouldSync &&
-        batch.set(docRef, {
-          ...document,
-          user: userRef,
-          id: null,
-          createdAt: Timestamp.fromDate(new Date(document.createdAt)),
-          updatedAt: Timestamp.fromDate(new Date(document.updatedAt)),
-        });
+      batch.set(docRef, {
+        ...document,
+        user: userRef,
+        createdAt: Timestamp.fromDate(new Date(document.createdAt)),
+        updatedAt: Timestamp.fromDate(new Date(document.updatedAt)),
+      });
     });
 
     // Commit Batch Transaction
@@ -110,10 +108,7 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
   const userRef = doc(userCollectionRef, uid);
 
   // Document Doc Ref
-  const documentDocRef =
-    documentId !== "default"
-      ? doc(documentCollectionRef, documentId)
-      : doc(documentCollectionRef);
+  const documentDocRef = doc(documentCollectionRef, documentId);
 
   // Perform Update
   await setDoc(
@@ -121,7 +116,6 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
     {
       ...updatedDocumentData,
       user: userRef,
-      id: null,
       createdAt: Timestamp.fromDate(new Date(updatedDocumentData.createdAt)),
       updatedAt: serverTimestamp(),
     },
@@ -136,6 +130,6 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
 });
 
 // Delete Document
-export const deleteDocument = catchAsync((documentId) => {
-  return updateDocument({ isActive: false, id: documentId });
+export const deleteDocument = catchAsync((deletedDocument) => {
+  return updateDocument({ ...deletedDocument, isActive: false });
 });

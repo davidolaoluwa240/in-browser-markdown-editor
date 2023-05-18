@@ -1,4 +1,4 @@
-// Modules
+// Hooks
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,31 +7,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { documentSA } from "../store";
 
 // Destructure Redux Imports
-const { selectDocuments, selectIsLoading, selectAllDocuments } = documentSA;
+const { selectDocuments, selectIsLoading, selectActiveDocuments } = documentSA;
 
 // Document Hook
 export const useDocument = () => {
   const dispatch = useDispatch();
   const { documentId } = useParams();
   const documents = useSelector(selectDocuments);
-  const allDocuments = useSelector(selectAllDocuments);
+  const activeDocuments = useSelector(selectActiveDocuments);
   const isLoading = useSelector(selectIsLoading);
-  const [document, setDocument] = useState(documents[0]);
+  const [document, setDocument] = useState(documents[0] || null);
 
   useEffect(() => {
     // Get Single Document Based On Param Document Id
     setDocument(
-      documents.find((document) => document.id === documentId) || null
+      activeDocuments.find((document) => document.id === documentId) || null
     );
-  }, [documents, documentId]);
+  }, [activeDocuments, documentId]);
 
   return {
     dispatch,
-    paramDocumentId: documentId,
+    activeDocumentId: documentId,
     documents,
     isLoading,
-    allDocuments,
     document,
+    activeDocuments,
     ...documentSA,
   };
 };

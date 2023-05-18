@@ -14,12 +14,12 @@ export const MarkdownEditor = () => {
   const markdownRef = useRef();
 
   useEffect(() => {
-    // Get Markdown Editor Mounted Document Id
-    const markdownEditorMountedDocumentId =
-      markdownRef.current.dataset.mountedDocumentId;
-
     // Get Markdown Ref Element
     const markdownRefElm = markdownRef.current;
+
+    // Get Markdown Editor Mounted Document Id
+    const markdownEditorMountedDocumentId =
+      markdownRefElm.dataset.mountedDocumentId;
 
     if (
       document?.content &&

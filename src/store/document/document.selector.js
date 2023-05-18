@@ -7,17 +7,17 @@ const documentReducer = (state) => state.document;
 // Select Documents
 export const selectDocuments = createSelector(
   [documentReducer],
-  (documentSlice) => documentSlice.documents.filter((doc) => doc.isActive)
+  (documentSlice) => documentSlice.documents
+);
+
+// Select Active Documents
+export const selectActiveDocuments = createSelector(
+  [selectDocuments],
+  (documents) => documents.filter((doc) => doc.isActive)
 );
 
 // Select IsLoading
 export const selectIsLoading = createSelector(
   [documentReducer],
   (documentSlice) => documentSlice.isLoading
-);
-
-// Select All Documents
-export const selectAllDocuments = createSelector(
-  [documentReducer],
-  (documentSlice) => documentSlice.documents
 );

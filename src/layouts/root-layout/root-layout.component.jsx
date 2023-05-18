@@ -2,7 +2,8 @@
 import React from "react";
 
 // Hooks
-import { useUi } from "../../hooks";
+import { useMemo } from "react";
+import { useUi, useDocument } from "../../hooks";
 
 // Components
 import { Outlet } from "react-router-dom";
@@ -16,6 +17,9 @@ import {
 // Hocs
 import { preventIfNotAuth } from "../../hocs/preventIfNotAuth.hocs";
 
+// Utils
+import { createNewDocument } from "../../utils";
+
 // Style
 import {
   RootLayoutWrapper,
@@ -27,7 +31,8 @@ import {
 
 const _RootLayout = () => {
   const { dispatch, setTheme, theme, isSideBarOpen } = useUi();
-  const mainContentStyle = { width: window.innerWidth };
+  const { documents, setDocuments, startUpdatingDocument } = useDocument();
+  const mainContentStyle = useMemo(() => ({ width: window.innerWidth }), []);
 
   /**
    * Update Page Theme
@@ -35,11 +40,25 @@ const _RootLayout = () => {
    */
   const handleUpdateTheme = (theme) => dispatch(setTheme(theme));
 
+  /**
+   * Handle Add New Document
+   */
+  const handleAddNewDocument = () => {
+    // Perform Creating New Documents
+    const newDocument = createNewDocument();
+    dispatch(setDocuments([...documents, newDocument]));
+
+    // Sync Created Document To Cloud
+    dispatch(startUpdatingDocument(newDocument));
+  };
+
   return (
     <RootLayoutWrapper showSideBar={isSideBarOpen}>
       <DocumentSideBar>
         <DocumentTitle>MY DOCUMENTS</DocumentTitle>
-        <Button widthFull>+ New Document</Button>
+        <Button widthFull onClick={handleAddNewDocument}>
+          + New Document
+        </Button>
 
         <DocumentFileBase />
 
