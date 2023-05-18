@@ -25,6 +25,13 @@ export const ButtonBase = styled.button`
     cursor: not-allowed;
   }
 
+  ${({ color }) => {
+    switch (color) {
+      case "secondary":
+        return "background: #f8e5ee";
+    }
+  }};
+
   ${({ widthFull }) => widthFull && "width: 100%"};
 `;
 

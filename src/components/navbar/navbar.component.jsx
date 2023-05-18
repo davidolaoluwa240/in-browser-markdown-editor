@@ -3,10 +3,12 @@ import React from "react";
 import { toast } from "react-toastify";
 
 // Hooks
+import { useState } from "react";
 import { useUi, useAuth, useDocument } from "../../hooks";
 
 // Components
-import { DocumentNameEditor, Button } from "../";
+import { Fragment } from "react";
+import { DocumentNameEditor, Button, DeleteDocumentModal } from "../";
 
 // Style
 import {
@@ -19,10 +21,12 @@ import {
   NavbarAction,
   NavbarDocumentDeleteIcon,
   SaveIcon,
+  DownloadIcon,
   LogoutIcon,
 } from "./navbar.styles";
 
 export const Navbar = () => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { dispatch, isSideBarOpen, setSideBarVisibility } = useUi();
   const { logoutUser } = useAuth();
   const {
@@ -54,6 +58,23 @@ export const Navbar = () => {
   };
 
   /**
+   * Handle Open Delete Document Modal
+   */
+  const handleOpenDeleteDocumentModal = () => setIsDeleteModalOpen(true);
+
+  /**
+   * Handle Close Delete Document Modal
+   */
+  const handleCloseDeleteDocumentModal = () => setIsDeleteModalOpen(false);
+
+  /**
+   * Handle Download Markdown File
+   */
+  const handleDownloadMarkdownFile = () => {
+    console.log(document);
+  };
+
+  /**
    * Handle Deleting Document
    */
   const onHandleDeleteDocument = () => {
@@ -72,27 +93,45 @@ export const Navbar = () => {
     } else {
       toast.error("Operation denied: default document cannot be deleted");
     }
+
+    // Close Delete Document Modal
+    handleCloseDeleteDocumentModal();
   };
 
   return (
-    <NavbarWrapper>
-      <NavbarBrand>
-        <NavbarMenu onClick={toggleMenuVisibility}>
-          <NavbarMenuIcon isMenuOpen={isSideBarOpen} />
-          <NavbarMenuCloseIcon isMenuOpen={isSideBarOpen} />
-        </NavbarMenu>
-        <NavbarBrandTitle>Markdown</NavbarBrandTitle>
-        <DocumentNameEditor />
-      </NavbarBrand>
+    <Fragment>
+      <DeleteDocumentModal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseDeleteDocumentModal}
+        onHandleDelete={onHandleDeleteDocument}
+      />
 
-      <NavbarAction>
-        <NavbarDocumentDeleteIcon onClick={onHandleDeleteDocument} />
-        <Button isLoading={isLoading} onClick={handleSaveFileChangesToCloud}>
-          <SaveIcon />
-          Save Changes
-        </Button>
-        <LogoutIcon title="logout" onClick={handleLogoutUser} />
-      </NavbarAction>
-    </NavbarWrapper>
+      <NavbarWrapper>
+        <NavbarBrand>
+          <NavbarMenu onClick={toggleMenuVisibility}>
+            <NavbarMenuIcon isMenuOpen={isSideBarOpen} />
+            <NavbarMenuCloseIcon isMenuOpen={isSideBarOpen} />
+          </NavbarMenu>
+          <NavbarBrandTitle>Markdown</NavbarBrandTitle>
+          <DocumentNameEditor />
+        </NavbarBrand>
+
+        <NavbarAction>
+          <NavbarDocumentDeleteIcon onClick={handleOpenDeleteDocumentModal} />
+
+          <Button onClick={handleDownloadMarkdownFile}>
+            <DownloadIcon />
+            Download
+          </Button>
+
+          <Button isLoading={isLoading} onClick={handleSaveFileChangesToCloud}>
+            <SaveIcon />
+            Save Changes
+          </Button>
+
+          <LogoutIcon title="logout" onClick={handleLogoutUser} />
+        </NavbarAction>
+      </NavbarWrapper>
+    </Fragment>
   );
 };
