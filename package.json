@@ -10,6 +10,7 @@
     "firebase": "^9.21.0",
     "github-markdown-css": "^5.2.0",
     "is-online": "^10.0.0",
+    "js-file-download": "^0.4.12",
     "marked": "^5.0.2",
     "marked-gfm-heading-id": "^3.0.3",
     "marked-mangle": "^1.0.1",
