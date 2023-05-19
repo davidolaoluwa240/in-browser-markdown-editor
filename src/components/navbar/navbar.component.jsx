@@ -10,6 +10,9 @@ import { useUi, useAuth, useDocument } from "../../hooks";
 import { Fragment } from "react";
 import { DocumentNameEditor, Button, DeleteDocumentModal } from "../";
 
+// Utils
+import { downloadMarkdownFile } from "../../utils";
+
 // Style
 import {
   NavbarWrapper,
@@ -70,9 +73,7 @@ export const Navbar = () => {
   /**
    * Handle Download Markdown File
    */
-  const handleDownloadMarkdownFile = () => {
-    console.log(document);
-  };
+  const handleDownloadMarkdownFile = () => downloadMarkdownFile(document);
 
   /**
    * Handle Deleting Document
