@@ -5,6 +5,7 @@ import { DOCUMENT_ACTION_TYPES } from "./document.type";
 const INITIAL_STATE = {
   documents: [],
   isLoading: false,
+  loadingType: "",
 };
 
 // Document Reducer
@@ -13,9 +14,16 @@ export const documentReducer = (state = INITIAL_STATE, action = {}) => {
 
   switch (type) {
     case DOCUMENT_ACTION_TYPES.SET_DOCUMENTS:
-      return { ...state, documents: payload, isLoading: false };
+      return {
+        ...state,
+        documents: payload,
+        isLoading: false,
+        loadingType: "",
+      };
     case DOCUMENT_ACTION_TYPES.SET_IS_LOADING:
       return { ...state, isLoading: payload };
+    case DOCUMENT_ACTION_TYPES.SET_LOADING_TYPE:
+      return { ...state, loadingType: payload };
     default:
       return type.includes("document/START")
         ? { ...state, isLoading: true }

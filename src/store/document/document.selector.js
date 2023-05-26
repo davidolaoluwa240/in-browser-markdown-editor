@@ -2,11 +2,11 @@
 import { createSelector } from "reselect";
 
 // Select Document Reducer
-const documentReducer = (state) => state.document;
+const selectDocumentReducer = (state) => state.document;
 
 // Select Documents
 export const selectDocuments = createSelector(
-  [documentReducer],
+  [selectDocumentReducer],
   (documentSlice) => documentSlice.documents
 );
 
@@ -18,6 +18,12 @@ export const selectActiveDocuments = createSelector(
 
 // Select IsLoading
 export const selectIsLoading = createSelector(
-  [documentReducer],
+  [selectDocumentReducer],
   (documentSlice) => documentSlice.isLoading
+);
+
+// Select LoadingType
+export const selectLoadingType = createSelector(
+  [selectDocumentReducer],
+  (documentSlice) => documentSlice.LoadingType
 );

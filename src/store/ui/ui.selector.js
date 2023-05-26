@@ -21,3 +21,15 @@ export const selectIsLoading = createSelector(
   [selectUiReducer],
   (uiSlice) => uiSlice.isLoading
 );
+
+// Select ScrollWith State
+export const selectScrollWith = createSelector(
+  [selectUiReducer],
+  (uiSlice) => uiSlice.scrollWith
+);
+
+// Select EditorFullScreen State
+export const selectEditorFullScreen = createSelector(
+  [selectUiReducer],
+  (uiSlice) => uiSlice.editorFullScreen
+);

@@ -24,3 +24,17 @@ export const setTheme = (theme) =>
  */
 export const setIsLoading = (bool) =>
   createAction(UI_ACTION_TYPES.SET_IS_LOADING, bool);
+
+/**
+ * Set Editor Full Screen Mode
+ * @param {Object} fullScreen
+ */
+export const setEditorFullScreen = (fullScreen) =>
+  createAction(UI_ACTION_TYPES.SET_EDITOR_FULLSCREEN, fullScreen);
+
+/**
+ * Set Editor Scroll With
+ * @param {string} editorName
+ */
+export const setScrollWith = (editorName) =>
+  createAction(UI_ACTION_TYPES.SET_SCROLL_WITH, editorName);

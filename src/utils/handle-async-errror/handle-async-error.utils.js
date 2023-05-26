@@ -33,7 +33,4 @@ export const handleAsyncError = async (error) => {
   const errorCode = error.code || "unknown";
   const errorMessage = ASYNC_ERROR_MAP[errorCode];
   toast.error(errorMessage);
-
-  // 4). After Handling Error, Also Make Error Available In Components
-  throw error;
 };

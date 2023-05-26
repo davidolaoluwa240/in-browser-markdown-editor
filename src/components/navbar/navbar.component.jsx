@@ -81,15 +81,6 @@ export const Navbar = () => {
   const onHandleDeleteDocument = () => {
     if (documents.length > 1) {
       // Perform Deletion
-      dispatch(
-        setDocuments(
-          documents.map((doc) =>
-            doc.id === document.id ? { ...doc, isActive: false } : doc
-          )
-        )
-      );
-
-      // Save Changes To Cloud
       dispatch(startDeletingDocument(document));
     } else {
       toast.error("Operation denied: default document cannot be deleted");

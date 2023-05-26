@@ -5,7 +5,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { uiSA } from "../store";
 
 // Destructure Redux Imports
-const { selectIsSideBarOpen, selectTheme, selectIsLoading } = uiSA;
+const {
+  selectIsSideBarOpen,
+  selectTheme,
+  selectIsLoading,
+  selectScrollWith,
+  selectEditorFullScreen,
+} = uiSA;
 
 // Ui Hook
 export const useUi = () => {
@@ -13,12 +19,16 @@ export const useUi = () => {
   const isSideBarOpen = useSelector(selectIsSideBarOpen);
   const theme = useSelector(selectTheme);
   const isLoading = useSelector(selectIsLoading);
+  const scrollWith = useSelector(selectScrollWith);
+  const editorFullScreen = useSelector(selectEditorFullScreen);
 
   return {
     dispatch,
     isSideBarOpen,
     theme,
     isLoading,
+    scrollWith,
+    editorFullScreen,
     ...uiSA,
   };
 };

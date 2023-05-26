@@ -21,24 +21,14 @@ export const MarkdownEditor = () => {
     const markdownEditorMountedDocumentId =
       markdownRefElm.dataset.mountedDocumentId;
 
-    if (
-      document?.content &&
-      document.id !== markdownEditorMountedDocumentId &&
-      markdownRefElm
-    ) {
+    if (document.id !== markdownEditorMountedDocumentId && markdownRefElm) {
       // Update Markdown Editor InnerText
-      markdownRefElm.innerText = DOMPurify.sanitize(document.content.trim());
+      markdownRefElm.innerText = DOMPurify.sanitize(
+        document?.content?.trim() || ""
+      );
 
       // Set Markdown Editor Mounted Document Id Attribute
       markdownRefElm.setAttribute("data-mounted-document-id", document.id);
-    }
-
-    if (!document?.content && markdownRefElm) {
-      // Reset Markdown Editor InnerText
-      markdownRefElm.innerText = "";
-
-      // Remove Markdown Editor Mounted Document Id Attribute
-      markdownRefElm.removeAttribute("data-mounted-document-id");
     }
   }, [document]);
 
@@ -54,7 +44,6 @@ export const MarkdownEditor = () => {
             ? {
                 ...doc,
                 content: event.target.innerText,
-                lastSavedLocal: Date.now(),
               }
             : doc
         )

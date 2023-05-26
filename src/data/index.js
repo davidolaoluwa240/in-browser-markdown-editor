@@ -1,6 +1,5 @@
 // Default Document Item
 export const DEFAULT_DOCUMENT_ITEM = {
-  id: "default",
   fileName: "welcome",
   content: `
   # Welcome to Markdown
@@ -38,7 +37,4 @@ export const DEFAULT_DOCUMENT_ITEM = {
   </main>
   \`\`\`
   `,
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  isActive: true,
 };

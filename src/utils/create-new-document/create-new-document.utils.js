@@ -8,6 +8,7 @@ export const createNewDocument = () => {
   // Create Document Data
   const newDocument = {
     ...DEFAULT_DOCUMENT_ITEM,
+    fileName: "untitled-document",
   };
 
   // Return Created Document

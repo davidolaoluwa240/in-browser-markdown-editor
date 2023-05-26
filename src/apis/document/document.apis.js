@@ -3,25 +3,53 @@ import {
   getDocs,
   query,
   where,
-  setDoc,
   doc,
-  writeBatch,
   serverTimestamp,
-  Timestamp,
+  updateDoc,
+  addDoc,
 } from "firebase/firestore";
 import {
   documentCollectionRef,
   auth,
   userCollectionRef,
   firebaseLooper,
-  db,
 } from "../../utils";
 
 // Utils
 import { catchAsync } from "../../utils";
 
-// Fetch Documents
-export const fetchDocuments = catchAsync(async (activeDocuments = false) => {
+/**
+ * Add New Document
+ * @param {Object} newDocument
+ */
+export const addDocument = catchAsync(async (newDocument) => {
+  // Get Auth User Uid
+  const { uid } = auth.currentUser;
+
+  // User Doc Ref
+  const userRef = doc(userCollectionRef, uid);
+
+  // Perform Adding Document
+  await addDoc(documentCollectionRef, {
+    ...newDocument,
+    isActive: true,
+    user: userRef,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
+
+  // Get Documents
+  const allDocuments = await fetchDocuments();
+
+  // Return Documents
+  return allDocuments;
+});
+
+/**
+ * Fetch Documents
+ * @param {boolean} activeDocuments Determine whether To Fetch Active Documents
+ */
+export const fetchDocuments = catchAsync(async (activeDocuments = true) => {
   // Get Auth User Uid
   const { uid } = auth.currentUser;
 
@@ -29,13 +57,11 @@ export const fetchDocuments = catchAsync(async (activeDocuments = false) => {
   const userRef = doc(userCollectionRef, uid);
 
   // Create Document Query
-  const documentQuery = activeDocuments
-    ? query(
-        documentCollectionRef,
-        where("user", "==", userRef),
-        where("isActive", "==", true)
-      )
-    : query(documentCollectionRef, where("user", "==", userRef));
+  const documentQuery = query(
+    documentCollectionRef,
+    where("user", "==", userRef),
+    where("isActive", "==", activeDocuments)
+  );
 
   // Get Documents
   const documentQuerySnapshot = await getDocs(documentQuery);
@@ -44,83 +70,22 @@ export const fetchDocuments = catchAsync(async (activeDocuments = false) => {
   return firebaseLooper(documentQuerySnapshot);
 });
 
-// Sync Documents
-export const syncDocuments = catchAsync(async (documents) => {
-  if (documents.length) {
-    // Fetch Documents
-    const allDocuments = await fetchDocuments();
-
-    // Create New Batch Transaction
-    const batch = writeBatch(db);
-
-    // Get Auth User Uid
-    const { uid } = auth.currentUser;
-
-    // User Doc Ref
-    const userRef = doc(userCollectionRef, uid);
-
-    // Add Document To Batch
-    documents.forEach((document) => {
-      // Create Document Doc Ref
-      const docRef = doc(documentCollectionRef, document.id);
-
-      // Get Single Cloud Document
-      const cloudDocument = allDocuments.find((doc) => doc.id === document.id);
-
-      // Determine If Current Document Should Sync
-      if (!document.isActive) return;
-      if (
-        cloudDocument &&
-        new Date(document.lastSavedLocal).getTime() <
-          new Date(cloudDocument.updatedAt).getTime()
-      )
-        return;
-
-      // Create Documents
-      batch.set(docRef, {
-        ...document,
-        user: userRef,
-        createdAt: Timestamp.fromDate(new Date(document.createdAt)),
-        updatedAt: Timestamp.fromDate(new Date(document.updatedAt)),
-      });
-    });
-
-    // Commit Batch Transaction
-    await batch.commit();
-  }
-
-  // Get Documents
-  const allDocuments = await fetchDocuments();
-
-  // Return Documents
-  return allDocuments;
-});
-
-// Update Document
+/**
+ * Update Document
+ * @param {Object} updatedDocumentData
+ */
 export const updateDocument = catchAsync(async (updatedDocumentData) => {
   // Get Document Id
-  const documentId = updatedDocumentData.id;
-
-  // Get Auth User
-  const { uid } = auth.currentUser;
-
-  // User Doc Ref
-  const userRef = doc(userCollectionRef, uid);
+  const { id } = updatedDocumentData;
 
   // Document Doc Ref
-  const documentDocRef = doc(documentCollectionRef, documentId);
+  const documentDocRef = doc(documentCollectionRef, id);
 
   // Perform Update
-  await setDoc(
-    documentDocRef,
-    {
-      ...updatedDocumentData,
-      user: userRef,
-      createdAt: Timestamp.fromDate(new Date(updatedDocumentData.createdAt)),
-      updatedAt: serverTimestamp(),
-    },
-    { merge: true }
-  );
+  await updateDoc(documentDocRef, {
+    ...updatedDocumentData,
+    updatedAt: serverTimestamp(),
+  });
 
   // Get Documents
   const allDocuments = await fetchDocuments();
@@ -129,7 +94,10 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
   return allDocuments;
 });
 
-// Delete Document
+/**
+ * Delete Document
+ * @param {Object} deletedDocument
+ */
 export const deleteDocument = catchAsync((deletedDocument) => {
   return updateDocument({ ...deletedDocument, isActive: false });
 });

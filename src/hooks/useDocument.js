@@ -7,31 +7,30 @@ import { useDispatch, useSelector } from "react-redux";
 import { documentSA } from "../store";
 
 // Destructure Redux Imports
-const { selectDocuments, selectIsLoading, selectActiveDocuments } = documentSA;
+const { selectLoadingType, selectIsLoading, selectActiveDocuments } =
+  documentSA;
 
 // Document Hook
 export const useDocument = () => {
   const dispatch = useDispatch();
   const { documentId } = useParams();
-  const documents = useSelector(selectDocuments);
-  const activeDocuments = useSelector(selectActiveDocuments);
+  const documents = useSelector(selectActiveDocuments);
   const isLoading = useSelector(selectIsLoading);
-  const [document, setDocument] = useState(documents[0] || null);
+  const loadingType = useSelector(selectLoadingType);
+  const [document, setDocument] = useState(documents[0]);
 
   useEffect(() => {
     // Get Single Document Based On Param Document Id
-    setDocument(
-      activeDocuments.find((document) => document.id === documentId) || null
-    );
-  }, [activeDocuments, documentId]);
+    setDocument(documents.find((document) => document.id === documentId));
+  }, [documents, documentId]);
 
   return {
     dispatch,
-    activeDocumentId: documentId,
+    documentId,
     documents,
-    isLoading,
     document,
-    activeDocuments,
+    isLoading,
+    loadingType,
     ...documentSA,
   };
 };

@@ -24,7 +24,45 @@ import {
 } from "./settings-modal.styles";
 
 export const SettingsModal = ({ isOpen, onClose }) => {
-  const { theme, setTheme } = useUi();
+  const {
+    dispatch,
+    theme,
+    setTheme,
+    editorFullScreen,
+    setEditorFullScreen,
+    scrollWith,
+    setScrollWith,
+  } = useUi();
+  const scrollWithValue = scrollWith === "markdown" ? "off" : "on";
+
+  /**
+   * Handle Update ScrollWith
+   * @param {string} value
+   */
+  const handleUpdateScrollWith = (value) =>
+    dispatch(setScrollWith(value === "off" ? "markdown" : "preview"));
+
+  /**
+   * Handle Update Editor FullScreen
+   * @param {string} value
+   */
+  const handleUpdateEditorFullScreen = (editorType, value) => {
+    const otherEditorType = editorType === "markdown" ? "preview" : "markdown";
+    const otherEditorValue =
+      value === "on" ? "off" : editorFullScreen[otherEditorType];
+    dispatch(
+      setEditorFullScreen({
+        [editorType]: value,
+        [otherEditorType]: otherEditorValue,
+      })
+    );
+  };
+
+  /**
+   * Update Page Theme
+   * @param {string} theme Theme
+   */
+  const handleUpdateTheme = (theme) => dispatch(setTheme(theme));
 
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose} style={settingModalStyles}>
@@ -39,7 +77,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
           based on your preference. Choose the mode that best suits your style
           and enhances your editing experience.
         </SettingSubDescription>
-        <ThemeToggle theme={theme} setTheme={setTheme} />
+        <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
       </SettingGroup>
 
       {/* Scroll Behaviour */}
@@ -54,7 +92,8 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         <InputToggle
           onContent={<SettingToggleText>Preview</SettingToggleText>}
           offContent={<SettingToggleText>Markdown</SettingToggleText>}
-          value={"off"}
+          value={scrollWithValue}
+          onChange={handleUpdateScrollWith}
         />
       </SettingGroup>
 
@@ -75,7 +114,8 @@ export const SettingsModal = ({ isOpen, onClose }) => {
             <InputToggle
               onContent={<SettingToggleText>On</SettingToggleText>}
               offContent={<SettingToggleText>Off</SettingToggleText>}
-              value={"off"}
+              value={editorFullScreen.markdown}
+              onChange={handleUpdateEditorFullScreen.bind(null, "markdown")}
             />
           </SettingToggleGroup>
 
@@ -84,7 +124,8 @@ export const SettingsModal = ({ isOpen, onClose }) => {
             <InputToggle
               onContent={<SettingToggleText>On</SettingToggleText>}
               offContent={<SettingToggleText>Off</SettingToggleText>}
-              value={"off"}
+              value={editorFullScreen.preview}
+              onChange={handleUpdateEditorFullScreen.bind(null, "preview")}
             />
           </SettingToggleGroup>
         </SettingToggleWrapper>

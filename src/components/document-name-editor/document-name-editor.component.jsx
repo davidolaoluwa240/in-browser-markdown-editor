@@ -28,26 +28,17 @@ export const DocumentNameEditor = () => {
     const documentControlRefElm = documentControlRef.current;
 
     if (
-      document?.fileName &&
       document.id !== documentNameMountedDocumentId &&
       documentControlRefElm
     ) {
       // Update Document Name Editor Input InnerText
-      documentControlRefElm.innerText = document.fileName;
+      documentControlRefElm.innerText = document?.fileName || "";
 
       // Set Document Name Editor Mounted Document Id Attribute
       documentControlRefElm.setAttribute(
         "data-mounted-document-id",
         document.id
       );
-    }
-
-    if (!document?.content && documentControlRefElm) {
-      // Reset Document Name Editor InnerText
-      documentControlRefElm.innerText = "";
-
-      // Remove Document Name Editor Mounted Document Id Attribute
-      documentControlRefElm.removeAttribute("data-mounted-document-id");
     }
   }, [document]);
 
