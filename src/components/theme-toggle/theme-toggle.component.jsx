@@ -1,33 +1,29 @@
 // Modules
 import React from "react";
 
+// Components
+import { InputToggle } from "../";
+
 // Style
-import {
-  ThemeToggleWrapper,
-  ThemeDarkIcon,
-  ThemeLightIcon,
-  ThemeTrack,
-  ThemeThumb,
-} from "./theme-toggle.styles";
+import { ThemeDarkIcon, ThemeLightIcon } from "./theme-toggle.styles";
 
 export const ThemeToggle = ({ theme, setTheme }) => {
-  const isLightTheme = theme === "light";
-  const isDarkTheme = theme === "dark";
+  const value = theme === "dark" ? "off" : "on";
 
   /**
    * Handle Toggle Theme
+   * @param {string} value
    */
-  const onHandleToggleTheme = () =>
-    setTheme(theme === "dark" ? "light" : "dark");
+  const onHandleToggleTheme = (value) =>
+    setTheme(value === "off" ? "dark" : "light");
 
   return (
-    <ThemeToggleWrapper>
-      <ThemeDarkIcon isActive={isDarkTheme} />
-      <ThemeTrack isLight={isLightTheme} onClick={onHandleToggleTheme}>
-        <ThemeThumb />
-      </ThemeTrack>
-      <ThemeLightIcon isActive={isLightTheme} />
-    </ThemeToggleWrapper>
+    <InputToggle
+      onContent={<ThemeLightIcon />}
+      offContent={<ThemeDarkIcon />}
+      value={value}
+      onChange={onHandleToggleTheme}
+    />
   );
 };
 

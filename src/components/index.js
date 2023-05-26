@@ -13,3 +13,5 @@ export * from "./editor/preview-editor/preview-editor.component";
 export * from "./toast-container/toast-container.component";
 export * from "./page-loader/page-loader.component";
 export * from "./modals/delete-document-modal/delete-document-modal.component";
+export * from "./modals/settings-modal/settings-modal.component";
+export * from "./input-toggle/input-toggle.component";

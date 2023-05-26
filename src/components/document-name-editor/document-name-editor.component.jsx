@@ -63,7 +63,6 @@ export const DocumentNameEditor = () => {
             ? {
                 ...doc,
                 fileName: event.target.innerText,
-                lastSavedLocal: Date.now(),
               }
             : doc
         )

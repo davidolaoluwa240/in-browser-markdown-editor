@@ -2,16 +2,18 @@
 import React from "react";
 
 // Hooks
-import { useMemo } from "react";
+import { useState } from "react";
 import { useUi, useDocument } from "../../hooks";
 
 // Components
+import { Fragment } from "react";
 import { Outlet } from "react-router-dom";
 import {
   Button,
-  ThemeToggle,
   DocumentFileBase,
   Navbar,
+  ThemeToggle,
+  SettingsModal,
 } from "../../components";
 
 // Hocs
@@ -27,18 +29,30 @@ import {
   DocumentTitle,
   DocumentFooter,
   MainContent,
+  SettingsIcon,
 } from "./root-layout.styles";
 
 const _RootLayout = () => {
-  const { dispatch, setTheme, theme, isSideBarOpen } = useUi();
+  const [isSettingsModal, setIsSettingsModalOpen] = useState(false);
+  const { dispatch, theme, setTheme, isSideBarOpen } = useUi();
   const { documents, setDocuments, startUpdatingDocument } = useDocument();
-  const mainContentStyle = useMemo(() => ({ width: window.innerWidth }), []);
+  const mainContentStyle = { width: window.innerWidth };
 
   /**
    * Update Page Theme
    * @param {string} theme Theme
    */
   const handleUpdateTheme = (theme) => dispatch(setTheme(theme));
+
+  /**
+   * Open Settings Modal
+   */
+  const handleOpenSettingsModal = () => setIsSettingsModalOpen(true);
+
+  /**
+   * Close Settings Modal
+   */
+  const handleCloseSettingsModal = () => setIsSettingsModalOpen(false);
 
   /**
    * Handle Add New Document
@@ -53,25 +67,33 @@ const _RootLayout = () => {
   };
 
   return (
-    <RootLayoutWrapper showSideBar={isSideBarOpen}>
-      <DocumentSideBar>
-        <DocumentTitle>MY DOCUMENTS</DocumentTitle>
-        <Button widthFull onClick={handleAddNewDocument}>
-          + New Document
-        </Button>
+    <Fragment>
+      <SettingsModal
+        isOpen={isSettingsModal}
+        onClose={handleCloseSettingsModal}
+      />
 
-        <DocumentFileBase />
+      <RootLayoutWrapper showSideBar={isSideBarOpen}>
+        <DocumentSideBar>
+          <DocumentTitle>MY DOCUMENTS</DocumentTitle>
+          <Button widthFull onClick={handleAddNewDocument}>
+            + New Document
+          </Button>
 
-        <DocumentFooter>
-          <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
-        </DocumentFooter>
-      </DocumentSideBar>
+          <DocumentFileBase />
 
-      <MainContent style={mainContentStyle}>
-        <Navbar />
-        <Outlet />
-      </MainContent>
-    </RootLayoutWrapper>
+          <DocumentFooter>
+            <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
+            <SettingsIcon onClick={handleOpenSettingsModal} />
+          </DocumentFooter>
+        </DocumentSideBar>
+
+        <MainContent style={mainContentStyle}>
+          <Navbar />
+          <Outlet />
+        </MainContent>
+      </RootLayoutWrapper>
+    </Fragment>
   );
 };
 

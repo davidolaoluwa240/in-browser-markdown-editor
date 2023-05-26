@@ -34,11 +34,11 @@ export const Navbar = () => {
   const { logoutUser } = useAuth();
   const {
     document,
-    startUpdatingDocument,
     isLoading,
     setDocuments,
     documents,
-    activeDocuments,
+    loadingType,
+    startUpdatingDocument,
     startDeletingDocument,
   } = useDocument();
 
@@ -79,7 +79,7 @@ export const Navbar = () => {
    * Handle Deleting Document
    */
   const onHandleDeleteDocument = () => {
-    if (activeDocuments.length > 1) {
+    if (documents.length > 1) {
       // Perform Deletion
       dispatch(
         setDocuments(
@@ -102,6 +102,10 @@ export const Navbar = () => {
   return (
     <Fragment>
       <DeleteDocumentModal
+        headingText={"Delete this document?"}
+        descriptionText={`Are you sure you want to delete ‘${document?.fileName}.md’ document and its contents? This action cannot be reversed.`}
+        isLoading={isLoading}
+        loadingType={loadingType}
         isOpen={isDeleteModalOpen}
         onClose={handleCloseDeleteDocumentModal}
         onHandleDelete={onHandleDeleteDocument}
@@ -125,7 +129,10 @@ export const Navbar = () => {
             Download
           </Button>
 
-          <Button isLoading={isLoading} onClick={handleSaveFileChangesToCloud}>
+          <Button
+            isLoading={isLoading && loadingType === "saving"}
+            onClick={handleSaveFileChangesToCloud}
+          >
             <SaveIcon />
             Save Changes
           </Button>

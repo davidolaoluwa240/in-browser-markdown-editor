@@ -1,6 +1,9 @@
 // Modules
 import styled from "styled-components";
 
+// Components
+import { AiOutlineSetting } from "react-icons/ai";
+
 export const RootLayoutWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
@@ -31,8 +34,29 @@ export const DocumentTitle = styled.h6`
 
 export const DocumentFooter = styled.div`
   margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const MainContent = styled.div`
   flex-shrink: 0;
+`;
+
+export const SettingsIcon = styled(AiOutlineSetting)`
+  @keyframes infiniteRotation {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  vertical-align: middle;
+  cursor: pointer;
+  color: #f8f9fa;
+  font-size: 2.4rem;
+  animation: infiniteRotation 1.4s linear infinite;
 `;
