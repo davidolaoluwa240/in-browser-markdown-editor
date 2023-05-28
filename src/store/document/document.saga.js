@@ -5,32 +5,62 @@ import { put, call, all, takeLatest } from "redux-saga/effects";
 import { DOCUMENT_ACTION_TYPES } from "./document.type";
 
 // Actions
-import { setDocuments } from "./document.action";
-import { setIsLoading as uiIsLoading } from "../ui";
+import { setDocuments, setLoadingType, setError } from "./document.action";
 
 // Apis
 import * as Apis from "../../apis";
 
+export function* addDefaultDocument() {
+  try {
+    const documents = yield call(Apis.addDefaultDocument);
+    yield put(setDocuments(documents));
+  } catch (err) {
+    yield put(setError(err));
+  }
+}
+
 export function* fetchDocuments() {
-  const documents = yield call(Apis.fetchDocuments);
-  yield put(setDocuments(documents));
+  try {
+    yield put(setLoadingType("fetching"));
+    const documents = yield call(Apis.fetchDocuments);
+    if (documents.length) {
+      yield put(setDocuments(documents));
+    } else {
+      yield call(addDefaultDocument);
+    }
+  } catch (err) {
+    yield put(setError(err));
+  }
+}
+
+export function* addDocument({ payload: newDocument }) {
+  try {
+    yield put(setLoadingType("adding"));
+    const documents = yield call(Apis.addDocument, newDocument);
+    yield put(setDocuments(documents));
+  } catch (err) {
+    yield put(setError(err));
+  }
 }
 
 export function* updateDocument({ payload: updatedDocumentData }) {
-  const documents = yield call(Apis.updateDocument, updatedDocumentData);
-  yield put(setDocuments(documents));
-}
-
-export function* syncDocuments({ payload: documents }) {
-  yield put(uiIsLoading(true));
-  const allDocuments = yield call(Apis.syncDocuments, documents);
-  yield put(setDocuments(allDocuments));
-  yield put(uiIsLoading(false));
+  try {
+    yield put(setLoadingType("updating"));
+    const documents = yield call(Apis.updateDocument, updatedDocumentData);
+    yield put(setDocuments(documents));
+  } catch (err) {
+    yield put(setError(err));
+  }
 }
 
 export function* deleteDocument({ payload: documentId }) {
-  const documents = yield call(Apis.deleteDocument, documentId);
-  yield put(setDocuments(documents));
+  try {
+    yield put(setLoadingType("deleting"));
+    const documents = yield call(Apis.deleteDocument, documentId);
+    yield put(setDocuments(documents));
+  } catch (err) {
+    yield put(setError(err));
+  }
 }
 
 export function* onFetchDocuments() {
@@ -40,21 +70,18 @@ export function* onFetchDocuments() {
   );
 }
 
-export function* onSyncDocuments() {
-  yield takeLatest(
-    DOCUMENT_ACTION_TYPES.START_SYNCING_DOCUMENTS,
-    syncDocuments
-  );
+export function* onAddDocument() {
+  yield takeLatest(DOCUMENT_ACTION_TYPES.START_ADDING_DOCUMENT, addDocument);
 }
 
-export function* onUpdateDocuments() {
+export function* onUpdateDocument() {
   yield takeLatest(
     DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT,
     updateDocument
   );
 }
 
-export function* onDeleteDocuments() {
+export function* onDeleteDocument() {
   yield takeLatest(
     DOCUMENT_ACTION_TYPES.START_DELETING_DOCUMENT,
     deleteDocument
@@ -63,9 +90,9 @@ export function* onDeleteDocuments() {
 
 export function* documentSaga() {
   yield all([
-    call(onDeleteDocuments),
+    call(onDeleteDocument),
     call(onFetchDocuments),
-    call(onUpdateDocuments),
-    call(onSyncDocuments),
+    call(onUpdateDocument),
+    call(onAddDocument),
   ]);
 }

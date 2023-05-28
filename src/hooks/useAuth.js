@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { authSA } from "../store";
 
 // Descructure Redux Imports
-const { selectCurrentUser, selectCheckedAuth, selectIsLoading } = authSA;
+const { selectCurrentUser, selectCheckedAuth, selectIsLoading, selectError } =
+  authSA;
 
 // Auth Hook
 export const useAuth = () => {
@@ -13,12 +14,14 @@ export const useAuth = () => {
   const isLoading = useSelector(selectIsLoading);
   const currentUser = useSelector(selectCurrentUser);
   const checkedAuth = useSelector(selectCheckedAuth);
+  const error = useSelector(selectError);
 
   return {
     dispatch,
     isLoading,
     currentUser,
     checkedAuth,
+    error,
     ...authSA,
   };
 };

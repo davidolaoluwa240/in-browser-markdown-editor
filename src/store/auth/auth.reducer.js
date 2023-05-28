@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   currentUser: null,
   checkedAuth: false,
   isLoading: false,
+  error: null,
 };
 
 // Auth Reducer
@@ -17,11 +18,14 @@ export const authReducer = (state = INITIAL_STATE, action = {}) => {
       return { ...state, isLoading: payload };
     case AUTH_ACTION_TYPES.SET_CHECKED_AUTH:
       return { ...state, checkedAuth: payload };
+    case AUTH_ACTION_TYPES.SET_ERROR:
+      return { ...state, error: payload };
     case AUTH_ACTION_TYPES.SET_CURRENT_USER:
       return {
         ...state,
         currentUser: payload,
         isLoading: false,
+        checkedAuth: true,
       };
     default:
       return type.includes("auth/START")

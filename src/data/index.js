@@ -38,3 +38,13 @@ export const DEFAULT_DOCUMENT_ITEM = {
   \`\`\`
   `,
 };
+
+// Default Ui Settings Item
+export const DEFAULT_UI_SETTINGS_ITEM = {
+  theme: "dark",
+  scrollWith: "markdown",
+  editorFullScreen: {
+    markdown: "off",
+    preview: "off",
+  },
+};

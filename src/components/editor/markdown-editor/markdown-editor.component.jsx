@@ -21,11 +21,13 @@ export const MarkdownEditor = () => {
     const markdownEditorMountedDocumentId =
       markdownRefElm.dataset.mountedDocumentId;
 
-    if (document.id !== markdownEditorMountedDocumentId && markdownRefElm) {
+    if (
+      document &&
+      document.id !== markdownEditorMountedDocumentId &&
+      markdownRefElm
+    ) {
       // Update Markdown Editor InnerText
-      markdownRefElm.innerText = DOMPurify.sanitize(
-        document?.content?.trim() || ""
-      );
+      markdownRefElm.innerText = DOMPurify.sanitize(document.content.trim());
 
       // Set Markdown Editor Mounted Document Id Attribute
       markdownRefElm.setAttribute("data-mounted-document-id", document.id);

@@ -4,7 +4,7 @@ import { createSelector } from "reselect";
 // Select Document Reducer
 const selectDocumentReducer = (state) => state.document;
 
-// Select Documents
+// Select Documents State
 export const selectDocuments = createSelector(
   [selectDocumentReducer],
   (documentSlice) => documentSlice.documents
@@ -16,14 +16,20 @@ export const selectActiveDocuments = createSelector(
   (documents) => documents.filter((doc) => doc.isActive)
 );
 
-// Select IsLoading
+// Select IsLoading State
 export const selectIsLoading = createSelector(
   [selectDocumentReducer],
   (documentSlice) => documentSlice.isLoading
 );
 
-// Select LoadingType
+// Select LoadingType State
 export const selectLoadingType = createSelector(
   [selectDocumentReducer],
   (documentSlice) => documentSlice.LoadingType
+);
+
+// Select Error State
+export const selectError = createSelector(
+  [selectDocumentReducer],
+  (documentSlice) => documentSlice.error
 );

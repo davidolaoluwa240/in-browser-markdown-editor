@@ -22,6 +22,12 @@ export const selectIsLoading = createSelector(
   (uiSlice) => uiSlice.isLoading
 );
 
+// Select LoadingType State
+export const selectLoadingType = createSelector(
+  [selectUiReducer],
+  (uiSlice) => uiSlice.loadingType
+);
+
 // Select ScrollWith State
 export const selectScrollWith = createSelector(
   [selectUiReducer],
@@ -32,4 +38,10 @@ export const selectScrollWith = createSelector(
 export const selectEditorFullScreen = createSelector(
   [selectUiReducer],
   (uiSlice) => uiSlice.editorFullScreen
+);
+
+// Select Error State
+export const selectError = createSelector(
+  [selectUiReducer],
+  (uiSlice) => uiSlice.error
 );

@@ -28,11 +28,12 @@ export const DocumentNameEditor = () => {
     const documentControlRefElm = documentControlRef.current;
 
     if (
+      document &&
       document.id !== documentNameMountedDocumentId &&
       documentControlRefElm
     ) {
       // Update Document Name Editor Input InnerText
-      documentControlRefElm.innerText = document?.fileName || "";
+      documentControlRefElm.innerText = document.fileName;
 
       // Set Document Name Editor Mounted Document Id Attribute
       documentControlRefElm.setAttribute(

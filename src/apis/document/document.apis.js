@@ -15,8 +15,18 @@ import {
   firebaseLooper,
 } from "../../utils";
 
+// Data
+import { DEFAULT_DOCUMENT_ITEM } from "../../data";
+
 // Utils
 import { catchAsync } from "../../utils";
+
+/**
+ * Add Default Document
+ */
+export const addDefaultDocument = catchAsync(async () => {
+  return await addDocument(DEFAULT_DOCUMENT_ITEM);
+});
 
 /**
  * Add New Document

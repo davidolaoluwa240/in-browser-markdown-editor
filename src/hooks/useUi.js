@@ -11,6 +11,8 @@ const {
   selectIsLoading,
   selectScrollWith,
   selectEditorFullScreen,
+  selectLoadingType,
+  selectError,
 } = uiSA;
 
 // Ui Hook
@@ -21,6 +23,8 @@ export const useUi = () => {
   const isLoading = useSelector(selectIsLoading);
   const scrollWith = useSelector(selectScrollWith);
   const editorFullScreen = useSelector(selectEditorFullScreen);
+  const loadingType = useSelector(selectLoadingType);
+  const error = useSelector(selectError);
 
   return {
     dispatch,
@@ -29,6 +33,8 @@ export const useUi = () => {
     isLoading,
     scrollWith,
     editorFullScreen,
+    loadingType,
+    error,
     ...uiSA,
   };
 };

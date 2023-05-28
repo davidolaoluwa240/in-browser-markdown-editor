@@ -15,7 +15,7 @@ export const dataFromSnapshot = (snapshot) => {
   // Convert UpdatedAt Field To Date String
   if (data.updatedAt) data.updatedAt = data.updatedAt.toDate().toISOString();
 
-  //  Return Data
+  // Return Data
   return data;
 };
 

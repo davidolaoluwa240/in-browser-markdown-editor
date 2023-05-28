@@ -5,25 +5,36 @@ import { call, put, all, takeLatest } from "redux-saga/effects";
 import { AUTH_ACTION_TYPES } from "./auth.type";
 
 // Actions
-import { setCurrentUser, setCheckedAuth } from "./auth.action";
+import { setCurrentUser, setError } from "./auth.action";
 
 // Apis
 import * as Apis from "../../apis";
 
 export function* onInitializeAuth() {
-  const userProfile = yield call(Apis.initializeAuth);
-  yield put(setCurrentUser(userProfile));
-  yield put(setCheckedAuth(true));
+  try {
+    const userProfile = yield call(Apis.initializeAuth);
+    yield put(setCurrentUser(userProfile));
+  } catch (err) {
+    yield put(setError(err));
+  }
 }
 
 export function* onSignupWithOAuth({ payload: provider }) {
-  const userProfile = yield call(Apis.signupWithOAuth, provider);
-  yield put(setCurrentUser(userProfile));
+  try {
+    const userProfile = yield call(Apis.signupWithOAuth, provider);
+    yield put(setCurrentUser(userProfile));
+  } catch (err) {
+    yield put(setError(err));
+  }
 }
 
 export function* onLogoutUser() {
-  yield call(Apis.logoutUser);
-  yield put(setCurrentUser(null));
+  try {
+    yield call(Apis.logoutUser);
+    yield put(setCurrentUser(null));
+  } catch (err) {
+    yield put(setError(err));
+  }
 }
 
 export function* startOAuth() {

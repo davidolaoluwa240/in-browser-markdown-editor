@@ -10,7 +10,9 @@ const INITIAL_STATE = {
     markdown: "off",
     preview: "off",
   },
-  isLoading: false,
+  isLoading: true,
+  loadingType: "fetching",
+  error: null,
 };
 
 // Ui Reducer
@@ -25,10 +27,14 @@ export const uiReducer = (state = INITIAL_STATE, action = {}) => {
     case UI_ACTION_TYPES.SET_IS_LOADING:
       return { ...state, isLoading: payload };
     case UI_ACTION_TYPES.SET_EDITOR_FULLSCREEN:
-      return { ...state, editorFullScreen: payload };
+      return { ...state, editorFullScreen: payload, loadingType: "" };
     case UI_ACTION_TYPES.SET_SCROLL_WITH:
       return { ...state, scrollWith: payload };
+    case UI_ACTION_TYPES.SET_LOADING_TYPE:
+      return { ...state, loadingType: payload };
+    case UI_ACTION_TYPES.SET_ERROR:
+      return { ...state, error: payload };
     default:
-      return state;
+      return type.includes("ui/START") ? { ...state, isLoading: true } : state;
   }
 };

@@ -1,3 +1,6 @@
+// Firebase
+import { FirebaseError } from "firebase/app";
+
 // Modules
 import { toast } from "react-toastify";
 import isOnline from "is-online";
@@ -33,4 +36,7 @@ export const handleAsyncError = async (error) => {
   const errorCode = error.code || "unknown";
   const errorMessage = ASYNC_ERROR_MAP[errorCode];
   toast.error(errorMessage);
+
+  // 4). After Handling Error, Also Make Error Available In Components
+  throw error;
 };

@@ -2,35 +2,24 @@
 import React from "react";
 
 // Hooks
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDocument } from "../../hooks";
+import { useDocument, useUi } from "../../hooks";
 
 // Components
 import { Editor } from "../../components";
-
-// Utils
-import { createNewDocument } from "../../utils";
 
 // Style
 import { EditorLayoutWrapper, EditorPanel } from "./editor-layout.styles";
 
 export const EditorLayout = () => {
-  const [isMarkdownEditorFullScreen, setIsMarkdownEditorFullScreen] =
-    useState(false);
-  const [isPreviewEditorFullScreen, setIsPreviewEditorFullScreen] =
-    useState(false);
-  const {
-    documents,
-    activeDocuments,
-    dispatch,
-    setDocuments,
-    document,
-    startUpdatingDocument,
-  } = useDocument();
-  const navigate = useNavigate();
+  const { editorFullScreen, setEditorFullScreen } = useUi();
+  const { documents, dispatch, document } = useDocument();
   const markdownEditorRef = useRef();
   const previewEditorRef = useRef();
+  const navigate = useNavigate();
+  const isMarkdownEditorFullScreen = editorFullScreen.markdown === "on";
+  const isPreviewEditorFullScreen = editorFullScreen.preview === "on";
 
   useEffect(() => {
     // Handle Key Press
@@ -57,25 +46,11 @@ export const EditorLayout = () => {
   }, []);
 
   useEffect(() => {
-    if (!document) {
-      let id, fileName;
-
-      if (activeDocuments.length) {
-        ({ id, fileName } = activeDocuments[0]);
-      } else {
-        // Create New Document
-        const newDocument = createNewDocument();
-
-        // Update Documents
-        dispatch(setDocuments([...documents, newDocument]));
-        ({ id, fileName } = newDocument);
-
-        // Sync Created Document To Cloud
-        dispatch(startUpdatingDocument(newDocument));
-      }
+    if (!document && documents.length) {
+      const { id, fileName } = documents[0];
       navigate(`/${id}/${fileName}`, { replace: true });
     }
-  }, [document]);
+  }, [document, documents]);
 
   /**
    * Toggle Editor Full Screen Mode
@@ -84,12 +59,20 @@ export const EditorLayout = () => {
   const toggleEditorFullScreen = (editorType) => {
     switch (editorType) {
       case "preview":
-        setIsPreviewEditorFullScreen((prevState) => !prevState);
-        setIsMarkdownEditorFullScreen(false);
+        dispatch(
+          setEditorFullScreen({
+            markdown: "off",
+            preview: isPreviewEditorFullScreen ? "off" : "on",
+          })
+        );
         break;
       case "markdown":
-        setIsMarkdownEditorFullScreen((prevState) => !prevState);
-        setIsPreviewEditorFullScreen(false);
+        dispatch(
+          setEditorFullScreen({
+            markdown: isMarkdownEditorFullScreen ? "off" : "on",
+            preview: "off",
+          })
+        );
         break;
     }
   };

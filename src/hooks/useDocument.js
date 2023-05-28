@@ -7,8 +7,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { documentSA } from "../store";
 
 // Destructure Redux Imports
-const { selectLoadingType, selectIsLoading, selectActiveDocuments } =
-  documentSA;
+const {
+  selectLoadingType,
+  selectIsLoading,
+  selectActiveDocuments,
+  selectError,
+} = documentSA;
 
 // Document Hook
 export const useDocument = () => {
@@ -17,6 +21,7 @@ export const useDocument = () => {
   const documents = useSelector(selectActiveDocuments);
   const isLoading = useSelector(selectIsLoading);
   const loadingType = useSelector(selectLoadingType);
+  const error = useSelector(selectError);
   const [document, setDocument] = useState(documents[0]);
 
   useEffect(() => {
@@ -31,6 +36,7 @@ export const useDocument = () => {
     document,
     isLoading,
     loadingType,
+    error,
     ...documentSA,
   };
 };

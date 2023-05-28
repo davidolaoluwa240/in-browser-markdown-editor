@@ -11,11 +11,11 @@ import { DocumentFileList } from "../";
 import { DocumentFileBaseWrapper } from "./document-file-base.styles";
 
 export const DocumentFileBase = () => {
-  const { activeDocuments } = useDocument();
+  const { documents } = useDocument();
 
   return (
     <DocumentFileBaseWrapper>
-      <DocumentFileList items={activeDocuments} />
+      <DocumentFileList items={documents} />
     </DocumentFileBaseWrapper>
   );
 };

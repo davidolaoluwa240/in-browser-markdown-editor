@@ -4,29 +4,63 @@ import { DOCUMENT_ACTION_TYPES } from "./document.type";
 // Utils
 import { createAction } from "../../utils";
 
-// Set Documents Action
+/**
+ * Set Documents State
+ * @param {Array} documents
+ */
 export const setDocuments = (documents) =>
   createAction(DOCUMENT_ACTION_TYPES.SET_DOCUMENTS, documents);
 
-// Set IsLoading Action
+/**
+ * Set IsLoading State
+ * @param {boolean} bool
+ */
 export const setIsLoading = (bool) =>
   createAction(DOCUMENT_ACTION_TYPES.SET_IS_LOADING, bool);
 
-// Start Fetching Documents Action
+/**
+ * Set Error State
+ * @param {string} type
+ */
+export const setError = (error) =>
+  createAction(DOCUMENT_ACTION_TYPES.SET_ERROR, error);
+
+/**
+ * Set LoadingType State
+ * @param {string} type
+ */
+export const setLoadingType = (type) =>
+  createAction(DOCUMENT_ACTION_TYPES.SET_LOADING_TYPE, type);
+
+/**
+ * Start Fetching Documents
+ */
 export const startFetchingDocuments = () =>
   createAction(DOCUMENT_ACTION_TYPES.START_FETCHING_DOCUMENTS);
 
-// Start Updating Document Action
-export const startUpdatingDocument = (updatedDocumentData) =>
-  createAction(
-    DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT,
-    updatedDocumentData
-  );
+/**
+ * Start Updating Document
+ * @param {Object} updatedDocument
+ */
+export const startUpdatingDocument = ({ fileName, content, id }) =>
+  createAction(DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT, {
+    fileName,
+    content,
+    id,
+  });
 
-// Start Deleting Document Action
+/**
+ * Start Adding Document
+ * @param {Object} newDocument
+ */
+export const startAddingDocument = (newDocument) =>
+  createAction(DOCUMENT_ACTION_TYPES.START_ADDING_DOCUMENT, newDocument);
+
+/**
+ * Start Deleting Document
+ * @param {string} documentId
+ */
 export const startDeletingDocument = (documentId) =>
-  createAction(DOCUMENT_ACTION_TYPES.START_DELETING_DOCUMENT, documentId);
-
-// Start Syncing Documents Action
-export const startSyncingDocuments = (documents) =>
-  createAction(DOCUMENT_ACTION_TYPES.START_SYNCING_DOCUMENTS, documents);
+  createAction(DOCUMENT_ACTION_TYPES.START_DELETING_DOCUMENT, {
+    id: documentId,
+  });
