@@ -37,14 +37,14 @@ const composedEnhancer =
 // Register Middlewares
 const composedEnhancers = composedEnhancer(applyMiddleware(...middlewares));
 
-// Create Persistor Reducer
+// Create Persisted Reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 // Create Redux Store
 const store = createStore(persistedReducer, undefined, composedEnhancers);
 
 // Create Persist Store
-export const persistor = persistStore(store);
+export const persistore = persistStore(store);
 
 // Run Root Saga
 sagaMiddleware.run(rootSaga);

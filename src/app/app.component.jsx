@@ -3,7 +3,7 @@ import React from "react";
 
 // Hooks
 import { useEffect } from "react";
-import { useAuth, useUi, useDocument } from "../hooks";
+import { useAuth, useUi } from "../hooks";
 
 // Components
 import { Fragment } from "react";
@@ -14,19 +14,8 @@ import { Routes } from "../routes.component";
 
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
-  const {
-    isLoading: uiIsLoading,
-    loadingType: uiLoadingType,
-    startFetchingUiSettings,
-  } = useUi();
-  const {
-    startFetchingDocuments,
-    isLoading: documentIsLoading,
-    loadingType: documentLoadingType,
-  } = useDocument();
-  const isFetchingUiSettings = uiIsLoading && uiLoadingType === "fetching";
-  const isFetchingDocuments =
-    documentIsLoading && documentLoadingType === "fetching";
+  const { isLoading, loadingType, startFetchingUiSettings } = useUi();
+  const isFetchingUiSettings = isLoading && loadingType === "fetching";
 
   useEffect(() => {
     // Initialize Authentication
@@ -38,23 +27,16 @@ const App = () => {
     if (currentUser) {
       // Fetch User Settings
       dispatch(startFetchingUiSettings());
-
-      // Fetch User Documents
-      dispatch(startFetchingDocuments());
     }
   }, [currentUser]);
 
   return (
     <Fragment>
       {/* Register Page Loader Spinner */}
-      {(!checkedAuth || isFetchingUiSettings || isFetchingDocuments) && (
-        <PageLoader />
-      )}
+      {(!checkedAuth || isFetchingUiSettings) && <PageLoader />}
 
       {/* Register App Routes */}
-      {checkedAuth && !isFetchingUiSettings && !isFetchingDocuments && (
-        <Routes />
-      )}
+      {checkedAuth && !isFetchingUiSettings && <Routes />}
 
       {/* Register Toast Container  */}
       <ToastContainer />

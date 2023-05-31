@@ -1,5 +1,78 @@
 // Modules
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+// Components
+import { AnimateThreeDots } from "../";
+
+const colorStyle =
+  (hovered = true) =>
+  ({ secondary, tertiary }) => {
+    if (secondary) {
+      return css`
+        background: linear-gradient(
+          198deg,
+          rgba(152, 95, 153, 1) 0%,
+          rgba(228, 102, 67, 1) 80%
+        );
+
+        &:hover,
+        &:disabled {
+          ${hovered &&
+          css`
+            background: linear-gradient(
+              198deg,
+              rgba(152, 95, 153, 0.8) 0%,
+              rgba(228, 102, 67, 0.8) 80%
+            );
+          `}
+        }
+      `;
+    }
+
+    if (tertiary) {
+      return css`
+        background: linear-gradient(
+          198deg,
+          rgba(6, 123, 194, 1) 0%,
+          rgba(228, 102, 67, 1) 83%
+        );
+
+        &:hover,
+        &:disabled {
+          ${hovered &&
+          css`
+            background: linear-gradient(
+              198deg,
+              rgba(6, 123, 194, 0.8) 0%,
+              rgba(228, 102, 67, 0.8) 83%
+            );
+          `}
+        }
+      `;
+    }
+
+    return css`
+      background: #e46643;
+
+      &:hover,
+      &:disabled {
+        ${hovered &&
+        css`
+          background: #f39765;
+        `}
+      }
+    `;
+  };
+
+export const StyledThreeDots = styled(AnimateThreeDots)`
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
 
 export const ButtonBase = styled.button`
   text-decoration: none;
@@ -8,40 +81,27 @@ export const ButtonBase = styled.button`
   display: inline-block;
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
+  font-weight: inherit;
   line-height: inherit;
   border: none;
-  background: #e46643;
-  color: #fff;
   transition: background 0.3s ease-out;
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  color: #fff;
+  width: ${({ widthFull }) => (widthFull ? "100%" : "auto")};
+  ${colorStyle()};
 
-  &:hover {
-    background: #f39765;
+  &:hover,
+  &:disabled {
+    color: rgba(255, 255, 255, 0.8);
   }
 
   &:disabled {
     cursor: not-allowed;
   }
 
-  ${({ color }) => {
-    switch (color) {
-      case "secondary":
-        return "background: #f8e5ee";
-    }
-  }};
-
-  ${({ widthFull }) => widthFull && "width: 100%"};
+  ${StyledThreeDots} {
+    ${colorStyle(false)}
+  }
 `;
-
-export const buttonSpinnerStyle = {
-  alignItems: "center",
-  justifyContent: "center",
-  position: "absolute",
-  background: "#e46643",
-  top: "0",
-  left: "0",
-  width: "100%",
-  height: "100%",
-};

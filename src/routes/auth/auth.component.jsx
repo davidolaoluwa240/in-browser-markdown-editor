@@ -2,11 +2,10 @@
 import React from "react";
 
 // Hooks
-import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks";
 
 // Hocs
-import { preventIfAuth } from "../../hocs/preventIfAuth.hocs";
+import { preventIfAuth } from "../../hocs";
 
 // Style
 import {
@@ -18,24 +17,15 @@ import {
 } from "./auth.styles";
 
 const _Auth = () => {
-  const [loadingProviderName, setLoadingProviderName] = useState();
-  const [googleIsLoading, setGoogleIsLoading] = useState(false);
-  const [githubIsLoading, setGithubIsLoading] = useState(false);
-  const { dispatch, startOAuth, isLoading } = useAuth();
-
-  useEffect(() => {
-    loadingProviderName === "google" && setGoogleIsLoading(isLoading);
-    loadingProviderName === "github" && setGithubIsLoading(isLoading);
-  }, [isLoading]);
+  const { dispatch, startOAuth, isLoading, loadingType } = useAuth();
+  const isGoogleProviderLoading = isLoading && loadingType === "google";
+  const isGithubProviderLoading = isLoading && loadingType === "github";
 
   /**
    * Handle Login/Signup With OAuth
    * @param {string} provider Provider
    */
   const handleLoginWithOAuth = (provider) => {
-    // Update Loading Provider Name
-    setLoadingProviderName(provider);
-
     // Perform OAuth Authentication
     dispatch(startOAuth(provider));
   };
@@ -44,8 +34,9 @@ const _Auth = () => {
     <AuthenticationWrapper>
       <AuthenticationContainer>
         <AuthenticationButton
-          disabled={googleIsLoading || githubIsLoading}
-          isLoading={googleIsLoading}
+          disabled={isGoogleProviderLoading || isGithubProviderLoading}
+          isLoading={isGoogleProviderLoading}
+          tertiary
           onClick={handleLoginWithOAuth.bind(null, "google")}
         >
           <GoogleIcon />
@@ -53,8 +44,9 @@ const _Auth = () => {
         </AuthenticationButton>
 
         <AuthenticationButton
-          disabled={googleIsLoading || githubIsLoading}
-          isLoading={githubIsLoading}
+          disabled={isGoogleProviderLoading || isGithubProviderLoading}
+          isLoading={isGithubProviderLoading}
+          secondary
           onClick={handleLoginWithOAuth.bind(null, "github")}
         >
           <GithubIcon />

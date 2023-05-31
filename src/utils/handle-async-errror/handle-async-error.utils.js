@@ -1,14 +1,19 @@
-// Firebase
-import { FirebaseError } from "firebase/app";
-
 // Modules
 import { toast } from "react-toastify";
 import isOnline from "is-online";
+
+// Firebase
+import { FirebaseError } from "firebase/app";
 
 // Async Error Map
 export const ASYNC_ERROR_MAP = {
   network: "Internet Connectivity Error. Connect To Internet And Try Again",
   unknown: "An Unknown Error Occur",
+  unhandled:
+    process.env.NODE_ENV === "development"
+      ? "Unhandled Error Occur"
+      : undefined,
+  "auth/account-exists-with-different-credential": 0,
 };
 
 /**
@@ -34,8 +39,9 @@ export const handleAsyncError = async (error) => {
 
   // 3). Throw Custom Error Message Based On Error Object.
   const errorCode = error.code || "unknown";
-  const errorMessage = ASYNC_ERROR_MAP[errorCode];
-  toast.error(errorMessage);
+  const errorMessage =
+    ASYNC_ERROR_MAP[errorCode] ?? ASYNC_ERROR_MAP["unhandled"];
+  toast.error(errorMessage !== 0 ? errorMessage : undefined);
 
   // 4). After Handling Error, Also Make Error Available In Components
   throw error;

@@ -4,9 +4,14 @@ import { useSelector, useDispatch } from "react-redux";
 // Redux
 import { authSA } from "../store";
 
-// Descructure Redux Imports
-const { selectCurrentUser, selectCheckedAuth, selectIsLoading, selectError } =
-  authSA;
+// Destructure Redux Imports
+const {
+  selectCurrentUser,
+  selectCheckedAuth,
+  selectIsLoading,
+  selectError,
+  selectLoadingType,
+} = authSA;
 
 // Auth Hook
 export const useAuth = () => {
@@ -15,6 +20,7 @@ export const useAuth = () => {
   const currentUser = useSelector(selectCurrentUser);
   const checkedAuth = useSelector(selectCheckedAuth);
   const error = useSelector(selectError);
+  const loadingType = useSelector(selectLoadingType);
 
   return {
     dispatch,
@@ -22,6 +28,7 @@ export const useAuth = () => {
     currentUser,
     checkedAuth,
     error,
+    loadingType,
     ...authSA,
   };
 };

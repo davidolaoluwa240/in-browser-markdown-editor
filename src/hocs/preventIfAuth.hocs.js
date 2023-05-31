@@ -17,10 +17,10 @@ export const preventIfAuth = (Component) => {
     const { currentUser } = useAuth();
     const { state } = useLocation();
 
-    // If CurrentUser Exist And User Does Not Have Previous History, Then Navigate To Root Route
+    // If CurrentUser Exist And User Does Not Have From Location History, Then Navigate To Root Route
     if (currentUser && !state.from) return <Navigate to="/" replace />;
 
-    // If CurrentUser Exist And User Have Previous History, Then Navigate To The Previous History
+    // If CurrentUser Exist And User Have From Location History, Then Navigate To The History
     if (currentUser && state.from)
       return <Navigate to={state.from.pathname} replace />;
 

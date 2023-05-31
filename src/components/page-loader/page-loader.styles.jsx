@@ -1,8 +1,19 @@
 // Modules
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 // Components
 import { GoMarkdown } from "react-icons/go";
+
+// Animations
+const scaleAndShrink = keyframes`
+  from {
+      transform: scale(1.2);
+    }
+
+    to {
+      transform: scale(1);
+    }
+`;
 
 export const PageLoaderWrapper = styled.div`
   display: flex;
@@ -13,21 +24,8 @@ export const PageLoaderWrapper = styled.div`
 `;
 
 export const PageLoaderIcon = styled(GoMarkdown)`
-  @keyframes scaleAndShrink {
-    from {
-      transform: scale(1.2);
-    }
-
-    to {
-      transform: scale(1);
-    }
-  }
-
   vertical-align: middle;
   font-size: 4.5rem;
   fill: #fff;
-  animation-name: scaleAndShrink;
-  animation-duration: 1.2s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  animation: ${scaleAndShrink} 1.2s linear infinite;
 `;

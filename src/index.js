@@ -16,7 +16,7 @@ import "./utils/firebase/firebase-config.utils";
 
 // Store
 import store from "./store/store";
-import { persistor } from "./store/store";
+import { persistore } from "./store/store";
 
 // Styles
 import "./index.css";
@@ -29,7 +29,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      <PersistGate loading={null} persistor={persistore}>
         <BrowserRouter>
           <App />
         </BrowserRouter>

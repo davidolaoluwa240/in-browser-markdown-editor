@@ -1,4 +1,5 @@
 // Re-Export Components
+export * from "./animate-three-dots/animate-three-dots.component";
 export * from "./button/button.component";
 export * from "./theme-toggle/theme-toggle.component";
 export * from "./document-file-base/document-file-base.component";

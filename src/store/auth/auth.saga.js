@@ -5,12 +5,12 @@ import { call, put, all, takeLatest } from "redux-saga/effects";
 import { AUTH_ACTION_TYPES } from "./auth.type";
 
 // Actions
-import { setCurrentUser, setError } from "./auth.action";
+import { setCurrentUser, setError, setLoadingType } from "./auth.action";
 
 // Apis
 import * as Apis from "../../apis";
 
-export function* onInitializeAuth() {
+export function* initializeAuth() {
   try {
     const userProfile = yield call(Apis.initializeAuth);
     yield put(setCurrentUser(userProfile));
@@ -19,16 +19,28 @@ export function* onInitializeAuth() {
   }
 }
 
-export function* onSignupWithOAuth({ payload: provider }) {
+export function* linkOAuthProvider(err) {
   try {
-    const userProfile = yield call(Apis.signupWithOAuth, provider);
+    const userProfile = yield call(Apis.linkOAuthProvider, err);
     yield put(setCurrentUser(userProfile));
   } catch (err) {
     yield put(setError(err));
   }
 }
 
-export function* onLogoutUser() {
+export function* signupWithOAuth({ payload: provider }) {
+  try {
+    yield put(setLoadingType(provider));
+    const userProfile = yield call(Apis.signupWithOAuth, provider);
+    yield put(setCurrentUser(userProfile));
+  } catch (err) {
+    if (err.code === "auth/account-exists-with-different-credential")
+      return yield call(linkOAuthProvider, err);
+    yield put(setError(err));
+  }
+}
+
+export function* logoutUser() {
   try {
     yield call(Apis.logoutUser);
     yield put(setCurrentUser(null));
@@ -37,18 +49,22 @@ export function* onLogoutUser() {
   }
 }
 
-export function* startOAuth() {
-  yield takeLatest(AUTH_ACTION_TYPES.START_OAUTH, onSignupWithOAuth);
+export function* onStartOAuth() {
+  yield takeLatest(AUTH_ACTION_TYPES.START_OAUTH, signupWithOAuth);
 }
 
-export function* startInitializeAuth() {
-  yield takeLatest(AUTH_ACTION_TYPES.START_INITIALIZING_AUTH, onInitializeAuth);
+export function* onStartInitializeAuth() {
+  yield takeLatest(AUTH_ACTION_TYPES.START_INITIALIZING_AUTH, initializeAuth);
 }
 
-export function* logoutUser() {
-  yield takeLatest(AUTH_ACTION_TYPES.LOGOUT_USER, onLogoutUser);
+export function* onLogoutUser() {
+  yield takeLatest(AUTH_ACTION_TYPES.LOGOUT_USER, logoutUser);
 }
 
 export function* authSaga() {
-  yield all([call(startInitializeAuth), call(startOAuth), call(logoutUser)]);
+  yield all([
+    call(onStartInitializeAuth),
+    call(onStartOAuth),
+    call(onLogoutUser),
+  ]);
 }

@@ -2,9 +2,12 @@
 import { setDoc, Timestamp, doc, getDoc } from "firebase/firestore";
 import {
   signInWithPopup,
+  linkWithCredential,
   getAdditionalUserInfo,
   onAuthStateChanged,
   signOut,
+  OAuthProvider,
+  fetchSignInMethodsForEmail,
 } from "firebase/auth";
 import {
   googleProvider,
@@ -62,6 +65,38 @@ export const createNewUserDocument = catchAsync(async (userCredential) => {
 
   // 3). Create User Document
   return await setDoc(userRef, userData);
+});
+
+/**
+ * Link User OAuth Provider
+ * @param {Object} err Error
+ */
+export const linkOAuthProvider = catchAsync(async (err) => {
+  // 1). Get Pending Credential
+  const pendingCred = OAuthProvider.credentialFromError(err);
+
+  // 2). Get Provider Email
+  const email = err.customData.email;
+
+  // 3). Fetch SignIn Method For Email
+  const userSignInMethod = await fetchSignInMethodsForEmail(auth, email);
+
+  // 4). Get Provider Service
+  const providerService = userSignInMethod[0].includes("google")
+    ? googleProvider
+    : githubProvider;
+
+  // 5). Signup/SignIn With Popup Using The Provider Service
+  const { user } = await signInWithPopup(auth, providerService);
+
+  // 6). Link Provider With Pending Credential
+  await linkWithCredential(user, pendingCred);
+
+  // 7). Get User
+  const userProfile = await getUser();
+
+  // 8). Return User Profile
+  return userProfile;
 });
 
 /**

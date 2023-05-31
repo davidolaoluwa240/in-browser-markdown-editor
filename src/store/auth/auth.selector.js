@@ -27,3 +27,9 @@ export const selectError = createSelector(
   [selectAuthReducer],
   (authSlice) => authSlice.error
 );
+
+// Select LoadingType State
+export const selectLoadingType = createSelector(
+  [selectAuthReducer],
+  (authSlice) => authSlice.loadingType
+);

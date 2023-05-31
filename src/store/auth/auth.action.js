@@ -26,6 +26,13 @@ export const setIsLoading = (bool) =>
   createAction(AUTH_ACTION_TYPES.SET_IS_LOADING, bool);
 
 /**
+ * Set LoadingType State
+ * @param {string} type
+ */
+export const setLoadingType = (type) =>
+  createAction(AUTH_ACTION_TYPES.SET_LOADING_TYPE, type);
+
+/**
  * Set Error State
  * @param {Object} error
  */
@@ -45,7 +52,7 @@ export const onInitializeAuth = () =>
 
 /**
  * Start OAuth
- * @param {string} provider
+ * @param {string} provider OAuth provider
  */
 export const startOAuth = (provider) =>
   createAction(AUTH_ACTION_TYPES.START_OAUTH, provider);

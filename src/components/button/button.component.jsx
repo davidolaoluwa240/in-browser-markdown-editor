@@ -1,22 +1,18 @@
 // Modules
 import React from "react";
 
-// Components
-import { ThreeDots } from "react-loader-spinner";
-
 // Style
-import { ButtonBase, buttonSpinnerStyle } from "./button.styles";
+import { ButtonBase, StyledThreeDots } from "./button.styles";
 
-export const Button = ({ color, as, children, isLoading, ...buttonProps }) => {
+export const Button = ({ children, isLoading, ...buttonProps }) => {
   return (
-    <ButtonBase as={as} color={color} disabled={isLoading} {...buttonProps}>
-      <ThreeDots
+    <ButtonBase disabled={isLoading} {...buttonProps}>
+      <StyledThreeDots
         height="30"
         width="40"
         radius="9"
         color="#ffffff"
-        ariaLabel="three-dots-loading"
-        wrapperStyle={buttonSpinnerStyle}
+        ariaLabel="Loading"
         visible={isLoading}
       />
       {children}
