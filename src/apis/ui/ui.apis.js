@@ -2,6 +2,7 @@
 import {
   getDoc,
   serverTimestamp,
+  updateDoc,
   setDoc,
   doc,
   Timestamp,
@@ -14,57 +15,79 @@ import { DEFAULT_UI_SETTINGS_ITEM } from "../../data";
 // Utils
 import { catchAsync } from "../../utils";
 
+/**
+ * Add Default Ui Settings
+ */
 export const addDefaultUiSettings = catchAsync(async () => {
-  return await addAndUpdateUiSettings(DEFAULT_UI_SETTINGS_ITEM);
+  return await addUiSettings(DEFAULT_UI_SETTINGS_ITEM);
 });
 
 /**
- * Add/Update New Ui Settings
+ * Add New Ui Settings
  * @param {Object} settings
  */
-export const addAndUpdateUiSettings = catchAsync(async (settings) => {
-  // Get Auth User Uid
-  const {
-    uid,
-    metadata: { creationTime },
-  } = auth.currentUser;
+export const addUiSettings = catchAsync(async (settings) => {
+  // 1). Get Auth User Uid
+  const { uid } = auth.currentUser;
 
-  // Ui Doc Ref
-  const uiDocRef = doc(uiCollectionRef, uid);
+  // 2). Ui Doc Ref
+  const uiRef = doc(uiCollectionRef, uid);
 
-  // Perform Adding/Updating Ui Doc
-  await setDoc(
-    uiDocRef,
-    {
-      ...settings,
-      createdAt: Timestamp.fromDate(new Date(creationTime)),
-      updatedAt: serverTimestamp(),
-    },
-    { merge: true }
-  );
+  // 3). Perform Adding Ui Setting
+  await setDoc(uiRef, {
+    ...settings,
+    createdAt: serverTimestamp(),
+    updatedAt: serverTimestamp(),
+  });
 
-  // Get Ui Setting
+  // 4). Get Ui Setting
   const uiSetting = await fetchUiSettings();
 
-  // Retur Ui Setting
+  // 5). Return Ui Setting
   return uiSetting;
 });
 
 /**
- * Fetch Ui Settings
+ * Update Ui Settings
+ * @param {Object} updatedSettings
+ */
+export const updateUiSettings = catchAsync(async (updatedSettings) => {
+  // 1). Get Ui Settings Id And CreatedAt Date
+  const { id, createdAt } = updatedSettings;
+
+  // 2). Ui Doc Ref
+  const uiRef = doc(uiCollectionRef, id);
+
+  // 3). Perform updating Ui Setting
+  await updateDoc(uiRef, {
+    ...updatedSettings,
+    createdAt: Timestamp.fromDate(new Date(createdAt)),
+    updatedAt: serverTimestamp(),
+  });
+
+  // 4). Get Ui Setting
+  const uiSetting = await fetchUiSettings();
+
+  // 5). Return Ui Setting
+  return uiSetting;
+});
+
+/**
+ * Fetch User Ui Settings
  */
 export const fetchUiSettings = catchAsync(async () => {
-  // Get Auth User Uid
+  // 1). Get Auth User Uid
   const { uid } = auth.currentUser;
 
-  // Ui Doc Ref
+  // 2). Ui Doc Ref
   const uiDocRef = doc(uiCollectionRef, uid);
 
-  // Get Ui Doc
+  // 3). Get Ui Doc
   const uiSettingSnapshot = await getDoc(uiDocRef);
 
+  // 4). If UiSetting Document Does Not Exist Then Return Null
   if (!uiSettingSnapshot.exists()) return null;
 
-  //  Return Ui Setting Document
+  // 5). Return Ui Setting Document
   return dataFromSnapshot(uiSettingSnapshot);
 });

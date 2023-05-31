@@ -7,7 +7,6 @@ import { uiSA } from "../store";
 // Destructure Redux Imports
 const {
   selectIsSideBarOpen,
-  selectTheme,
   selectIsLoading,
   selectScrollWith,
   selectEditorFullScreen,
@@ -19,7 +18,6 @@ const {
 export const useUi = () => {
   const dispatch = useDispatch();
   const isSideBarOpen = useSelector(selectIsSideBarOpen);
-  const theme = useSelector(selectTheme);
   const isLoading = useSelector(selectIsLoading);
   const scrollWith = useSelector(selectScrollWith);
   const editorFullScreen = useSelector(selectEditorFullScreen);
@@ -29,11 +27,10 @@ export const useUi = () => {
   return {
     dispatch,
     isSideBarOpen,
-    theme,
     isLoading,
+    loadingType,
     scrollWith,
     editorFullScreen,
-    loadingType,
     error,
     ...uiSA,
   };

@@ -12,13 +12,6 @@ export const setSideBarVisibility = (bool) =>
   createAction(UI_ACTION_TYPES.SET_SIDE_BAR_VISIBILITY, bool);
 
 /**
- * Set Page Theme State
- * @param {string} theme Theme
- */
-export const setTheme = (theme) =>
-  createAction(UI_ACTION_TYPES.SET_THEME, theme);
-
-/**
  * Set IsLoading State
  * @param {boolean} bool
  */
@@ -60,11 +53,15 @@ export const startFetchingUiSettings = () =>
   createAction(UI_ACTION_TYPES.START_FETCHING_UI_SETTINGS);
 
 /**
- * Start Adding And Updating Ui Settings
+ * Start Adding Ui Settings
  * @param {Object} uiSettings
  */
-export const startAddingAndUpdatingUiSettings = (uiSettings) =>
-  createAction(
-    UI_ACTION_TYPES.START_ADDING_AND_UPDATING_UI_SETTINGS,
-    uiSettings
-  );
+export const startAddingUiSettings = (uiSettings) =>
+  createAction(UI_ACTION_TYPES.START_ADDING_UI_SETTINGS, uiSettings);
+
+/**
+ * Start Updating Ui Settings
+ * @param {Object} updatedUiSettings
+ */
+export const startUpdatingUiSettings = (updatedUiSettings) =>
+  createAction(UI_ACTION_TYPES.START_UPDATING_UI_SETTINGS, updatedUiSettings);
