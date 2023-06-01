@@ -2,8 +2,11 @@
 import React from "react";
 
 // Hooks
-import { useState } from "react";
+import { useState, useContext, useCallback, useEffect } from "react";
 import { useUi, useDocument } from "../../hooks";
+
+// Contexts
+import { ThemeContext } from "styled-components";
 
 // Components
 import { Fragment } from "react";
@@ -33,50 +36,80 @@ import {
 } from "./root-layout.styles";
 
 const _RootLayout = () => {
-  const [isSettingsModal, setIsSettingsModalOpen] = useState(false);
-  const { dispatch, theme, setTheme, isSideBarOpen } = useUi();
-  const { documents, setDocuments, startUpdatingDocument } = useDocument();
-  const mainContentStyle = { width: window.innerWidth };
+  const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
+  const [mainContentStyle, setMainContentStyle] = useState({
+    width: window.outerWidth,
+  });
+  const { dispatch, isSideBarOpen } = useUi();
+  const {
+    startAddingDocument,
+    isLoading,
+    loadingType,
+    startFetchingDocuments,
+  } = useDocument();
+  const { theme, handleUpdateTheme } = useContext(ThemeContext);
+  const isAddingDocument = isLoading && loadingType === "adding";
 
-  /**
-   * Update Page Theme
-   * @param {string} theme Theme
-   */
-  const handleUpdateTheme = (theme) => dispatch(setTheme(theme));
+  // useEffect(() => {
+  //   dispatch(startFetchingDocuments());
+  // }, []);
 
   /**
    * Open Settings Modal
    */
-  const handleOpenSettingsModal = () => setIsSettingsModalOpen(true);
+  const handleOpenSettingsModal = useCallback(
+    () => setIsSettingsModalOpen(true),
+    []
+  );
 
   /**
    * Close Settings Modal
    */
-  const handleCloseSettingsModal = () => setIsSettingsModalOpen(false);
+  const handleCloseSettingsModal = useCallback(
+    () => setIsSettingsModalOpen(false),
+    []
+  );
 
   /**
    * Handle Add New Document
    */
-  const handleAddNewDocument = () => {
-    // Perform Creating New Documents
-    const newDocument = createNewDocument();
-    dispatch(setDocuments([...documents, newDocument]));
+  const handleAddNewDocument = useCallback(() => {
+    dispatch(startAddingDocument(createNewDocument()));
+  }, []);
 
-    // Sync Created Document To Cloud
-    dispatch(startUpdatingDocument(newDocument));
-  };
+  useEffect(() => {
+    /**
+     * Handle Window View Resize
+     */
+    const handleWindowResize = () => {
+      setMainContentStyle({ width: window.outerWidth });
+    };
+
+    // Register Resize Event On The Window Object
+    window.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      // Remove Event Listener When Component Un-Mount
+      window.removeEventListener("resize", handleWindowResize);
+    };
+  }, []);
 
   return (
     <Fragment>
       <SettingsModal
-        isOpen={isSettingsModal}
+        isOpen={isSettingsModalOpen}
         onClose={handleCloseSettingsModal}
       />
 
       <RootLayoutWrapper showSideBar={isSideBarOpen}>
         <DocumentSideBar>
           <DocumentTitle>MY DOCUMENTS</DocumentTitle>
-          <Button widthFull onClick={handleAddNewDocument}>
+          <Button
+            isLoading={isAddingDocument}
+            widthFull
+            secondary
+            onClick={handleAddNewDocument}
+          >
             + New Document
           </Button>
 

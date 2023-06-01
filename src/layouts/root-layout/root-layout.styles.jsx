@@ -1,15 +1,26 @@
 // Modules
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 // Components
 import { AiOutlineSetting } from "react-icons/ai";
+
+// Animations
+const rotation = keyframes`
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  `;
 
 export const RootLayoutWrapper = styled.div`
   display: flex;
   flex-wrap: nowrap;
   transition: transform 0.4s ease-in;
-  transform: translateX(-250px);
-  ${({ showSideBar }) => showSideBar && "transform: translateX(0%);"}
+  transform: ${({ showSideBar }) =>
+    showSideBar ? "translateX(0%)" : "translateX(-250px)"};
 `;
 
 export const DocumentSideBar = styled.aside`
@@ -44,19 +55,9 @@ export const MainContent = styled.div`
 `;
 
 export const SettingsIcon = styled(AiOutlineSetting)`
-  @keyframes infiniteRotation {
-    from {
-      transform: rotate(0deg);
-    }
-
-    to {
-      transform: rotate(360deg);
-    }
-  }
-
   vertical-align: middle;
   cursor: pointer;
   color: #f8f9fa;
   font-size: 2.4rem;
-  animation: infiniteRotation 1.4s linear infinite;
+  animation: ${rotation} 1.4s linear infinite;
 `;

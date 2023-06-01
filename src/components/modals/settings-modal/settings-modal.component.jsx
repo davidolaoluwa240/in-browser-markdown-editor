@@ -73,9 +73,6 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         <SettingSubHeading>Theme</SettingSubHeading>
         <SettingSubDescription>
           Switch effortlessly between dark and light mode themes for the editor.
-          Enjoy the flexibility to customize the visual appearance of the editor
-          based on your preference. Choose the mode that best suits your style
-          and enhances your editing experience.
         </SettingSubDescription>
         <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
       </SettingGroup>
@@ -86,8 +83,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         <SettingSubDescription>
           Customize the scrolling behavior of the editor to suit your
           preferences. You have the power to decide which editor controls and
-          keeps an eye on the other editor while scrolling. Enjoy a seamless
-          editing experience tailored to your needs.
+          keeps an eye on the other editor while scrolling.
         </SettingSubDescription>
         <InputToggle
           onContent={<SettingToggleText>Preview</SettingToggleText>}
@@ -103,9 +99,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         <SettingSubDescription>
           Maximize your editing experience with our convenient full-screen mode
           toggle. Easily switch between regular and full-screen modes to
-          optimize your focus and productivity. Enjoy a distraction-free
-          environment that allows you to immerse yourself fully in your editing
-          tasks.
+          optimize your focus and productivity.
         </SettingSubDescription>
 
         <SettingToggleWrapper>

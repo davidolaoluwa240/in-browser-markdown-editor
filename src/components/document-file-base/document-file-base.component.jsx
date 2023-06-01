@@ -8,14 +8,26 @@ import { useDocument } from "../../hooks";
 import { DocumentFileList } from "../";
 
 // Style
-import { DocumentFileBaseWrapper } from "./document-file-base.styles";
+import {
+  DocumentFileBaseWrapper,
+  StyledAnimateTailSpin,
+} from "./document-file-base.styles";
 
 export const DocumentFileBase = () => {
-  const { documents } = useDocument();
+  const { documents, isLoading, loadingType } = useDocument();
+  const isFetchingDocuments = isLoading && loadingType === "fetching";
 
   return (
     <DocumentFileBaseWrapper>
-      <DocumentFileList items={documents} />
+      {!isFetchingDocuments && <DocumentFileList items={documents} />}
+      <StyledAnimateTailSpin
+        height="50"
+        width="50"
+        color="#ffffff"
+        ariaLabel="Documents Loading"
+        radius="1"
+        visible={isFetchingDocuments}
+      />
     </DocumentFileBaseWrapper>
   );
 };

@@ -1,13 +1,16 @@
 // Modules
-import React from "react";
+import React, { useCallback } from "react";
 
 // Hooks
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth, useUi } from "../hooks";
 
 // Components
-import { Fragment } from "react";
+import { ThemeProvider } from "styled-components";
 import { ToastContainer, PageLoader } from "../components";
+
+// Themes
+import { LIGHT_THEME, DARK_THEME } from "../assets/themes";
 
 // App Routes
 import { Routes } from "../routes.component";
@@ -15,6 +18,7 @@ import { Routes } from "../routes.component";
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
   const { isLoading, loadingType, startFetchingUiSettings } = useUi();
+  const [theme, setTheme] = useState(DARK_THEME);
   const isFetchingUiSettings = isLoading && loadingType === "fetching";
 
   useEffect(() => {
@@ -30,8 +34,17 @@ const App = () => {
     }
   }, [currentUser]);
 
+  /**
+   * Handle Update App Theme
+   * @param {string} theme
+   */
+  const handleUpdateTheme = useCallback(
+    (theme) => setTheme(theme === "dark" ? DARK_THEME : LIGHT_THEME),
+    []
+  );
+
   return (
-    <Fragment>
+    <ThemeProvider theme={{ ...theme, handleUpdateTheme }}>
       {/* Register Page Loader Spinner */}
       {(!checkedAuth || isFetchingUiSettings) && <PageLoader />}
 
@@ -40,7 +53,7 @@ const App = () => {
 
       {/* Register Toast Container  */}
       <ToastContainer />
-    </Fragment>
+    </ThemeProvider>
   );
 };
 

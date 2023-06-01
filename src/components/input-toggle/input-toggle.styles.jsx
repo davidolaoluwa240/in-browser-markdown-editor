@@ -18,7 +18,7 @@ export const InputToggleThumb = styled.span`
   height: 18px;
   border-radius: 9999px;
   background: #fff;
-  display: inline-block;
+  display: block;
   transform: translateX(5%);
   transition: transform 0.3s ease-out;
 `;

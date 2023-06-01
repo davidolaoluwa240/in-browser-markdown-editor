@@ -11,10 +11,10 @@ export const ThemeToggle = ({ theme, setTheme }) => {
   const value = theme === "dark" ? "off" : "on";
 
   /**
-   * Handle Toggle Theme
+   * Handle Update Theme
    * @param {string} value
    */
-  const onHandleToggleTheme = (value) =>
+  const onHandleUpdateTheme = (value) =>
     setTheme(value === "off" ? "dark" : "light");
 
   return (
@@ -22,7 +22,7 @@ export const ThemeToggle = ({ theme, setTheme }) => {
       onContent={<ThemeLightIcon />}
       offContent={<ThemeDarkIcon />}
       value={value}
-      onChange={onHandleToggleTheme}
+      onChange={onHandleUpdateTheme}
     />
   );
 };

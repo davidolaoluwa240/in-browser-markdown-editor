@@ -5,17 +5,17 @@ import styled, { css } from "styled-components";
 import { BiMoon } from "react-icons/bi";
 import { MdOutlineLightMode } from "react-icons/md";
 
-export const themeIconBaseStyles = css`
+export const themeIconStyle = css`
   transition: color 0.3s ease-out;
   font-size: 2rem;
-  color: rgb(90, 96, 105);
-  ${({ isActive }) => isActive && "color: #f8f9fa"}
+  vertical-align: middle;
+  color: ${({ isActive }) => (isActive ? "#f8f9fa" : "#5a6069")};
 `;
 
 export const ThemeDarkIcon = styled(BiMoon)`
-  ${themeIconBaseStyles}
+  ${themeIconStyle}
 `;
 
 export const ThemeLightIcon = styled(MdOutlineLightMode)`
-  ${themeIconBaseStyles}
+  ${themeIconStyle}
 `;
