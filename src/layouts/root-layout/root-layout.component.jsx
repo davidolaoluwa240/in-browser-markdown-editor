@@ -50,9 +50,9 @@ const _RootLayout = () => {
   const { theme, handleUpdateTheme } = useContext(ThemeContext);
   const isAddingDocument = isLoading && loadingType === "adding";
 
-  // useEffect(() => {
-  //   dispatch(startFetchingDocuments());
-  // }, []);
+  useEffect(() => {
+    dispatch(startFetchingDocuments());
+  }, []);
 
   /**
    * Open Settings Modal

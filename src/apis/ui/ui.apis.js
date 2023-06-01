@@ -53,7 +53,8 @@ export const addUiSettings = catchAsync(async (settings) => {
  */
 export const updateUiSettings = catchAsync(async (updatedSettings) => {
   // 1). Get Ui Settings Id And CreatedAt Date
-  const { id, createdAt } = updatedSettings;
+  const { uid: id } = auth.currentUser;
+  const { createdAt } = updatedSettings;
 
   // 2). Ui Doc Ref
   const uiRef = doc(uiCollectionRef, id);
