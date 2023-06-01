@@ -61,21 +61,13 @@ function* onFetchUiSettings() {
   yield takeLatest(UI_ACTION_TYPES.START_FETCHING_UI_SETTINGS, fetchUiSettings);
 }
 
-function* onAddUiSettings() {
-  yield takeLatest(UI_ACTION_TYPES.START_ADDING_UI_SETTINGS, addUiSettings);
-}
-
-function* onUpdateUiSettings() {
+function* onAddAndUpdateUiSettings() {
   yield takeLatest(
-    UI_ACTION_TYPES.START_UPDATING_UI_SETTINGS,
-    updateUiSettings
+    UI_ACTION_TYPES.START_ADDING_AND_UPDATING_UI_SETTINGS,
+    addAndUpdateUiSettings
   );
 }
 
 export function* uiSaga() {
-  yield all([
-    call(onFetchUiSettings),
-    call(onAddUiSettings),
-    call(onUpdateUiSettings),
-  ]);
+  yield all([call(onFetchUiSettings), call(onAddAndUpdateUiSettings)]);
 }

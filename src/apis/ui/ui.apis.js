@@ -2,7 +2,6 @@
 import {
   getDoc,
   serverTimestamp,
-  updateDoc,
   setDoc,
   doc,
   Timestamp,
@@ -19,7 +18,7 @@ import { catchAsync } from "../../utils";
  * Add Default Ui Settings
  */
 export const addDefaultUiSettings = catchAsync(async () => {
-  return await addUiSettings(DEFAULT_UI_SETTINGS_ITEM);
+  return await addAndUpdateUiSettings(DEFAULT_UI_SETTINGS_ITEM);
 });
 
 /**

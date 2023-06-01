@@ -53,15 +53,11 @@ export const startFetchingUiSettings = () =>
   createAction(UI_ACTION_TYPES.START_FETCHING_UI_SETTINGS);
 
 /**
- * Start Adding Ui Settings
- * @param {Object} uiSettings
+ * Start Adding/Updating Ui Settings
+ * @param {Object} newOrUpdatedUiSetting
  */
-export const startAddingUiSettings = (uiSettings) =>
-  createAction(UI_ACTION_TYPES.START_ADDING_UI_SETTINGS, uiSettings);
-
-/**
- * Start Updating Ui Settings
- * @param {Object} updatedUiSettings
- */
-export const startUpdatingUiSettings = (updatedUiSettings) =>
-  createAction(UI_ACTION_TYPES.START_UPDATING_UI_SETTINGS, updatedUiSettings);
+export const startAddingAndUpdatingUiSettings = (newOrUpdatedUiSetting) =>
+  createAction(
+    UI_ACTION_TYPES.START_ADDING_AND_UPDATING_UI_SETTINGS,
+    newOrUpdatedUiSetting
+  );
