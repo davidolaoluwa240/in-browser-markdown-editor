@@ -9,8 +9,7 @@ import {
   ModalHeading,
   ModalDescription,
   ModalButton,
-  modalStyles,
-} from "./delete-document-modal.styles";
+} from "../modal/modal.styles";
 
 export const DeleteDocumentModal = ({
   isOpen,
@@ -22,7 +21,7 @@ export const DeleteDocumentModal = ({
   onClose,
 }) => {
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={modalStyles}>
+    <Modal isOpen={isOpen} onRequestClose={onClose}>
       <ModalHeading>{headingText}</ModalHeading>
       <ModalDescription>{descriptionText}</ModalDescription>
       <ModalButton

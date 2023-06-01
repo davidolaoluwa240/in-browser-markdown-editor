@@ -2,89 +2,114 @@
 import React from "react";
 
 // Hooks
-import { useUi } from "../../../hooks";
+import { useContext, useCallback } from "react";
+import { useUi } from "../../hooks";
+
+// Data
+import { DEFAULT_UI_SETTINGS_ITEM } from "../../data";
+
+// Contexts
+import { ThemeContext } from "styled-components";
 
 // Components
-import Modal from "react-modal";
-import { ThemeToggle, InputToggle } from "../../";
+import { ThemeToggle, InputToggle } from "../";
 
 // Style
 import {
-  ModalHeading,
-  ModalButton,
-} from "../delete-document-modal/delete-document-modal.styles";
-import {
   SettingSubHeading,
-  SettingSubDescription,
+  SettingDescription,
   SettingGroup,
-  settingModalStyles,
   SettingToggleText,
   SettingToggleGroup,
   SettingToggleWrapper,
+  StyledSettingsModal,
+  ModalHeading,
+  ModalButton,
 } from "./settings-modal.styles";
 
 export const SettingsModal = ({ isOpen, onClose }) => {
+  const { theme, handleUpdateTheme } = useContext(ThemeContext);
   const {
     dispatch,
-    theme,
-    setTheme,
     editorFullScreen,
     setEditorFullScreen,
     scrollWith,
     setScrollWith,
+    startUpdatingUiSettings,
+    isLoading,
+    loadingType,
   } = useUi();
+  const isUpdatingUi = isLoading && loadingType === "updating";
   const scrollWithValue = scrollWith === "markdown" ? "off" : "on";
 
   /**
    * Handle Update ScrollWith
    * @param {string} value
    */
-  const handleUpdateScrollWith = (value) =>
-    dispatch(setScrollWith(value === "off" ? "markdown" : "preview"));
+  const handleUpdateScrollWith = useCallback(
+    (value) =>
+      dispatch(setScrollWith(value === "off" ? "markdown" : "preview")),
+    []
+  );
 
   /**
    * Handle Update Editor FullScreen
    * @param {string} value
    */
-  const handleUpdateEditorFullScreen = (editorType, value) => {
+  const handleUpdateEditorFullScreen = useCallback((editorType, value) => {
     const otherEditorType = editorType === "markdown" ? "preview" : "markdown";
-    const otherEditorValue =
-      value === "on" ? "off" : editorFullScreen[otherEditorType];
     dispatch(
       setEditorFullScreen({
         [editorType]: value,
-        [otherEditorType]: otherEditorValue,
+        [otherEditorType]: "off",
       })
     );
-  };
+  }, []);
 
   /**
-   * Update Page Theme
-   * @param {string} theme Theme
+   * Handle Update Ui Settings
+   * @param {Object} uiSettings
    */
-  const handleUpdateTheme = (theme) => dispatch(setTheme(theme));
+  const handleUpdateUiSettings = useCallback(
+    (uiSettings = { scrollWith, editorFullScreen }) =>
+      () => {
+        dispatch(startUpdatingUiSettings(uiSettings));
+      },
+    [scrollWith, editorFullScreen]
+  );
+
+  /**
+   * Handle Reset Ui Setting
+   */
+  const handleResetUiSettings = useCallback(() => {
+    // 1). Reset User Ui Settings
+    handleUpdateUiSettings(DEFAULT_UI_SETTINGS_ITEM)();
+
+    // 2). Reset App Theme
+    handleUpdateTheme("dark");
+  }, []);
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onClose} style={settingModalStyles}>
+    <StyledSettingsModal isOpen={isOpen} onRequestClose={onClose}>
       <ModalHeading>Settings</ModalHeading>
 
       {/* Theme Settings*/}
       <SettingGroup>
         <SettingSubHeading>Theme</SettingSubHeading>
-        <SettingSubDescription>
+        <SettingDescription>
           Switch effortlessly between dark and light mode themes for the editor.
-        </SettingSubDescription>
+        </SettingDescription>
         <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
       </SettingGroup>
 
       {/* Scroll Behaviour */}
       <SettingGroup>
         <SettingSubHeading>Editor Scrolling</SettingSubHeading>
-        <SettingSubDescription>
+        <SettingDescription>
           Customize the scrolling behavior of the editor to suit your
           preferences. You have the power to decide which editor controls and
           keeps an eye on the other editor while scrolling.
-        </SettingSubDescription>
+        </SettingDescription>
         <InputToggle
           onContent={<SettingToggleText>Preview</SettingToggleText>}
           offContent={<SettingToggleText>Markdown</SettingToggleText>}
@@ -96,11 +121,11 @@ export const SettingsModal = ({ isOpen, onClose }) => {
       {/* Full Screen Mode */}
       <SettingGroup>
         <SettingSubHeading>Full Screen</SettingSubHeading>
-        <SettingSubDescription>
+        <SettingDescription>
           Maximize your editing experience with our convenient full-screen mode
           toggle. Easily switch between regular and full-screen modes to
           optimize your focus and productivity.
-        </SettingSubDescription>
+        </SettingDescription>
 
         <SettingToggleWrapper>
           <SettingToggleGroup>
@@ -126,9 +151,18 @@ export const SettingsModal = ({ isOpen, onClose }) => {
       </SettingGroup>
 
       <SettingToggleWrapper>
-        <ModalButton widthFull>Save Settings</ModalButton>
-        <ModalButton widthFull>Reset Settings</ModalButton>
+        <ModalButton
+          widthFull
+          tertiary
+          isLoading={isUpdatingUi}
+          onClick={handleUpdateUiSettings()}
+        >
+          Save Settings
+        </ModalButton>
+        <ModalButton widthFull secondary onClick={handleResetUiSettings}>
+          Reset Settings
+        </ModalButton>
       </SettingToggleWrapper>
-    </Modal>
+    </StyledSettingsModal>
   );
 };

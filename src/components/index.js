@@ -1,6 +1,7 @@
 // Re-Export Components
 export * from "./animate-tail-spin/animate-tail-spin.component";
 export * from "./animate-three-dots/animate-three-dots.component";
+export * from "./react-modal-enhanced/react-modal-enhanced.component";
 export * from "./button/button.component";
 export * from "./theme-toggle/theme-toggle.component";
 export * from "./document-file-base/document-file-base.component";
@@ -14,6 +15,7 @@ export * from "./editor/markdown-editor/markdown-editor.component";
 export * from "./editor/preview-editor/preview-editor.component";
 export * from "./toast-container/toast-container.component";
 export * from "./page-loader/page-loader.component";
-export * from "./modals/delete-document-modal/delete-document-modal.component";
-export * from "./modals/settings-modal/settings-modal.component";
+export * from "./delete-document-modal/delete-document-modal.component";
+export * from "./settings-modal/settings-modal.component";
 export * from "./input-toggle/input-toggle.component";
+export * from "./modal/modal.component";

@@ -1,38 +1,37 @@
 // Modules
 import styled from "styled-components";
 
+// Components
+import { Modal } from "../modal/modal.component";
+
 // Styles
 import {
   ModalDescription,
-  modalStyles,
   ModalButton,
-} from "../delete-document-modal/delete-document-modal.styles";
+  ModalHeading,
+} from "../modal/modal.styles";
 
 export const SettingSubHeading = styled.p`
   font-size: 1.7rem;
   line-height: 24px;
   font-weight: 600;
   font-family: Roboto Slab, serif;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
   color: #f8f9fa;
 `;
 
-export const SettingSubDescription = styled(ModalDescription)`
+export const SettingDescription = styled(ModalDescription)`
   margin-bottom: 0.5rem;
 `;
 
 export const SettingGroup = styled.div`
-  margin-bottom: 1.5rem;
-  &:not(:last-child) {
-  }
+  margin-bottom: 1.7rem;
 `;
 
 export const SettingToggleText = styled.span`
-  color: rgb(90, 96, 105);
+  color: ${({ isActive }) => (isActive ? "#f8f9fa" : "rgb(90, 96, 105)")};
   font-size: 1.4rem;
   font-weight: 500;
-
-  ${({ isActive }) => isActive && "color: #f8f9fa"}
 `;
 
 export const SettingToggleGroup = styled.div`
@@ -41,7 +40,7 @@ export const SettingToggleGroup = styled.div`
   }
 
   > ${SettingToggleText} {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     color: #f8f9fa;
   }
 `;
@@ -58,7 +57,10 @@ export const SettingToggleWrapper = styled.div`
   }
 `;
 
-export const settingModalStyles = {
-  ...modalStyles,
-  content: { ...modalStyles.content, maxWidth: "600px" },
-};
+export const StyledSettingsModal = styled(Modal)`
+  .ReactModal__Content {
+    max-width: 600px;
+  }
+`;
+
+export { ModalHeading, ModalButton };
