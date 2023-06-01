@@ -1,13 +1,26 @@
 // Modules
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 // Components
+import { MdClose } from "react-icons/md";
 import { ReactModalExhanced, Button } from "../";
+
+// Animations
+const animateModalIn = keyframes`
+  from{
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 export const StyledReactModalExhanced = styled(ReactModalExhanced)`
   background: hsla(213, 4%, 51%, 0.4);
   position: fixed;
   inset: 0px;
+  animation: ${animateModalIn} 0.3s linear;
 
   .ReactModal__Content {
     top: 50% !important;
@@ -41,4 +54,25 @@ export const ModalDescription = styled.p`
 
 export const ModalButton = styled(Button)`
   font-weight: 600;
+`;
+
+export const ModalCloseIconContainer = styled.div`
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  cursor: pointer;
+  border-radius: 9999px;
+  display: ${({ showCloseIcon }) => (showCloseIcon ? "flex" : "none")};
+  background: linear-gradient(
+    198deg,
+    rgba(6, 123, 194, 1) 0%,
+    rgba(228, 102, 67, 1) 83%
+  );
+`;
+
+export const ModalCloseIcon = styled(MdClose)`
+  font-size: 2.2rem;
+  color: #f8f9fa;
+  vertical-align: middle;
+  font-weight: 700;
 `;

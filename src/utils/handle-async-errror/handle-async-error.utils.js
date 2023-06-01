@@ -7,7 +7,7 @@ import { FirebaseError } from "firebase/app";
 
 // Async Error Map
 export const ASYNC_ERROR_MAP = {
-  network: "Internet Connectivity Error. Connect To Internet And Try Again",
+  network: "Internet Connectivity Error. Connect To Internet And Reload",
   unknown: "An Unknown Error Occur",
   unhandled:
     process.env.NODE_ENV === "development"

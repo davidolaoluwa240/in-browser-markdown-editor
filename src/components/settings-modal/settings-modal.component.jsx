@@ -35,7 +35,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
     setEditorFullScreen,
     scrollWith,
     setScrollWith,
-    startUpdatingUiSettings,
+    startAddingAndUpdatingUiSettings,
     isLoading,
     loadingType,
   } = useUi();
@@ -73,7 +73,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
   const handleUpdateUiSettings = useCallback(
     (uiSettings = { scrollWith, editorFullScreen }) =>
       () => {
-        dispatch(startUpdatingUiSettings(uiSettings));
+        dispatch(startAddingAndUpdatingUiSettings(uiSettings));
       },
     [scrollWith, editorFullScreen]
   );
@@ -159,7 +159,12 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         >
           Save Settings
         </ModalButton>
-        <ModalButton widthFull secondary onClick={handleResetUiSettings}>
+        <ModalButton
+          widthFull
+          secondary
+          disabled={isUpdatingUi}
+          onClick={handleResetUiSettings}
+        >
           Reset Settings
         </ModalButton>
       </SettingToggleWrapper>
