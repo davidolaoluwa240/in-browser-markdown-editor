@@ -46,10 +46,13 @@ function* fetchUiSettings() {
   }
 }
 
-function* addAndUpdateUiSettings() {
+function* addAndUpdateUiSettings({ payload: newOrUpdatedUiSetting }) {
   try {
-    yield put(setLoadingType("add/update"));
-    const uiSettings = yield call(Apis.addAndUpdateUiSettings);
+    yield put(setLoadingType("adding/updating"));
+    const uiSettings = yield call(
+      Apis.addAndUpdateUiSettings,
+      newOrUpdatedUiSetting
+    );
     yield call(setUiSettings, uiSettings);
   } catch (err) {
     yield put(setError(err));

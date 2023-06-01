@@ -14,27 +14,30 @@ import { DEFAULT_UI_SETTINGS_ITEM } from "../../data";
 // Utils
 import { catchAsync } from "../../utils";
 
+/**
+ * Add Default Ui Settings
+ */
 export const addDefaultUiSettings = catchAsync(async () => {
   return await addAndUpdateUiSettings(DEFAULT_UI_SETTINGS_ITEM);
 });
 
 /**
- * Add/Update New Ui Settings
+ * Add/Update Ui Settings
  * @param {Object} settings
  */
 export const addAndUpdateUiSettings = catchAsync(async (settings) => {
-  // Get Auth User Uid
+  // 1). Get Auth User Uid/CreationTime
   const {
     uid,
     metadata: { creationTime },
   } = auth.currentUser;
 
-  // Ui Doc Ref
-  const uiDocRef = doc(uiCollectionRef, uid);
+  // 2). Ui Doc Ref
+  const uiRef = doc(uiCollectionRef, uid);
 
-  // Perform Adding/Updating Ui Doc
+  // 3). Perform Adding/Updating Ui Setting
   await setDoc(
-    uiDocRef,
+    uiRef,
     {
       ...settings,
       createdAt: Timestamp.fromDate(new Date(creationTime)),
@@ -43,10 +46,10 @@ export const addAndUpdateUiSettings = catchAsync(async (settings) => {
     { merge: true }
   );
 
-  // Get Ui Setting
+  // 4). Get Ui Setting
   const uiSetting = await fetchUiSettings();
 
-  // Retur Ui Setting
+  // 5). Return Ui Setting
   return uiSetting;
 });
 
