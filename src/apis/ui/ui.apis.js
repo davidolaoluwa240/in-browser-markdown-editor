@@ -23,48 +23,29 @@ export const addDefaultUiSettings = catchAsync(async () => {
 });
 
 /**
- * Add New Ui Settings
+ * Add Ui Settings
  * @param {Object} settings
  */
-export const addUiSettings = catchAsync(async (settings) => {
-  // 1). Get Auth User Uid
-  const { uid } = auth.currentUser;
+export const addAndUpdateUiSettings = catchAsync(async (settings) => {
+  // 1). Get Auth User Uid/CreationTime
+  const {
+    uid,
+    metadata: { creationTime },
+  } = auth.currentUser;
 
   // 2). Ui Doc Ref
   const uiRef = doc(uiCollectionRef, uid);
 
-  // 3). Perform Adding Ui Setting
-  await setDoc(uiRef, {
-    ...settings,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-  });
-
-  // 4). Get Ui Setting
-  const uiSetting = await fetchUiSettings();
-
-  // 5). Return Ui Setting
-  return uiSetting;
-});
-
-/**
- * Update Ui Settings
- * @param {Object} updatedSettings
- */
-export const updateUiSettings = catchAsync(async (updatedSettings) => {
-  // 1). Get Ui Settings Id And CreatedAt Date
-  const { uid: id } = auth.currentUser;
-  const { createdAt } = updatedSettings;
-
-  // 2). Ui Doc Ref
-  const uiRef = doc(uiCollectionRef, id);
-
-  // 3). Perform updating Ui Setting
-  await updateDoc(uiRef, {
-    ...updatedSettings,
-    createdAt: Timestamp.fromDate(new Date(createdAt)),
-    updatedAt: serverTimestamp(),
-  });
+  // 3). Perform Adding/Updating Ui Setting
+  await setDoc(
+    uiRef,
+    {
+      ...settings,
+      createdAt: Timestamp.fromDate(new Date(creationTime)),
+      updatedAt: serverTimestamp(),
+    },
+    { merge: true }
+  );
 
   // 4). Get Ui Setting
   const uiSetting = await fetchUiSettings();
