@@ -104,9 +104,9 @@ export const Navbar = () => {
 
       <NavbarWrapper>
         <NavbarBrand>
-          <NavbarMenu onClick={toggleMenuVisibility}>
-            <NavbarMenuIcon isMenuOpen={isSideBarOpen} />
-            <NavbarMenuCloseIcon isMenuOpen={isSideBarOpen} />
+          <NavbarMenu isMenuOpen={isSideBarOpen} onClick={toggleMenuVisibility}>
+            <NavbarMenuIcon />
+            <NavbarMenuCloseIcon />
           </NavbarMenu>
           <NavbarBrandTitle>Markdown</NavbarBrandTitle>
           <DocumentNameEditor />

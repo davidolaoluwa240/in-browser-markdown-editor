@@ -22,6 +22,21 @@ export const NavbarBrand = styled.div`
   display: flex;
 `;
 
+const navbarMenuIconStyle = css`
+  font-size: 3.8rem;
+  color: #ffffff;
+  font-weight: 700;
+  vertical-align: middle;
+`;
+
+export const NavbarMenuIcon = styled(IoMenuOutline)`
+  ${NavbarMenuIconStyle}
+`;
+
+export const NavbarMenuCloseIcon = styled(IoMdClose)`
+  ${NavbarMenuIconStyle}
+`;
+
 export const NavbarMenu = styled.span`
   width: 72px;
   height: 100%;
@@ -30,23 +45,14 @@ export const NavbarMenu = styled.span`
   justify-content: center;
   align-items: center;
   background: #495057;
-`;
 
-const NavbarMenuIconBase = css`
-  font-size: 3.8rem;
-  color: #ffffff;
-  font-weight: 700;
-  vertical-align: middle;
-`;
+  ${NavbarMenuIcon} {
+    display: ${({ isMenuOpen }) => (isMenuOpen ? "none" : "block")};
+  }
 
-export const NavbarMenuIcon = styled(IoMenuOutline)`
-  ${NavbarMenuIconBase}
-  ${({ isMenuOpen }) => isMenuOpen && "display: none"}
-`;
-
-export const NavbarMenuCloseIcon = styled(IoMdClose)`
-  ${NavbarMenuIconBase}
-  ${({ isMenuOpen }) => !isMenuOpen && "display: none"}
+  ${NavbarMenuCloseIcon} {
+    display: ${({ isMenuOpen }) => (isMenuOpen ? "block" : "none")};
+  }
 `;
 
 export const NavbarBrandTitle = styled.h1`
