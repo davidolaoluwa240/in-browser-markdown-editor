@@ -58,7 +58,7 @@ export const ModalButton = styled(Button)`
 
 export const ModalCloseIconContainer = styled.div`
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 10px;
   cursor: pointer;
   border-radius: 9999px;
