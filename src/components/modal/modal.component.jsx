@@ -17,6 +17,7 @@ export const Modal = ({
   return (
     <StyledReactModalExhanced onRequestClose={onRequestClose} {...props}>
       <ModalCloseIconContainer
+        title="close modal"
         showCloseIcon={showCloseIcon}
         onClick={onRequestClose}
       >

@@ -12,6 +12,7 @@ import * as Apis from "../../apis";
 
 export function* addDefaultDocument() {
   try {
+    yield put(setLoadingType("adding/default"));
     const documents = yield call(Apis.addDefaultDocument);
     yield put(setDocuments(documents));
   } catch (err) {

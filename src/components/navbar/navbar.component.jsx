@@ -1,9 +1,8 @@
 // Modules
 import React from "react";
-import { toast } from "react-toastify";
 
 // Hooks
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useUi, useAuth, useDocument } from "../../hooks";
 
 // Components
@@ -35,76 +34,85 @@ export const Navbar = () => {
   const {
     document,
     isLoading,
-    setDocuments,
-    documents,
     loadingType,
     startUpdatingDocument,
     startDeletingDocument,
   } = useDocument();
+  const isUpdatingDocument = isLoading && loadingType === "updating";
+  const isDeletingDocument = isLoading && loadingType === "deleting";
 
   /**
-   * Toggle Menu Visibility
+   * Handle Toggle Menu Visibility
    */
-  const toggleMenuVisibility = () =>
-    dispatch(setSideBarVisibility(!isSideBarOpen));
+  const handleToggleMenuVisibility = useCallback(
+    () => dispatch(setSideBarVisibility(!isSideBarOpen)),
+    [isSideBarOpen]
+  );
 
   /**
    * Handle Logout User
    */
-  const handleLogoutUser = () => dispatch(logoutUser());
+  const handleLogoutUser = useCallback(() => dispatch(logoutUser()), []);
 
   /**
    * Handle Save File Changes To Cloud
    */
-  const handleSaveFileChangesToCloud = () => {
+  const handleSaveFileChangesToCloud = useCallback(() => {
     document && dispatch(startUpdatingDocument(document));
-  };
+  }, [document]);
 
   /**
    * Handle Open Delete Document Modal
    */
-  const handleOpenDeleteDocumentModal = () => setIsDeleteModalOpen(true);
+  const handleOpenDeleteDocumentModal = useCallback(
+    () => setIsDeleteModalOpen(true),
+    []
+  );
 
   /**
    * Handle Close Delete Document Modal
    */
-  const handleCloseDeleteDocumentModal = () => setIsDeleteModalOpen(false);
+  const handleCloseDeleteDocumentModal = useCallback(
+    () => setIsDeleteModalOpen(false),
+    []
+  );
 
   /**
    * Handle Download Markdown File
    */
-  const handleDownloadMarkdownFile = () => downloadMarkdownFile(document);
+  const handleDownloadMarkdownFile = useCallback(
+    () => downloadMarkdownFile(document),
+    [document]
+  );
 
   /**
    * Handle Deleting Document
    */
-  const onHandleDeleteDocument = () => {
-    if (documents.length > 1) {
-      // Perform Deletion
-      dispatch(startDeletingDocument(document));
-    } else {
-      toast.error("Operation denied: default document cannot be deleted");
-    }
+  const onHandleDeleteDocument = useCallback(() => {
+    // Perform Deletion
+    dispatch(startDeletingDocument(document.id));
 
     // Close Delete Document Modal
     handleCloseDeleteDocumentModal();
-  };
+  }, [document]);
 
   return (
     <Fragment>
       <DeleteDocumentModal
         headingText={"Delete this document?"}
         descriptionText={`Are you sure you want to delete ‘${document?.fileName}.md’ document and its contents? This action cannot be reversed.`}
-        isLoading={isLoading}
-        loadingType={loadingType}
-        isOpen={isDeleteModalOpen}
+        isLoading={isDeletingDocument}
+        isOpen={isDeleteModalOpen || isDeletingDocument}
         onClose={handleCloseDeleteDocumentModal}
         onHandleDelete={onHandleDeleteDocument}
       />
 
       <NavbarWrapper>
         <NavbarBrand>
-          <NavbarMenu isMenuOpen={isSideBarOpen} onClick={toggleMenuVisibility}>
+          <NavbarMenu
+            isMenuOpen={isSideBarOpen}
+            onClick={handleToggleMenuVisibility}
+          >
             <NavbarMenuIcon />
             <NavbarMenuCloseIcon />
           </NavbarMenu>
@@ -115,13 +123,14 @@ export const Navbar = () => {
         <NavbarAction>
           <NavbarDocumentDeleteIcon onClick={handleOpenDeleteDocumentModal} />
 
-          <Button onClick={handleDownloadMarkdownFile}>
+          <Button secondary onClick={handleDownloadMarkdownFile}>
             <DownloadIcon />
             Download
           </Button>
 
           <Button
-            isLoading={isLoading && loadingType === "saving"}
+            tertiary
+            isLoading={isUpdatingDocument}
             onClick={handleSaveFileChangesToCloud}
           >
             <SaveIcon />

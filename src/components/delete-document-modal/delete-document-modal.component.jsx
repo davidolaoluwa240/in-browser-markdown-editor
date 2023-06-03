@@ -2,7 +2,7 @@
 import React from "react";
 
 // Components
-import Modal from "react-modal";
+import { Modal } from "../modal/modal.component";
 
 // Style
 import {
@@ -14,11 +14,10 @@ import {
 export const DeleteDocumentModal = ({
   isOpen,
   isLoading,
-  loadingType,
-  onHandleDelete,
   headingText,
   descriptionText,
   onClose,
+  onHandleDelete,
 }) => {
   return (
     <Modal isOpen={isOpen} onRequestClose={onClose}>
@@ -26,7 +25,8 @@ export const DeleteDocumentModal = ({
       <ModalDescription>{descriptionText}</ModalDescription>
       <ModalButton
         widthFull
-        isLoading={isLoading && loadingType === "deleting"}
+        secondary
+        isLoading={isLoading}
         onClick={onHandleDelete}
       >
         Confirm & Delete

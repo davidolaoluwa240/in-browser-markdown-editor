@@ -41,18 +41,9 @@ const _RootLayout = () => {
     width: window.outerWidth,
   });
   const { dispatch, isSideBarOpen } = useUi();
-  const {
-    startAddingDocument,
-    isLoading,
-    loadingType,
-    startFetchingDocuments,
-  } = useDocument();
+  const { startAddingDocument, isLoading, loadingType } = useDocument();
   const { theme, handleUpdateTheme } = useContext(ThemeContext);
   const isAddingDocument = isLoading && loadingType === "adding";
-
-  useEffect(() => {
-    dispatch(startFetchingDocuments());
-  }, []);
 
   /**
    * Open Settings Modal

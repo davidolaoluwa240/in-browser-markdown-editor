@@ -20,7 +20,7 @@ export const setIsLoading = (bool) =>
 
 /**
  * Set Error State
- * @param {string} type
+ * @param {Object} error
  */
 export const setError = (error) =>
   createAction(DOCUMENT_ACTION_TYPES.SET_ERROR, error);
@@ -42,12 +42,8 @@ export const startFetchingDocuments = () =>
  * Start Updating Document
  * @param {Object} updatedDocument
  */
-export const startUpdatingDocument = ({ fileName, content, id }) =>
-  createAction(DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT, {
-    fileName,
-    content,
-    id,
-  });
+export const startUpdatingDocument = (updatedDocument) =>
+  createAction(DOCUMENT_ACTION_TYPES.START_UPDATING_DOCUMENT, updatedDocument);
 
 /**
  * Start Adding Document
@@ -61,6 +57,4 @@ export const startAddingDocument = (newDocument) =>
  * @param {string} documentId
  */
 export const startDeletingDocument = (documentId) =>
-  createAction(DOCUMENT_ACTION_TYPES.START_DELETING_DOCUMENT, {
-    id: documentId,
-  });
+  createAction(DOCUMENT_ACTION_TYPES.START_DELETING_DOCUMENT, documentId);

@@ -12,8 +12,14 @@ import {
   setError,
 } from "./ui.action";
 
+// Utils
+import { catchAsyncGen as utilCatchAsyncGen } from "../../utils";
+
 // Apis
 import * as Apis from "../../apis";
+
+// Configurations
+const catchAsyncGen = utilCatchAsyncGen.bind(setError);
 
 function* setUiSettings(uiSettings) {
   const { editorFullScreen, scrollWith } = uiSettings;
@@ -21,43 +27,31 @@ function* setUiSettings(uiSettings) {
   yield put(setScrollWith(scrollWith));
 }
 
-function* addDefaultUiSettings() {
-  try {
-    const uiSettings = yield call(Apis.addDefaultUiSettings);
+const addDefaultUiSettings = catchAsyncGen(function* () {
+  const uiSettings = yield call(Apis.addDefaultUiSettings);
+  yield call(setUiSettings, uiSettings);
+});
+
+const fetchUiSettings = catchAsyncGen(function* () {
+  yield put(setLoadingType("fetching"));
+  const uiSettings = yield call(Apis.fetchUiSettings);
+  if (uiSettings) {
     yield call(setUiSettings, uiSettings);
-  } catch (err) {
-    yield put(setError(err));
+  } else {
+    yield call(addDefaultUiSettings);
   }
-}
+});
 
-function* fetchUiSettings() {
-  try {
-    yield put(setLoadingType("fetching"));
-    const uiSettings = yield call(Apis.fetchUiSettings);
-    if (uiSettings) {
-      yield call(setUiSettings, uiSettings);
-    } else {
-      yield call(addDefaultUiSettings);
-    }
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
-
-function* addAndUpdateUiSettings({
+const addAndUpdateUiSettings = catchAsyncGen(function* ({
   payload: { loadingType = "updating", ...newOrUpdatedUiSetting },
 }) {
-  try {
-    yield put(setLoadingType(loadingType));
-    const uiSettings = yield call(
-      Apis.addAndUpdateUiSettings,
-      newOrUpdatedUiSetting
-    );
-    yield call(setUiSettings, uiSettings);
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+  yield put(setLoadingType(loadingType));
+  const uiSettings = yield call(
+    Apis.addAndUpdateUiSettings,
+    newOrUpdatedUiSetting
+  );
+  yield call(setUiSettings, uiSettings);
+});
 
 function* onFetchUiSettings() {
   yield takeLatest(UI_ACTION_TYPES.START_FETCHING_UI_SETTINGS, fetchUiSettings);

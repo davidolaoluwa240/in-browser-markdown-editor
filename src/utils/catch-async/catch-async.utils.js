@@ -1,3 +1,6 @@
+// Modules
+import { put, call } from "redux-saga/effects";
+
 // Utils
 import { handleAsyncError } from "../";
 
@@ -22,3 +25,18 @@ export const catchAsync =
       await handleAsyncError(err);
     }
   };
+
+/**
+ * Catch/Handle Asynchronous Error For Generator Functions
+ * @param {Function} error Error redux action
+ * @param {Function} genCallback Generator function callback
+ */
+export const catchAsyncGen = (setError, genCallback) => {
+  return function* (action) {
+    try {
+      return yield call(genCallback, action);
+    } catch (err) {
+      yield put(setError(err));
+    }
+  };
+};

@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 
 // Hooks
 import { useEffect, useState } from "react";
-import { useAuth, useUi } from "../hooks";
+import { useAuth, useUi, useDocument } from "../hooks";
 
 // Components
 import { ThemeProvider } from "styled-components";
@@ -18,6 +18,7 @@ import { Routes } from "../routes.component";
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
   const { isLoading, loadingType, startFetchingUiSettings } = useUi();
+  const { startFetchingDocuments } = useDocument();
   const [theme, setTheme] = useState(DARK_THEME);
   const isFetchingUiSettings = isLoading && loadingType === "fetching";
 
@@ -31,6 +32,9 @@ const App = () => {
     if (currentUser) {
       // Fetch User Settings
       dispatch(startFetchingUiSettings());
+
+      // Fetch User Documents
+      dispatch(startFetchingDocuments());
     }
   }, [currentUser]);
 

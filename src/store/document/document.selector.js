@@ -10,12 +10,6 @@ export const selectDocuments = createSelector(
   (documentSlice) => documentSlice.documents
 );
 
-// Select Active Documents
-export const selectActiveDocuments = createSelector(
-  [selectDocuments],
-  (documents) => documents.filter((doc) => doc.isActive)
-);
-
 // Select IsLoading State
 export const selectIsLoading = createSelector(
   [selectDocumentReducer],

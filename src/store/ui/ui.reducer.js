@@ -29,6 +29,7 @@ export const uiReducer = (state = INITIAL_STATE, action = {}) => {
         editorFullScreen: payload,
         loadingType: "",
         isLoading: false,
+        error: null,
       };
     case UI_ACTION_TYPES.SET_SCROLL_WITH:
       return { ...state, scrollWith: payload };

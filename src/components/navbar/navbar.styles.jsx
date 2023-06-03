@@ -30,11 +30,11 @@ const navbarMenuIconStyle = css`
 `;
 
 export const NavbarMenuIcon = styled(IoMenuOutline)`
-  ${NavbarMenuIconStyle}
+  ${navbarMenuIconStyle}
 `;
 
 export const NavbarMenuCloseIcon = styled(IoMdClose)`
-  ${NavbarMenuIconStyle}
+  ${navbarMenuIconStyle}
 `;
 
 export const NavbarMenu = styled.span`
@@ -81,26 +81,22 @@ export const NavbarBrandTitle = styled.h1`
 `;
 
 export const NavbarAction = styled.div`
-  flex: 1;
+  margin-left: auto;
   display: flex;
-  justify-content: flex-end;
   align-items: center;
   margin-right: 2.4rem;
 
   ${ButtonBase} {
-    &:hover {
-      background: #e46643;
-    }
-
     &:not(:last-of-type) {
       margin-right: 1rem;
     }
   }
 `;
 
-export const NavbarIconStyleBase = css`
+export const navbarIconStyle = css`
   font-size: 2.6rem;
   cursor: pointer;
+  vertical-align: middle;
   color: rgb(124, 129, 135);
   transition: color 0.3s ease-out;
 
@@ -110,11 +106,16 @@ export const NavbarIconStyleBase = css`
 `;
 
 export const NavbarDocumentDeleteIcon = styled(TbTrash)`
-  ${NavbarIconStyleBase};
+  ${navbarIconStyle};
   margin-right: 2.4rem;
 `;
 
-const iconStyleBase = css`
+export const LogoutIcon = styled(MdLogout)`
+  ${navbarIconStyle};
+  margin-left: 2.4rem;
+`;
+
+const buttonIconStyle = css`
   margin-right: 0.8rem;
   font-size: 2.3rem;
   color: #ffffff;
@@ -122,14 +123,9 @@ const iconStyleBase = css`
 `;
 
 export const SaveIcon = styled(BiSave)`
-  ${iconStyleBase}
+  ${buttonIconStyle}
 `;
 
 export const DownloadIcon = styled(FiDownload)`
-  ${iconStyleBase}
-`;
-
-export const LogoutIcon = styled(MdLogout)`
-  ${NavbarIconStyleBase};
-  margin-left: 2.4rem;
+  ${buttonIconStyle}
 `;
