@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 // Components
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { IoDocumentOutline } from "react-icons/io5";
 
 export const DocumentFileContent = styled.p`
@@ -13,7 +13,7 @@ export const DocumentFileContent = styled.p`
   transition: color 0.3s ease-out;
 `;
 
-export const DocumentFileItemWrapper = styled(Link)`
+export const DocumentFileItemWrapper = styled(NavLink)`
   display: flex;
   align-items: center;
   color: #ffffff;
@@ -24,6 +24,12 @@ export const DocumentFileItemWrapper = styled(Link)`
   }
 
   &:hover {
+    ${DocumentFileContent} {
+      color: #e46643;
+    }
+  }
+
+  &.active {
     ${DocumentFileContent} {
       color: #e46643;
     }
