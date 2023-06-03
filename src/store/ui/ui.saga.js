@@ -19,7 +19,7 @@ import { catchAsyncGen as utilCatchAsyncGen } from "../../utils";
 import * as Apis from "../../apis";
 
 // Configurations
-const catchAsyncGen = utilCatchAsyncGen.bind(setError);
+const catchAsyncGen = utilCatchAsyncGen.bind(null, setError);
 
 function* setUiSettings(uiSettings) {
   const { editorFullScreen, scrollWith } = uiSettings;
