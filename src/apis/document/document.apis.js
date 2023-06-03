@@ -89,7 +89,7 @@ export const updateDocument = catchAsync(async (updatedDocumentData) => {
   const documentRef = doc(documentCollectionRef, id);
 
   // 3). Perform Updating Document
-  await updateDoc(documentDocRef, {
+  await updateDoc(documentRef, {
     ...(fileName && { fileName, content }),
     isActive,
     updatedAt: serverTimestamp(),
