@@ -7,62 +7,50 @@ import { DOCUMENT_ACTION_TYPES } from "./document.type";
 // Actions
 import { setDocuments, setLoadingType, setError } from "./document.action";
 
+// Utils
+import { catchAsyncGen as utilCatchAsyncGen } from "../../utils";
+
 // Apis
 import * as Apis from "../../apis";
 
-export function* addDefaultDocument() {
-  try {
-    yield put(setLoadingType("adding/default"));
-    const documents = yield call(Apis.addDefaultDocument);
-    yield put(setDocuments(documents));
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+// Configurations
+const catchAsyncGen = utilCatchAsyncGen.bind(null, setError);
 
-export function* fetchDocuments() {
-  try {
-    yield put(setLoadingType("fetching"));
-    const documents = yield call(Apis.fetchDocuments);
-    if (documents.length) {
-      yield put(setDocuments(documents));
-    } else {
-      yield call(addDefaultDocument);
-    }
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+const addDefaultDocument = catchAsyncGen(function* () {
+  yield put(setLoadingType("adding/default"));
+  const documents = yield call(Apis.addDefaultDocument);
+  yield put(setDocuments(documents));
+});
 
-export function* addDocument({ payload: newDocument }) {
-  try {
-    yield put(setLoadingType("adding"));
-    const documents = yield call(Apis.addDocument, newDocument);
+const fetchDocuments = catchAsyncGen(function* () {
+  yield put(setLoadingType("fetching"));
+  const documents = yield call(Apis.fetchDocuments);
+  if (documents.length) {
     yield put(setDocuments(documents));
-  } catch (err) {
-    yield put(setError(err));
+  } else {
+    yield call(addDefaultDocument);
   }
-}
+});
 
-export function* updateDocument({ payload: updatedDocumentData }) {
-  try {
-    yield put(setLoadingType("updating"));
-    const documents = yield call(Apis.updateDocument, updatedDocumentData);
-    yield put(setDocuments(documents));
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+const addDocument = catchAsyncGen(function* ({ payload: newDocument }) {
+  yield put(setLoadingType("adding"));
+  const documents = yield call(Apis.addDocument, newDocument);
+  yield put(setDocuments(documents));
+});
 
-export function* deleteDocument({ payload: documentId }) {
-  try {
-    yield put(setLoadingType("deleting"));
-    const documents = yield call(Apis.deleteDocument, documentId);
-    yield put(setDocuments(documents));
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+const updateDocument = catchAsyncGen(function* ({
+  payload: updatedDocumentData,
+}) {
+  yield put(setLoadingType("updating"));
+  const documents = yield call(Apis.updateDocument, updatedDocumentData);
+  yield put(setDocuments(documents));
+});
+
+const deleteDocument = catchAsyncGen(function* ({ payload: documentId }) {
+  yield put(setLoadingType("deleting"));
+  const documents = yield call(Apis.deleteDocument, documentId);
+  yield put(setDocuments(documents));
+});
 
 export function* onFetchDocuments() {
   yield takeLatest(

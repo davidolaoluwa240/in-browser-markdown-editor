@@ -33,13 +33,13 @@ export const addDefaultDocument = catchAsync(async () => {
  * @param {Object} newDocument
  */
 export const addDocument = catchAsync(async (newDocument) => {
-  // Get Auth User Uid
+  // 1). Get Auth User Uid
   const { uid } = auth.currentUser;
 
-  // User Doc Ref
+  // 2). User Doc Ref
   const userRef = doc(userCollectionRef, uid);
 
-  // Perform Adding Document
+  // 3). Perform Adding Document
   await addDoc(documentCollectionRef, {
     ...newDocument,
     isActive: true,
@@ -48,11 +48,8 @@ export const addDocument = catchAsync(async (newDocument) => {
     updatedAt: serverTimestamp(),
   });
 
-  // Get Documents
-  const allDocuments = await fetchDocuments();
-
-  // Return Documents
-  return allDocuments;
+  // 4). Get Documents And Return Documents
+  return await fetchDocuments();
 });
 
 /**
@@ -60,23 +57,23 @@ export const addDocument = catchAsync(async (newDocument) => {
  * @param {boolean} activeDocuments Determine whether To Fetch Active Documents
  */
 export const fetchDocuments = catchAsync(async (activeDocuments = true) => {
-  // Get Auth User Uid
+  // 1). Get Auth User Uid
   const { uid } = auth.currentUser;
 
-  // User Doc Ref
+  // 2). User Doc Ref
   const userRef = doc(userCollectionRef, uid);
 
-  // Create Document Query
+  // 3). Create Document Query
   const documentQuery = query(
     documentCollectionRef,
     where("user", "==", userRef),
     where("isActive", "==", activeDocuments)
   );
 
-  // Get Documents
+  // 4). Get Documents
   const documentQuerySnapshot = await getDocs(documentQuery);
 
-  // Return Documents
+  // 5). Return Documents
   return firebaseLooper(documentQuerySnapshot);
 });
 
@@ -85,29 +82,27 @@ export const fetchDocuments = catchAsync(async (activeDocuments = true) => {
  * @param {Object} updatedDocumentData
  */
 export const updateDocument = catchAsync(async (updatedDocumentData) => {
-  // Get Document Id
-  const { id } = updatedDocumentData;
+  // 1). Get Document Data
+  const { id, fileName, content, isActive } = updatedDocumentData;
 
-  // Document Doc Ref
-  const documentDocRef = doc(documentCollectionRef, id);
+  // 2). Document Doc Ref
+  const documentRef = doc(documentCollectionRef, id);
 
-  // Perform Update
+  // 3). Perform Updating Document
   await updateDoc(documentDocRef, {
-    ...updatedDocumentData,
+    ...(fileName && { fileName, content }),
+    isActive,
     updatedAt: serverTimestamp(),
   });
 
-  // Get Documents
-  const allDocuments = await fetchDocuments();
-
-  // Return Documents
-  return allDocuments;
+  // 4). Get Documents And Return Documents
+  return await fetchDocuments();
 });
 
 /**
  * Delete Document
- * @param {Object} deletedDocument
+ * @param {string} documentId
  */
-export const deleteDocument = catchAsync((deletedDocument) => {
-  return updateDocument({ ...deletedDocument, isActive: false });
+export const deleteDocument = catchAsync((documentId) => {
+  return updateDocument({ id: documentId, isActive: false });
 });

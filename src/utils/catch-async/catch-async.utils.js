@@ -12,14 +12,11 @@ export const catchAsync =
   (callback) =>
   async (...data) => {
     try {
-      // Trigger Async Callback
-      const response = await callback(...data);
-
-      // Return Response
-      return response;
+      return await callback(...data);
     } catch (err) {
-      // TODO: remove below console.log later
+      // TODO: remove below console.log/table later
       console.log(err);
+      console.table(err);
 
       // Handle Asynchronous Error
       await handleAsyncError(err);
