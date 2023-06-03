@@ -7,57 +7,52 @@ import { AUTH_ACTION_TYPES } from "./auth.type";
 // Actions
 import { setCurrentUser, setError, setLoadingType } from "./auth.action";
 
+// Utils
+import { catchAsyncGen as utilCatchAsyncGen } from "../../utils";
+
 // Apis
 import * as Apis from "../../apis";
 
-export function* initializeAuth() {
-  try {
-    const userProfile = yield call(Apis.initializeAuth);
-    yield put(setCurrentUser(userProfile));
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+// Configurations
+const catchAsyncGen = utilCatchAsyncGen.bind(null, setError);
 
-export function* linkOAuthProvider(err) {
-  try {
-    const userProfile = yield call(Apis.linkOAuthProvider, err);
-    yield put(setCurrentUser(userProfile));
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+const initializeAuth = catchAsyncGen(function* () {
+  const userProfile = yield call(Apis.initializeAuth);
+  yield put(setCurrentUser(userProfile));
+});
 
-export function* signupWithOAuth({ payload: provider }) {
-  try {
+const linkOAuthProvider = catchAsyncGen(function* (err) {
+  const userProfile = yield call(Apis.linkOAuthProvider, err);
+  yield put(setCurrentUser(userProfile));
+});
+
+const signupWithOAuth = catchAsyncGen(
+  function* ({ payload: provider }) {
     yield put(setLoadingType(provider));
     const userProfile = yield call(Apis.signupWithOAuth, provider);
     yield put(setCurrentUser(userProfile));
-  } catch (err) {
-    if (err.code === "auth/account-exists-with-different-credential")
-      return yield call(linkOAuthProvider, err);
-    yield put(setError(err));
+  },
+  function* (err) {
+    if (err.code === "auth/account-exists-with-different-credential") {
+      yield call(linkOAuthProvider, err);
+    }
   }
-}
+);
 
-export function* logoutUser() {
-  try {
-    yield call(Apis.logoutUser);
-    yield put(setCurrentUser(null));
-  } catch (err) {
-    yield put(setError(err));
-  }
-}
+const logoutUser = catchAsyncGen(function* () {
+  yield call(Apis.logoutUser);
+  yield put(setCurrentUser(null));
+});
 
-export function* onStartOAuth() {
+function* onStartOAuth() {
   yield takeLatest(AUTH_ACTION_TYPES.START_OAUTH, signupWithOAuth);
 }
 
-export function* onStartInitializeAuth() {
+function* onStartInitializeAuth() {
   yield takeLatest(AUTH_ACTION_TYPES.START_INITIALIZING_AUTH, initializeAuth);
 }
 
-export function* onLogoutUser() {
+function* onLogoutUser() {
   yield takeLatest(AUTH_ACTION_TYPES.LOGOUT_USER, logoutUser);
 }
 
