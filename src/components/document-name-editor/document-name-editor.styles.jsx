@@ -1,6 +1,10 @@
 // Modules
 import styled from "styled-components";
 
+// Components
+import ContentEditable from "react-contenteditable";
+import { AnimateThreeDots } from "../";
+
 // Styles
 import { DocumentFileIcon } from "../document-file-base/document-file-item/document-file-item.styles";
 
@@ -32,8 +36,14 @@ export const DocumentNameExtension = styled.span`
   line-height: 18px;
 `;
 
-export const DocumentNameEditorInput = styled.span`
+export const DocumentNameEditorInput = styled(ContentEditable)`
   border: none;
   outline: none;
   caret-color: #e46643;
 `;
+
+export const DocumentNameEditorInputValueLoader = styled(AnimateThreeDots)`
+  color: #fff;
+`;
+
+export { DocumentFileIcon };

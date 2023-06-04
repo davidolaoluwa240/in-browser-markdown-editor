@@ -2,64 +2,35 @@
 import React from "react";
 
 // Hooks
-import { useEffect, useRef } from "react";
 import { useDocument } from "../../hooks";
 
+// Components
+import { Fragment } from "react";
+
 // Style
-import { DocumentFileIcon } from "../document-file-base/document-file-item/document-file-item.styles";
 import {
   DocumentNameEditorWrapper,
   DocumentNameEditorLabel,
   DocumentNameEditorInput,
+  DocumentNameEditorInputValueLoader,
   DocumentNameEditorInputGroup,
   DocumentNameExtension,
+  DocumentFileIcon,
 } from "./document-name-editor.styles";
 
 export const DocumentNameEditor = () => {
-  const documentControlRef = useRef();
-  const { dispatch, documents, document, setDocuments } = useDocument();
-
-  useEffect(() => {
-    // Get Document Name Mounted Document Id
-    const documentNameMountedDocumentId =
-      documentControlRef.current.dataset.mountedDocumentId;
-
-    // Get Document Control Ref Element
-    const documentControlRefElm = documentControlRef.current;
-
-    if (
-      document &&
-      document.id !== documentNameMountedDocumentId &&
-      documentControlRefElm
-    ) {
-      // Update Document Name Editor Input InnerText
-      documentControlRefElm.innerText = document.fileName;
-
-      // Set Document Name Editor Mounted Document Id Attribute
-      documentControlRefElm.setAttribute(
-        "data-mounted-document-id",
-        document.id
-      );
-    }
-  }, [document]);
+  const { document, updateDoc, documentId, isLoading, loadingType } =
+    useDocument();
+  const isFetchingDocuments =
+    isLoading &&
+    (loadingType === "fetching" || loadingType === "adding/default");
 
   /**
    * Handle Document Name Change
    * @param {Event} event Event
    */
   const handleDocumentNameChange = (event) => {
-    dispatch(
-      setDocuments(
-        documents.map((doc) =>
-          doc.id === document.id
-            ? {
-                ...doc,
-                fileName: event.target.innerText,
-              }
-            : doc
-        )
-      )
-    );
+    updateDoc(documentId, { fileName: event.target.value });
   };
 
   return (
@@ -67,12 +38,25 @@ export const DocumentNameEditor = () => {
       <DocumentFileIcon />
       <DocumentNameEditorInputGroup>
         <DocumentNameEditorLabel>Document Name</DocumentNameEditorLabel>
-        <DocumentNameEditorInput
-          ref={documentControlRef}
-          contentEditable
-          onInput={handleDocumentNameChange}
+        <DocumentNameEditorInputValueLoader
+          height="30"
+          width="40"
+          radius="9"
+          color="#ffffff"
+          ariaLabel="Loading"
+          visible={isFetchingDocuments}
         />
-        <DocumentNameExtension>.md</DocumentNameExtension>
+
+        {!isFetchingDocuments && (
+          <Fragment>
+            <DocumentNameEditorInput
+              html={document?.fileName}
+              tagName="span"
+              onChange={handleDocumentNameChange}
+            />
+            <DocumentNameExtension>.md</DocumentNameExtension>
+          </Fragment>
+        )}
       </DocumentNameEditorInputGroup>
     </DocumentNameEditorWrapper>
   );

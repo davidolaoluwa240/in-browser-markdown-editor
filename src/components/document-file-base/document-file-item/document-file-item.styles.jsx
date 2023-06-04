@@ -11,6 +11,7 @@ export const DocumentFileContent = styled.p`
   font-size: 1.5rem;
   font-family: "Roboto", sans-serif;
   transition: color 0.3s ease-out;
+  word-break: break-all;
 `;
 
 export const DocumentFileItemWrapper = styled(NavLink)`
@@ -39,6 +40,7 @@ export const DocumentFileItemWrapper = styled(NavLink)`
 export const DocumentFileIcon = styled(IoDocumentOutline)`
   font-size: 2rem;
   vertical-align: middle;
+  flex-shrink: 0;
 `;
 
 export const DocumentFileCreatedTime = styled.span`
