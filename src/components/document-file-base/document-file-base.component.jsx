@@ -14,8 +14,15 @@ import {
 } from "./document-file-base.styles";
 
 export const DocumentFileBase = () => {
-  const { documents, isLoading, loadingType } = useDocument();
-  const isFetchingDocuments = isLoading && loadingType === "fetching";
+  const {
+    documents,
+    isLoading: isDocumentLoading,
+    loadingType: documentLoadingType,
+  } = useDocument();
+  const isFetchingDocuments =
+    isDocumentLoading &&
+    (documentLoadingType === "fetching" ||
+      documentLoadingType === "adding/default");
 
   return (
     <DocumentFileBaseWrapper>
