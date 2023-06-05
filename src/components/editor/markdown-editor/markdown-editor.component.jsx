@@ -3,14 +3,14 @@ import React from "react";
 import * as DOMPurify from "dompurify";
 
 // Hooks
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useDocument } from "../../../hooks";
 
 // Style
 import { MarkdownEditorInput } from "./markdown-editor.styles";
 
 export const MarkdownEditor = () => {
-  const { document, dispatch, documents, setDocuments } = useDocument();
+  const { document, updateDoc } = useDocument();
   const markdownRef = useRef();
 
   useEffect(() => {
@@ -19,39 +19,40 @@ export const MarkdownEditor = () => {
 
     // Get Markdown Editor Mounted Document Id
     const markdownEditorMountedDocumentId =
-      markdownRefElm.dataset.mountedDocumentId;
+      markdownRefElm?.dataset.mountedDocumentId;
+
+    const updateMarkdownElInnerText = (value = "") => {
+      markdownRefElm.innerText = DOMPurify.sanitize(value);
+    };
+
+    // Reset Markdown Element InnerText If Document Does Not Exist
+    markdownRefElm && !document && updateMarkdownElInnerText();
 
     if (
       document &&
-      document.id !== markdownEditorMountedDocumentId &&
-      markdownRefElm
+      markdownRefElm &&
+      document.id !== markdownEditorMountedDocumentId
     ) {
       // Update Markdown Editor InnerText
-      markdownRefElm.innerText = DOMPurify.sanitize(document.content.trim());
+      updateMarkdownElInnerText(document.content.trim());
 
       // Set Markdown Editor Mounted Document Id Attribute
       markdownRefElm.setAttribute("data-mounted-document-id", document.id);
     }
-  }, [document]);
+  }, [document, markdownRef.current]);
 
   /**
    * Handle Editor Input Change
    * @param {Event} event Event
    */
-  const handleEditorInputChange = (event) => {
-    dispatch(
-      setDocuments(
-        documents.map((doc) =>
-          doc.id === document.id
-            ? {
-                ...doc,
-                content: event.target.innerText,
-              }
-            : doc
-        )
-      )
-    );
-  };
+  const handleEditorInputChange = useCallback(
+    (event) => {
+      updateDoc(document.id, {
+        content: event.target.innerText,
+      });
+    },
+    [document]
+  );
 
   return (
     <MarkdownEditorInput

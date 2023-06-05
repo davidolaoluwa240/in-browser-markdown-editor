@@ -8,6 +8,5 @@ export const MarkdownEditorInput = styled.div`
   caret-color: #e46643;
   color: #ced4da;
   font-family: Roboto Mono, monospace;
-  font-size: 14px;
-  direction: ltr;
+  font-size: 1.4rem;
 `;

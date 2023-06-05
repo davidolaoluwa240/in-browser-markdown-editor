@@ -2,6 +2,7 @@
 import React from "react";
 
 // Hooks
+import { useCallback } from "react";
 import { useDocument } from "../../hooks";
 
 // Components
@@ -36,9 +37,12 @@ export const DocumentNameEditor = () => {
    * Handle Document Name Change
    * @param {Event} event Event
    */
-  const handleDocumentNameChange = (event) => {
-    updateDoc(documentId, { fileName: event.target.value });
-  };
+  const handleDocumentNameChange = useCallback(
+    (event) => {
+      updateDoc(documentId, { fileName: event.target.value });
+    },
+    [document]
+  );
 
   return (
     <DocumentNameEditorWrapper>
