@@ -13,24 +13,25 @@ import { EditorContent } from "./editor.styles";
 
 export const Editor = forwardRef(
   ({ type, isFullScreen, onToggleFullScreen, scrollWithRef }, ref) => {
+    const isMarkdownEditor = type === "markdown";
+
     useEffect(() => {
       const scrollWithRefElm = scrollWithRef?.current;
-      const refElm = ref?.current;
+      const refElm = ref.current;
 
       const handleEditorScrolling = (event) => {
         const { scrollTop } = event.target;
         refElm.scrollTop = scrollTop;
       };
 
-      if (!scrollWithRefElm) return;
-
-      scrollWithRefElm.addEventListener("scroll", handleEditorScrolling);
+      // Register Scroll Event On The ScrollWith Element
+      scrollWithRefElm?.addEventListener("scroll", handleEditorScrolling);
 
       return () => {
-        if (scrollWithRefElm)
-          scrollWithRefElm.removeEventListener("scroll", handleEditorScrolling);
+        // Un-Register Scroll Event On The ScrollWith Element On Component Un-Mount
+        scrollWithRefElm?.removeEventListener("scroll", handleEditorScrolling);
       };
-    }, [ref, scrollWithRef]);
+    }, [ref.current, scrollWithRef]);
 
     return (
       <Fragment>
@@ -40,19 +41,8 @@ export const Editor = forwardRef(
           onToggleFullScreen={onToggleFullScreen}
         />
 
-        <EditorContent
-          ref={type === "markdown" ? ref : null}
-          direction="rtl"
-          show={type === "markdown"}
-        >
-          <MarkdownEditor />
-        </EditorContent>
-
-        <EditorContent
-          ref={type === "preview" ? ref : null}
-          show={type === "preview"}
-        >
-          <PreviewEditor />
+        <EditorContent ref={ref || null}>
+          {isMarkdownEditor ? <MarkdownEditor /> : <PreviewEditor />}
         </EditorContent>
       </Fragment>
     );

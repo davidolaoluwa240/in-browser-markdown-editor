@@ -2,24 +2,52 @@
 import React from "react";
 
 // Hooks
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDocument, useUi } from "../../hooks";
 
 // Components
-import { Editor } from "../../components";
+import { Editor, EditorSpinner } from "../../components";
 
 // Style
 import { EditorLayoutWrapper, EditorPanel } from "./editor-layout.styles";
 
 export const EditorLayout = () => {
-  const { editorFullScreen, setEditorFullScreen } = useUi();
-  const { documents, dispatch, document } = useDocument();
+  const {
+    editorFullScreen: { markdown, preview },
+    scrollWith,
+    handleUpdateEditorFullScreen,
+  } = useUi();
+  const [editorPanelBorderClass, setEditorPanelBorderClass] = useState(
+    "editor-panel--border-right"
+  );
+  const {
+    documents,
+    document,
+    isLoading: isDocumentLoading,
+    loadingType: documentLoadingType,
+  } = useDocument();
   const markdownEditorRef = useRef();
   const previewEditorRef = useRef();
   const navigate = useNavigate();
-  const isMarkdownEditorFullScreen = editorFullScreen.markdown === "on";
-  const isPreviewEditorFullScreen = editorFullScreen.preview === "on";
+  const isMarkdownEditorFullScreen = markdown === "on";
+  const isPreviewEditorFullScreen = preview === "on";
+  const isScrollWithMarkdown = scrollWith === "markdown";
+  const isFetchingDocuments =
+    isDocumentLoading &&
+    (documentLoadingType === "fetching" ||
+      documentLoadingType === "adding/default");
+
+  /**
+   * Handle Toggle Editor Panel Border Class
+   */
+  const handleToggleBorderClass = useCallback(() => {
+    setEditorPanelBorderClass(
+      isMarkdownEditorFullScreen || isPreviewEditorFullScreen
+        ? ""
+        : "editor-panel--border-right"
+    );
+  }, [isMarkdownEditorFullScreen, isPreviewEditorFullScreen]);
 
   useEffect(() => {
     // Handle Key Press
@@ -33,15 +61,25 @@ export const EditorLayout = () => {
         // Get Editor Type Based On Key
         const editorType = key === "m" ? "markdown" : "preview";
 
+        // Toggle Editor Type Value
+        const editorValue =
+          key === "m"
+            ? isMarkdownEditorFullScreen
+              ? "off"
+              : "on"
+            : isPreviewEditorFullScreen
+            ? "off"
+            : "on";
+
         // Toggle Either Markdown/Preview Editor Full Screen Visibility
-        toggleEditorFullScreen(editorType);
+        handleUpdateEditorFullScreen(editorType, editorValue);
       }
     };
 
-    // Add Event Listener
+    // Register Keydown Event Listener On The Window
     window.addEventListener("keydown", handleKeyPress);
 
-    // Remove Event Listener
+    // Un-Register Keydown Event Listener On The Window
     return () => window.removeEventListener("keydown", handleKeyPress);
   }, []);
 
@@ -52,39 +90,20 @@ export const EditorLayout = () => {
     }
   }, [document, documents]);
 
-  /**
-   * Toggle Editor Full Screen Mode
-   * @param {string} editorType Editor type
-   */
-  const toggleEditorFullScreen = (editorType) => {
-    switch (editorType) {
-      case "preview":
-        dispatch(
-          setEditorFullScreen({
-            markdown: "off",
-            preview: isPreviewEditorFullScreen ? "off" : "on",
-          })
-        );
-        break;
-      case "markdown":
-        dispatch(
-          setEditorFullScreen({
-            markdown: isMarkdownEditorFullScreen ? "off" : "on",
-            preview: "off",
-          })
-        );
-        break;
-    }
-  };
-
   return (
     <EditorLayoutWrapper>
-      <EditorPanel shrink={isPreviewEditorFullScreen}>
+      <EditorSpinner isLoading={isFetchingDocuments} />
+
+      <EditorPanel
+        className={editorPanelBorderClass}
+        shrink={isPreviewEditorFullScreen}
+        onTransitionEnd={handleToggleBorderClass}
+      >
         <Editor
-          type="markdown"
           ref={markdownEditorRef}
+          scrollWithRef={!isScrollWithMarkdown && previewEditorRef}
           isFullScreen={isMarkdownEditorFullScreen}
-          onToggleFullScreen={toggleEditorFullScreen}
+          onToggleFullScreen={handleUpdateEditorFullScreen}
         />
       </EditorPanel>
 
@@ -93,8 +112,8 @@ export const EditorLayout = () => {
           type="preview"
           ref={previewEditorRef}
           isFullScreen={isPreviewEditorFullScreen}
-          onToggleFullScreen={toggleEditorFullScreen}
-          scrollWithRef={markdownEditorRef}
+          scrollWithRef={isScrollWithMarkdown && markdownEditorRef}
+          onToggleFullScreen={handleUpdateEditorFullScreen}
         />
       </EditorPanel>
     </EditorLayoutWrapper>

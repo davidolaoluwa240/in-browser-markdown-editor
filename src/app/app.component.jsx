@@ -18,7 +18,7 @@ import { Routes } from "../routes.component";
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
   const { isLoading, loadingType, startFetchingUiSettings } = useUi();
-  const { startFetchingDocuments } = useDocument();
+  const { startFetchingDocuments, documents } = useDocument();
   const [theme, setTheme] = useState(DARK_THEME);
   const isFetchingUiSettings = isLoading && loadingType === "fetching";
 
@@ -37,6 +37,14 @@ const App = () => {
       dispatch(startFetchingDocuments());
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    // If User Exist
+    if (currentUser && !documents.length) {
+      // Fetch User Documents
+      dispatch(startFetchingDocuments());
+    }
+  }, [currentUser, documents]);
 
   /**
    * Handle Update App Theme

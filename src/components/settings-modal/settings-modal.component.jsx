@@ -38,6 +38,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
     startAddingAndUpdatingUiSettings,
     isLoading,
     loadingType,
+    handleUpdateEditorFullScreen,
   } = useUi();
   const isUpdatingUi = isLoading && loadingType === "updating";
   const scrollWithValue = scrollWith === "markdown" ? "off" : "on";
@@ -51,20 +52,6 @@ export const SettingsModal = ({ isOpen, onClose }) => {
       dispatch(setScrollWith(value === "off" ? "markdown" : "preview")),
     []
   );
-
-  /**
-   * Handle Update Editor FullScreen
-   * @param {string} value
-   */
-  const handleUpdateEditorFullScreen = useCallback((editorType, value) => {
-    const otherEditorType = editorType === "markdown" ? "preview" : "markdown";
-    dispatch(
-      setEditorFullScreen({
-        [editorType]: value,
-        [otherEditorType]: "off",
-      })
-    );
-  }, []);
 
   /**
    * Handle Update Ui Settings

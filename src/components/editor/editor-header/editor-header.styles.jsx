@@ -22,7 +22,7 @@ export const EditorHeaderTitle = styled.p`
   color: #f8f9fa;
 `;
 
-export const EditorIconBaseStyle = css`
+export const editorIconStyle = css`
   color: rgb(124, 129, 135);
   font-size: 2.5rem;
   cursor: pointer;
@@ -35,11 +35,11 @@ export const EditorIconBaseStyle = css`
 `;
 
 export const EditorHeaderFullScreenIcon = styled(MdOutlineFullscreen)`
-  ${EditorIconBaseStyle};
-  ${({ isFullScreen }) => isFullScreen && "display: none"}
+  ${editorIconStyle};
+  display: ${({ isFullScreen }) => (isFullScreen ? "none" : "block")};
 `;
 
 export const EditorHeaderFullScreenExitIcon = styled(MdOutlineFullscreenExit)`
-  ${EditorIconBaseStyle};
-  ${({ isFullScreen }) => !isFullScreen && "display: none"}
+  ${editorIconStyle};
+  display: ${({ isFullScreen }) => (!isFullScreen ? "none" : "block")};
 `;

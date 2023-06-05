@@ -1,4 +1,5 @@
 // Hooks
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Redux
@@ -12,6 +13,7 @@ const {
   selectEditorFullScreen,
   selectLoadingType,
   selectError,
+  setEditorFullScreen,
 } = uiSA;
 
 // Ui Hook
@@ -24,8 +26,24 @@ export const useUi = () => {
   const loadingType = useSelector(selectLoadingType);
   const error = useSelector(selectError);
 
+  /**
+   * Handle Update Editor FullScreen
+   * @param {string} editorType
+   * @param {string} value
+   */
+  const handleUpdateEditorFullScreen = useCallback((editorType, value) => {
+    const otherEditorType = editorType === "markdown" ? "preview" : "markdown";
+    dispatch(
+      setEditorFullScreen({
+        [editorType]: value,
+        [otherEditorType]: "off",
+      })
+    );
+  }, []);
+
   return {
     dispatch,
+    handleUpdateEditorFullScreen,
     isSideBarOpen,
     isLoading,
     loadingType,

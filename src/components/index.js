@@ -19,3 +19,4 @@ export * from "./delete-document-modal/delete-document-modal.component";
 export * from "./settings-modal/settings-modal.component";
 export * from "./input-toggle/input-toggle.component";
 export * from "./modal/modal.component";
+export * from "./editor-spinner/editor-spinner.component";

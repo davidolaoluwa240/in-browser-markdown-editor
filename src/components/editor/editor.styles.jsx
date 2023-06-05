@@ -7,8 +7,6 @@ export const EditorContent = styled.div`
   padding: 2rem 2.5rem;
   padding-bottom: 4rem;
   overflow-y: auto;
-  ${({ show }) => !show && "display: none"};
-  ${({ direction }) => direction && `direction: ${direction}`};
 
   &::-webkit-scrollbar {
     width: 6px;

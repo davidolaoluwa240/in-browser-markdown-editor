@@ -41,9 +41,14 @@ const _RootLayout = () => {
     width: window.outerWidth,
   });
   const { dispatch, isSideBarOpen } = useUi();
-  const { startAddingDocument, isLoading, loadingType } = useDocument();
+  const {
+    startAddingDocument,
+    isLoading: isDocumentLoading,
+    loadingType: documentLoadingType,
+  } = useDocument();
   const { theme, handleUpdateTheme } = useContext(ThemeContext);
-  const isAddingDocument = isLoading && loadingType === "adding";
+  const isAddingDocument =
+    isDocumentLoading && documentLoadingType === "adding";
 
   /**
    * Open Settings Modal

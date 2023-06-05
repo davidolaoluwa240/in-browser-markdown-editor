@@ -19,11 +19,18 @@ import {
 } from "./document-name-editor.styles";
 
 export const DocumentNameEditor = () => {
-  const { document, updateDoc, documentId, isLoading, loadingType } =
-    useDocument();
+  const {
+    document,
+    updateDoc,
+    documentId,
+    isLoading: isDocumentLoading,
+    loadingType: documentLoadingType,
+  } = useDocument();
   const isFetchingDocuments =
-    isLoading &&
-    (loadingType === "fetching" || loadingType === "adding/default");
+    (isDocumentLoading &&
+      (documentLoadingType === "fetching" ||
+        documentLoadingType === "adding/default")) ||
+    !document?.fileName;
 
   /**
    * Handle Document Name Change

@@ -19,7 +19,7 @@ export const selectIsLoading = createSelector(
 // Select LoadingType State
 export const selectLoadingType = createSelector(
   [selectDocumentReducer],
-  (documentSlice) => documentSlice.LoadingType
+  (documentSlice) => documentSlice.loadingType
 );
 
 // Select Error State
