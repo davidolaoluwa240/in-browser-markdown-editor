@@ -7,6 +7,7 @@ import {
   serverTimestamp,
   updateDoc,
   addDoc,
+  orderBy,
 } from "firebase/firestore";
 import {
   documentCollectionRef,
@@ -67,7 +68,8 @@ export const fetchDocuments = catchAsync(async (activeDocuments = true) => {
   const documentQuery = query(
     documentCollectionRef,
     where("user", "==", userRef),
-    where("isActive", "==", activeDocuments)
+    where("isActive", "==", activeDocuments),
+    orderBy("createdAt", "desc")
   );
 
   // 4). Get Documents
