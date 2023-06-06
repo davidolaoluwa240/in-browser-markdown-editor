@@ -20,7 +20,7 @@ import {
 } from "../../components";
 
 // Hocs
-import { preventIfNotAuth } from "../../hocs/preventIfNotAuth.hocs";
+import { preventIfNotAuth } from "../../hocs";
 
 // Utils
 import { createNewDocument } from "../../utils";

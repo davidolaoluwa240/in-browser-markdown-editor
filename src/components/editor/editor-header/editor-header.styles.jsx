@@ -2,7 +2,7 @@
 import styled, { css } from "styled-components";
 
 // Components
-import { MdOutlineFullscreen, MdOutlineFullscreenExit } from "react-icons/md";
+import { MdOutlineFullscreen, MdOutlineFullscreenExit } from "../../";
 
 export const EditorHeaderGroup = styled.div`
   background: #212529;
