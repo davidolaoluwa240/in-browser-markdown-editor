@@ -1,6 +1,9 @@
 // Modules
 import React from "react";
 
+// Components
+import { useCallback } from "react";
+
 // Style
 import {
   EditorHeaderGroup,
@@ -16,17 +19,20 @@ export const EditorHeader = ({ type, isFullScreen, onToggleFullScreen }) => {
    * Handle Toggle Editor Full Screen
    * @param {Event} event
    */
-  const handleToggleFullScreen = (event) => {
-    const { target } = event;
-    const svgElm = target.closest("svg");
+  const handleToggleFullScreen = useCallback(
+    (event) => {
+      const { target } = event;
+      const svgElm = target.closest("svg");
 
-    if (svgElm) {
-      const titleText = svgElm.querySelector("title").textContent;
-      const editorType = titleText.match(/\((.*?)\)/)[1];
-      const editorName = editorType === "m" ? "markdown" : "preview";
-      onToggleFullScreen(editorName, isFullScreen ? "off" : "on");
-    }
-  };
+      if (svgElm) {
+        const titleText = svgElm.querySelector("title").textContent;
+        const editorType = titleText.match(/\((.*?)\)/)[1];
+        const editorName = editorType === "m" ? "markdown" : "preview";
+        onToggleFullScreen(editorName, isFullScreen ? "off" : "on");
+      }
+    },
+    [isFullScreen]
+  );
 
   return (
     <EditorHeaderGroup onClick={handleToggleFullScreen}>

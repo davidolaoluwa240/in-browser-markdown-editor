@@ -58,6 +58,7 @@ export const MarkdownEditor = () => {
     <MarkdownEditorInput
       ref={markdownRef}
       contentEditable
+      spellCheck="false"
       onInput={handleEditorInputChange}
     />
   );

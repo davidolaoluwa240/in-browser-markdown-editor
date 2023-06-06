@@ -1,14 +1,14 @@
 // Modules
 import styled from "styled-components";
 
-export const PreviewEditorWrapper = styled.div.attrs({
+export const PreviewEditorPreview = styled.div.attrs({
   className: "markdown-body",
 })`
   width: 100%;
   min-height: 100%;
 
   &.markdown-body {
-    background-color: transparent;
+    background: transparent;
 
     h1 {
       line-height: 42px;
@@ -94,7 +94,7 @@ export const PreviewEditorWrapper = styled.div.attrs({
     blockquote,
     pre {
       padding: 2.4rem;
-      background-color: #343a40;
+      background: #343a40;
       border-radius: 4px;
     }
 

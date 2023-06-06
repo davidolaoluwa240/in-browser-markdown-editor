@@ -9,7 +9,7 @@ import { useDocument } from "../../../hooks";
 
 // Style
 import "github-markdown-css";
-import { PreviewEditorWrapper } from "./preview-editor.styles";
+import { PreviewEditorPreview } from "./preview-editor.styles";
 
 export const PreviewEditor = () => {
   const { document } = useDocument();
@@ -22,7 +22,7 @@ export const PreviewEditor = () => {
   }, [document]);
 
   return (
-    <PreviewEditorWrapper
+    <PreviewEditorPreview
       dangerouslySetInnerHTML={{ __html: compiledMarkdownContent }}
     />
   );
