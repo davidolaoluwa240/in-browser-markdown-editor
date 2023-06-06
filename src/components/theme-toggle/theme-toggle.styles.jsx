@@ -2,8 +2,7 @@
 import styled, { css } from "styled-components";
 
 // Components
-import { BiMoon } from "react-icons/bi";
-import { MdOutlineLightMode } from "react-icons/md";
+import { BiMoon, MdOutlineLightMode } from "..";
 
 export const themeIconStyle = css`
   transition: color 0.3s ease-out;

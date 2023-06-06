@@ -1,6 +1,7 @@
 // Re-Export Components
 export * from "./animate-tail-spin/animate-tail-spin.component";
 export * from "./animate-three-dots/animate-three-dots.component";
+export * from "./icons/icons.component";
 export * from "./react-modal-enhanced/react-modal-enhanced.component";
 export * from "./button/button.component";
 export * from "./theme-toggle/theme-toggle.component";
