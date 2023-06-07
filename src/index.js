@@ -9,6 +9,7 @@ import { gfmHeadingId } from "marked-gfm-heading-id";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { Analytics } from "@vercel/analytics/react";
 import App from "./app/app.component";
 
 // Firebase
@@ -32,6 +33,7 @@ root.render(
       <PersistGate loading={null} persistor={persistore}>
         <BrowserRouter>
           <App />
+          <Analytics />
         </BrowserRouter>
       </PersistGate>
     </Provider>
