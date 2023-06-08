@@ -2,7 +2,7 @@
 import { put, call } from "redux-saga/effects";
 
 // Utils
-import { handleAsyncError } from "../";
+import { handleAsyncError } from "..";
 
 /**
  * Catch/Handle Asynchronous Error

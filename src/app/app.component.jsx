@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 
 // Hooks
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth, useUi, useDocument } from "../hooks";
 
 // Components
@@ -15,11 +16,16 @@ import { LIGHT_THEME, DARK_THEME } from "../assets/themes";
 // App Routes
 import { Routes } from "../routes.component";
 
+// Utils
+import { History } from "../utils";
+
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
   const { isLoading, loadingType, startFetchingUiSettings } = useUi();
   const { startFetchingDocuments, documents } = useDocument();
   const [theme, setTheme] = useState(DARK_THEME);
+  const location = useLocation();
+  const navigate = useNavigate();
   const isFetchingUiSettings = isLoading && loadingType === "fetching";
 
   useEffect(() => {
@@ -42,6 +48,12 @@ const App = () => {
       dispatch(startFetchingDocuments());
     }
   }, [currentUser, documents]);
+
+  useEffect(() => {
+    // Update The History Object
+    History.navigate = navigate;
+    History.location = location;
+  }, [location]);
 
   /**
    * Handle Update App Theme

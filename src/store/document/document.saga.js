@@ -8,13 +8,17 @@ import { DOCUMENT_ACTION_TYPES } from "./document.type";
 import { setDocuments, setLoadingType, setError } from "./document.action";
 
 // Utils
-import { catchAsyncGen as utilCatchAsyncGen } from "../../utils";
+import { catchAsyncGen as utilCatchAsyncGen, History } from "../../utils";
 
 // Apis
 import * as Apis from "../../apis";
 
 // Configurations
 const catchAsyncGen = utilCatchAsyncGen.bind(null, setError);
+
+function* navigateFirstDocument(document) {
+  History.navigate(`/${document.id}/${document.fileName}`);
+}
 
 const addDefaultDocument = catchAsyncGen(function* () {
   yield put(setLoadingType("adding/default"));
@@ -36,6 +40,7 @@ const addDocument = catchAsyncGen(function* ({ payload: newDocument }) {
   yield put(setLoadingType("adding"));
   const documents = yield call(Apis.addDocument, newDocument);
   yield put(setDocuments(documents));
+  yield call(navigateFirstDocument, documents[0]);
 });
 
 const updateDocument = catchAsyncGen(function* ({

@@ -13,7 +13,7 @@ import { Analytics } from "@vercel/analytics/react";
 import App from "./app/app.component";
 
 // Firebase
-import "./utils/firebase/firebase-config.utils";
+import "./utils/firebase/firebase-config.util";
 
 // Store
 import store from "./store/store";

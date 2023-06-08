@@ -1,10 +1,9 @@
 // Firebase
 import { collection } from "firebase/firestore";
-import { db } from "../";
+import { db } from "..";
 
 // User Collection Reference
 export const userCollectionRef = collection(db, "users");
-
 
 // Document Collection Reference
 export const documentCollectionRef = collection(db, "documents");

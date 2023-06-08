@@ -1,6 +1,10 @@
 // Modules
 import React from "react";
 
+// Hooks
+import { useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 // Components
 import { Routes as Switch, Route } from "react-router-dom";
 
