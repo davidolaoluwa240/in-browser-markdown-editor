@@ -4,7 +4,7 @@ import { DOCUMENT_ACTION_TYPES } from "./document.type";
 // Initial State
 const INITIAL_STATE = {
   documents: [],
-  isLoading: true,
+  isLoading: false,
   loadingType: "",
   error: null,
 };

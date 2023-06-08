@@ -9,8 +9,8 @@ const INITIAL_STATE = {
     markdown: "off",
     preview: "off",
   },
-  isLoading: true,
-  loadingType: "fetching",
+  isLoading: false,
+  loadingType: "",
   error: null,
 };
 

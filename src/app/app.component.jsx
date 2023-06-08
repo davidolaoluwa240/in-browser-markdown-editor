@@ -32,9 +32,6 @@ const App = () => {
     if (currentUser) {
       // Fetch User Settings
       dispatch(startFetchingUiSettings());
-
-      // Fetch User Documents
-      dispatch(startFetchingDocuments());
     }
   }, [currentUser]);
 
