@@ -38,7 +38,7 @@ The **In-Browser-Markdown-Editor** is a powerful and user-friendly tool designed
 <details>
     <summary><b>Live Markdown Preview</b></summary>
 
-    With the real-time preview feature, users can instantly see how their Markdown markup translates into formatted content. As they type or make changes, the preview pane dynamically updates, providing immediate visual feedback and eliminating the need to switch between editing and previewing modes.
+    With the real-time preview feature, users can instantly see how their Markdown markup translates into formatted content. As they type or make changes, the preview pane dynamically updates, providing immediate   visual feedback and eliminating the need to switch between editing and previewing modes.
 
 </details>
 
@@ -69,6 +69,7 @@ Here are some of the technologies that was used to build **In-Browser-Markdown-E
 - JsFileDownload
 - Redux
 - Redux Saga
+- Reselect
 
 ## Demo
 
