@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# In Browser Markdown Editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents:
 
-## Available Scripts
+- [In Browser Markdown Editor](#in-browser-markdown-editor)
+  - [Table of Contents:](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Interface](#interface)
+  - [Features](#features)
+  - [Technologies Used](#technologies-used)
+  - [Demo](#demo)
+  - [Environment Variables](#environment-variables)
+  - [Commands](#commands)
+    - [Project Setup](#project-setup)
+    - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
+    - [Compiles and minifies for production](#compiles-and-minifies-for-production)
 
-In the project directory, you can run:
+## Introduction
 
-### `npm start`
+The **In-Browser-Markdown-Editor** is a powerful and user-friendly tool designed specifically for creating and editing Markdown documents directly within your web browser. With its intuitive interface and real-time preview feature, it empowers users to effortlessly harness the full potential of the Markdown markup language.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Interface
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![screenshot-2](/screenshots/screenshot-2.png)
+![screenshot-1](/screenshots/screenshot-1.png)
+![screenshot-3](/screenshots/screenshot-3.png)
+![screenshot-4](/screenshots/screenshot-4.png)
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<details>
+    <summary><b>Seamless Editing Experience</b></summary>
 
-### `npm run build`
+    The editor provides a clean and distraction-free environment, allowing users to focus solely on their content without any unnecessary clutter. The user interface is thoughtfully designed to be intuitive and user-friendly, ensuring a smooth editing experience.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+</details>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<details>
+    <summary><b>Live Markdown Preview</b></summary>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    With the real-time preview feature, users can instantly see how their Markdown markup translates into formatted content. As they type or make changes, the preview pane dynamically updates, providing immediate visual feedback and eliminating the need to switch between editing and previewing modes.
 
-### `npm run eject`
+</details>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+<details>
+    <summary><b>Syntax Highlighting</b></summary>
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    The editor employs syntax highlighting to make the Markdown markup more readable and visually appealing. This feature helps users identify different elements of their document, such as headings, lists, code blocks, and emphasis, by highlighting them with distinct colors.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+</details>
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<details>
+    <summary><b>Full Markdown Support</b></summary>
 
-## Learn More
+The In-Browser Markdown Editor supports the complete Markdown syntax, including advanced features like tables, task lists, footnotes, and fenced code blocks. Users can leverage the full range of Markdown's capabilities to create professional-looking documents with ease.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+</details>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Technologies Used
 
-### Code Splitting
+Here are some of the technologies that was used to build **In-Browser-Markdown-Editor**:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- React
+- Javascript
+- Firebase
+- Github-Markdown-Css
+- Styled Components
+- DOMPurify
+- JsFileDownload
+- Redux
+- Redux Saga
 
-### Analyzing the Bundle Size
+## Demo
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+You can view a live demo of **In-Browser-Markdown-Editor** [here](https://in-browser-markdown-editor-iota.vercel.app/).
 
-### Making a Progressive Web App
+## Environment Variables
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+This project requires the following environment variables in order to run. Environment variables can be set in a .env file in the root directory of the project.
 
-### Advanced Configuration
+```
+REACT_APP_FIREBASE_API_KEY= # Your Firebase API key
+REACT_APP_FIREBASE_AUTH_DOMAIN= # Your Firebase auth domain
+REACT_APP_FIREBASE_PROJECT_ID= # Your Firebase project ID
+REACT_APP_FIREBASE_STORAGE_BUCKET= # Your Firebase storage bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID= # Your Firebase messaging sender ID
+REACT_APP_FIREBASE_APP_ID= # Your Firebase app ID
+REACT_APP_MEASUREMENT_ID= # Your Firebase Measurement app ID
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Commands
 
-### Deployment
+### Project Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+> npm install
 
-### `npm run build` fails to minify
+### Compiles and hot-reloads for development
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+> npm start
+
+### Compiles and minifies for production
+
+> npm run build
