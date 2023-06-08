@@ -8,7 +8,6 @@ import { gfmHeadingId } from "marked-gfm-heading-id";
 // Components
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
 import { Analytics } from "@vercel/analytics/react";
 import App from "./app/app.component";
 
@@ -17,10 +16,9 @@ import "./utils/firebase/firebase-config.util";
 
 // Store
 import store from "./store/store";
-import { persistore } from "./store/store";
 
 // Styles
-import "./index.css";
+import { GlobalStyle } from "./index.styles";
 
 // Global Config
 marked.use(mangle(), gfmHeadingId({ prefix: "in-browser-editor-" }));
@@ -30,12 +28,11 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistore}>
-        <BrowserRouter>
-          <App />
-          <Analytics />
-        </BrowserRouter>
-      </PersistGate>
+      <BrowserRouter>
+        <App />
+        <Analytics />
+        <GlobalStyle />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
