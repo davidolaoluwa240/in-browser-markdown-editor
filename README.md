@@ -9,11 +9,11 @@
   - [Features](#features)
   - [Technologies Used](#technologies-used)
   - [Demo](#demo)
-  - [Environment Variables](#environment-variables)
   - [Commands](#commands)
     - [Project Setup](#project-setup)
     - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
     - [Compiles and minifies for production](#compiles-and-minifies-for-production)
+  - [Environment Variables](#environment-variables)
 
 ## Introduction
 
@@ -75,20 +75,6 @@ Here are some of the technologies that was used to build **In-Browser-Markdown-E
 
 You can view a live demo of **In-Browser-Markdown-Editor** [here](https://in-browser-markdown-editor-iota.vercel.app/).
 
-## Environment Variables
-
-This project requires the following environment variables in order to run. Environment variables can be set in a .env file in the root directory of the project.
-
-```
-REACT_APP_FIREBASE_API_KEY= # Your Firebase API key
-REACT_APP_FIREBASE_AUTH_DOMAIN= # Your Firebase auth domain
-REACT_APP_FIREBASE_PROJECT_ID= # Your Firebase project ID
-REACT_APP_FIREBASE_STORAGE_BUCKET= # Your Firebase storage bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID= # Your Firebase messaging sender ID
-REACT_APP_FIREBASE_APP_ID= # Your Firebase app ID
-REACT_APP_MEASUREMENT_ID= # Your Firebase Measurement app ID
-```
-
 ## Commands
 
 ### Project Setup
@@ -102,3 +88,17 @@ REACT_APP_MEASUREMENT_ID= # Your Firebase Measurement app ID
 ### Compiles and minifies for production
 
 > npm run build
+
+## Environment Variables
+
+This project requires the following environment variables in order to run. Environment variables can be set in a .env file in the root directory of the project.
+
+```
+REACT_APP_FIREBASE_API_KEY= # Your Firebase API key
+REACT_APP_FIREBASE_AUTH_DOMAIN= # Your Firebase auth domain
+REACT_APP_FIREBASE_PROJECT_ID= # Your Firebase project ID
+REACT_APP_FIREBASE_STORAGE_BUCKET= # Your Firebase storage bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID= # Your Firebase messaging sender ID
+REACT_APP_FIREBASE_APP_ID= # Your Firebase app ID
+REACT_APP_MEASUREMENT_ID= # Your Firebase Measurement app ID
+```

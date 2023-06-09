@@ -44,7 +44,7 @@ export const NavbarMenuCloseIcon = styled(IoMdClose)`
 `;
 
 export const NavbarMenu = styled.span`
-  width: 62px;
+  width: 72px;
   height: 100%;
   cursor: pointer;
   display: inline-flex;
@@ -58,6 +58,10 @@ export const NavbarMenu = styled.span`
 
   ${NavbarMenuCloseIcon} {
     display: ${({ isMenuOpen }) => (isMenuOpen ? "block" : "none")};
+  }
+
+  @media screen and (max-width: 900px) {
+    width: 62px;
   }
 `;
 
