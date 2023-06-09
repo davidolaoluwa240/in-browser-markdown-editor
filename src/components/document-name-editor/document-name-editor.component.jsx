@@ -14,7 +14,7 @@ import {
   DocumentNameEditorWrapper,
   DocumentNameEditorLabel,
   DocumentNameEditorInput,
-  DocumentNameEditorInputValueLoader,
+  DocumentNameEditorInputValueSpinner,
   DocumentNameEditorInputGroup,
   DocumentNameExtension,
   DocumentFileIcon,
@@ -59,7 +59,7 @@ export const DocumentNameEditor = () => {
           Document Name
           <NotSavedFlag isVisible={isNotSaved} />
         </DocumentNameEditorLabel>
-        <DocumentNameEditorInputValueLoader
+        <DocumentNameEditorInputValueSpinner
           height="30"
           width="40"
           radius="9"

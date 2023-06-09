@@ -17,6 +17,14 @@ export const DocumentNameEditorWrapper = styled.div`
   ${DocumentFileIcon} {
     margin-right: 1.6rem;
     color: white;
+
+    @media screen and (max-width: 900px) {
+      margin-right: 1rem;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    width: 190px;
   }
 `;
 
@@ -36,6 +44,10 @@ export const DocumentNameEditorLabel = styled.label`
   ${NotSavedFlagBox} {
     margin-left: 0.5rem;
   }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
 `;
 
 export const DocumentNameExtension = styled.span`
@@ -48,7 +60,7 @@ export const DocumentNameEditorInput = styled(ContentEditable)`
   caret-color: #e46643;
 `;
 
-export const DocumentNameEditorInputValueLoader = styled(AnimateThreeDots)`
+export const DocumentNameEditorInputValueSpinner = styled(AnimateThreeDots)`
   color: #fff;
 `;
 

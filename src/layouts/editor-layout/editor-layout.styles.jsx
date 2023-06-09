@@ -6,6 +6,10 @@ export const EditorLayoutWrapper = styled.div`
   height: calc(100vh - 72px);
   display: flex;
   position: relative;
+
+  @media screen and (max-width: 900px) {
+    height: calc(100vh - 56px);
+  }
 `;
 
 export const EditorPanel = styled.div`

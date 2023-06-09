@@ -4,6 +4,14 @@ import styled, { keyframes } from "styled-components";
 // Components
 import { AiOutlineSetting } from "react-icons/ai";
 
+// Styles
+import { InputToggleWrapper } from "../../components/input-toggle/input-toggle.styles";
+import {
+  NavbarAuthLogoutIcon,
+  DownloadIcon,
+} from "../../components/navbar/navbar.styles";
+import { ButtonBase } from "../../components/button/button.styles";
+
 // Animations
 const rotation = keyframes`
     from {
@@ -48,6 +56,29 @@ export const DocumentFooter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  ${ButtonBase},
+  ${NavbarAuthLogoutIcon} {
+    display: none;
+  }
+
+  @media screen and (max-width: 500px) {
+    justify-content: flex-start;
+
+    ${ButtonBase} {
+      display: inline-block;
+      margin-right: 1.3rem;
+    }
+
+    ${NavbarAuthLogoutIcon} {
+      display: block;
+      margin-left: auto;
+    }
+
+    ${InputToggleWrapper} {
+      display: none;
+    }
+  }
 `;
 
 export const MainContent = styled.div`
@@ -61,3 +92,8 @@ export const SettingsIcon = styled(AiOutlineSetting)`
   font-size: 2.4rem;
   animation: ${rotation} 1.4s linear infinite;
 `;
+
+export {
+  NavbarAuthLogoutIcon as AuthLogoutIcon,
+  DownloadIcon as DocumentDownloadIcon,
+};

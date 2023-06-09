@@ -24,7 +24,8 @@ import {
   NavbarDocumentDeleteIcon,
   SaveIcon,
   DownloadIcon,
-  LogoutIcon,
+  NavbarAuthLogoutIcon,
+  NavbarActionButtonBaseMobileWrapper,
 } from "./navbar.styles";
 
 export const Navbar = () => {
@@ -153,7 +154,21 @@ export const Navbar = () => {
             Save Changes
           </Button>
 
-          <LogoutIcon title="logout" onClick={handleLogoutUser} />
+          <NavbarActionButtonBaseMobileWrapper>
+            <Button secondary onClick={handleDownloadMarkdownFile}>
+              <DownloadIcon />
+            </Button>
+
+            <Button
+              tertiary
+              isLoading={isUpdatingDocument}
+              onClick={handleSaveFileChangesToCloud}
+            >
+              <SaveIcon />
+            </Button>
+          </NavbarActionButtonBaseMobileWrapper>
+
+          <NavbarAuthLogoutIcon title="logout" onClick={handleLogoutUser} />
         </NavbarAction>
       </NavbarWrapper>
     </Fragment>

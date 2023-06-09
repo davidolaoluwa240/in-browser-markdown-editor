@@ -8,6 +8,8 @@ import { TbTrash } from "react-icons/tb";
 import { BiSave } from "react-icons/bi";
 import { FiDownload } from "react-icons/fi";
 import { MdLogout } from "react-icons/md";
+
+// Styles
 import { ButtonBase } from "../button/button.styles";
 
 export const NavbarWrapper = styled.div`
@@ -15,6 +17,10 @@ export const NavbarWrapper = styled.div`
   height: 72px;
   display: flex;
   justify-content: space-between;
+
+  @media screen and (max-width: 900px) {
+    height: 56px;
+  }
 `;
 
 export const NavbarBrand = styled.div`
@@ -38,7 +44,7 @@ export const NavbarMenuCloseIcon = styled(IoMdClose)`
 `;
 
 export const NavbarMenu = styled.span`
-  width: 72px;
+  width: 62px;
   height: 100%;
   cursor: pointer;
   display: inline-flex;
@@ -78,6 +84,24 @@ export const NavbarBrandTitle = styled.h1`
     top: 50%;
     transform: translateY(-50%);
   }
+
+  @media screen and (max-width: 900px) {
+    display: none;
+  }
+`;
+
+export const NavbarActionButtonBaseMobileWrapper = styled.div`
+  display: none;
+
+  @media screen and (max-width: 900px) {
+    display: block;
+  }
+
+  @media screen and (max-width: 500px) {
+    ${ButtonBase}:first-child {
+      display: none;
+    }
+  }
 `;
 
 export const NavbarAction = styled.div`
@@ -85,6 +109,12 @@ export const NavbarAction = styled.div`
   display: flex;
   align-items: center;
   margin-right: 2.4rem;
+
+  > ${ButtonBase} {
+    @media screen and (max-width: 900px) {
+      display: none;
+    }
+  }
 
   ${ButtonBase} {
     &:not(:last-of-type) {
@@ -108,11 +138,23 @@ export const navbarIconStyle = css`
 export const NavbarDocumentDeleteIcon = styled(TbTrash)`
   ${navbarIconStyle};
   margin-right: 2.4rem;
+
+  @media screen and (max-width: 600px) {
+    margin-right: 1rem;
+  }
 `;
 
-export const LogoutIcon = styled(MdLogout)`
+export const NavbarAuthLogoutIcon = styled(MdLogout)`
   ${navbarIconStyle};
   margin-left: 2.4rem;
+
+  @media screen and (max-width: 600px) {
+    margin-left: 1rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
 const buttonIconStyle = css`
@@ -120,6 +162,10 @@ const buttonIconStyle = css`
   font-size: 2.3rem;
   color: #ffffff;
   vertical-align: middle;
+
+  @media screen and (max-width: 900px) {
+    margin-right: 0;
+  }
 `;
 
 export const SaveIcon = styled(BiSave)`

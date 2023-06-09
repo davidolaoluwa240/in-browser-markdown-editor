@@ -33,6 +33,8 @@ import {
   DocumentFooter,
   MainContent,
   SettingsIcon,
+  DocumentDownloadIcon,
+  AuthLogoutIcon,
 } from "./root-layout.styles";
 
 const _RootLayout = () => {
@@ -43,6 +45,7 @@ const _RootLayout = () => {
   const { dispatch, isSideBarOpen } = useUi();
   const {
     startAddingDocument,
+    handleDownloadMarkdownFile,
     isLoading: isDocumentLoading,
     loadingType: documentLoadingType,
   } = useDocument();
@@ -113,7 +116,11 @@ const _RootLayout = () => {
 
           <DocumentFooter>
             <ThemeToggle theme={theme} setTheme={handleUpdateTheme} />
+            <Button secondary onClick={handleDownloadMarkdownFile}>
+              <DocumentDownloadIcon />
+            </Button>
             <SettingsIcon onClick={handleOpenSettingsModal} />
+            <AuthLogoutIcon />
           </DocumentFooter>
         </DocumentSideBar>
 

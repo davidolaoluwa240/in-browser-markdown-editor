@@ -15,7 +15,7 @@ export const Button = ({ children, isLoading, ...buttonProps }) => {
         ariaLabel="Loading"
         visible={isLoading}
       />
-      {children}
+      <span> {children} </span>
     </ButtonBase>
   );
 };
