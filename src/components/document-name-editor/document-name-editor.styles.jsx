@@ -7,6 +7,7 @@ import { AnimateThreeDots } from "../";
 
 // Styles
 import { DocumentFileIcon } from "../document-file-base/document-file-item/document-file-item.styles";
+import { NotSavedFlagBox } from "../not-saved-flag/not-saved-flag.styles";
 
 export const DocumentNameEditorWrapper = styled.div`
   display: flex;
@@ -24,12 +25,17 @@ export const DocumentNameEditorInputGroup = styled.div`
 `;
 
 export const DocumentNameEditorLabel = styled.label`
-  display: block;
   font-weight: 300;
   font-size: 1.3rem;
   line-height: 15px;
   font-family: "Roboto", sans-serif;
   color: #adb5bd;
+  display: flex;
+  align-items: center;
+
+  ${NotSavedFlagBox} {
+    margin-left: 0.5rem;
+  }
 `;
 
 export const DocumentNameExtension = styled.span`

@@ -1,6 +1,5 @@
 // Modules
 import React from "react";
-import * as DOMPurify from "dompurify";
 
 // Hooks
 import { useRef, useEffect, useCallback } from "react";
@@ -22,7 +21,7 @@ export const MarkdownEditor = () => {
       markdownRefElm?.dataset.mountedDocumentId;
 
     const updateMarkdownElInnerText = (value = "") => {
-      markdownRefElm.innerText = DOMPurify.sanitize(value);
+      markdownRefElm.innerText = value;
     };
 
     // Reset Markdown Element InnerText If Document Does Not Exist
@@ -49,6 +48,9 @@ export const MarkdownEditor = () => {
     (event) => {
       updateDoc(document.id, {
         content: event.target.innerText,
+        notSavedFlag: [
+          ...new Set([...(document.notSavedFlag || ""), "content"]),
+        ],
       });
     },
     [document]

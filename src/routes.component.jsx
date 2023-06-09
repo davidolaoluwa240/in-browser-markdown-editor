@@ -1,10 +1,6 @@
 // Modules
 import React from "react";
 
-// Hooks
-import { useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-
 // Components
 import { Routes as Switch, Route } from "react-router-dom";
 
@@ -19,7 +15,7 @@ export const Routes = () => {
     <Switch>
       <Route path="/" element={<RootLayout />}>
         <Route index element={<EditorLayout />} />
-        <Route path=":documentId/:documentName" element={<EditorLayout />} />
+        <Route path=":documentId" element={<EditorLayout />} />
       </Route>
 
       <Route path="/auth" element={<Auth />} />

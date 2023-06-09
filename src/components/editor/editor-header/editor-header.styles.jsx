@@ -13,6 +13,11 @@ export const EditorHeaderGroup = styled.div`
   align-items: center;
 `;
 
+export const EditorHeaderTitleGroup = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const EditorHeaderTitle = styled.p`
   font-size: 1.3rem;
   margin-left: 2.1rem;
@@ -20,6 +25,7 @@ export const EditorHeaderTitle = styled.p`
   letter-spacing: 4px;
   text-transform: uppercase;
   color: #f8f9fa;
+  margin-right: 0.7rem;
 `;
 
 export const editorIconStyle = css`

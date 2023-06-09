@@ -1,19 +1,27 @@
 // Modules
 import React from "react";
 
-// Components
+// Hooks
 import { useCallback } from "react";
+import { useDocument } from "../../../hooks";
+
+// Components
+import { NotSavedFlag } from "../../";
 
 // Style
 import {
   EditorHeaderGroup,
   EditorHeaderTitle,
+  EditorHeaderTitleGroup,
   EditorHeaderFullScreenExitIcon,
   EditorHeaderFullScreenIcon,
 } from "./editor-header.styles";
 
 export const EditorHeader = ({ type, isFullScreen, onToggleFullScreen }) => {
+  const { document } = useDocument();
   const typeFirstChar = type[0];
+  const isNotSaved =
+    typeFirstChar === "m" && document?.notSavedFlag?.includes("content");
 
   /**
    * Handle Toggle Editor Full Screen
@@ -36,7 +44,10 @@ export const EditorHeader = ({ type, isFullScreen, onToggleFullScreen }) => {
 
   return (
     <EditorHeaderGroup onClick={handleToggleFullScreen}>
-      <EditorHeaderTitle>{type}</EditorHeaderTitle>
+      <EditorHeaderTitleGroup>
+        <EditorHeaderTitle>{type}</EditorHeaderTitle>
+        <NotSavedFlag isVisible={isNotSaved} />
+      </EditorHeaderTitleGroup>
       <EditorHeaderFullScreenIcon
         title={`Full screen (${typeFirstChar})`}
         isFullScreen={isFullScreen}

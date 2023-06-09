@@ -7,6 +7,7 @@ import { useDocument } from "../../hooks";
 
 // Components
 import { Fragment } from "react";
+import { NotSavedFlag } from "../";
 
 // Style
 import {
@@ -32,6 +33,7 @@ export const DocumentNameEditor = () => {
       (documentLoadingType === "fetching" ||
         documentLoadingType === "adding/default")) ||
     !document?.fileName;
+  const isNotSaved = document?.notSavedFlag?.includes("fileName");
 
   /**
    * Handle Document Name Change
@@ -39,7 +41,12 @@ export const DocumentNameEditor = () => {
    */
   const handleDocumentNameChange = useCallback(
     (event) => {
-      updateDoc(documentId, { fileName: event.target.value });
+      updateDoc(documentId, {
+        fileName: event.target.value,
+        notSavedFlag: [
+          ...new Set([...(document.notSavedFlag || ""), "fileName"]),
+        ],
+      });
     },
     [document]
   );
@@ -48,7 +55,10 @@ export const DocumentNameEditor = () => {
     <DocumentNameEditorWrapper>
       <DocumentFileIcon />
       <DocumentNameEditorInputGroup>
-        <DocumentNameEditorLabel>Document Name</DocumentNameEditorLabel>
+        <DocumentNameEditorLabel>
+          Document Name
+          <NotSavedFlag isVisible={isNotSaved} />
+        </DocumentNameEditorLabel>
         <DocumentNameEditorInputValueLoader
           height="30"
           width="40"

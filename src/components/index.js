@@ -21,3 +21,4 @@ export * from "./settings-modal/settings-modal.component";
 export * from "./input-toggle/input-toggle.component";
 export * from "./modal/modal.component";
 export * from "./editor-spinner/editor-spinner.component";
+export * from "./not-saved-flag/not-saved-flag.component";

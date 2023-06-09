@@ -17,7 +17,7 @@ import * as Apis from "../../apis";
 const catchAsyncGen = utilCatchAsyncGen.bind(null, setError);
 
 function* navigateFirstDocument(document) {
-  History.navigate(`/${document.id}/${document.fileName}`);
+  History.navigate(`/${document.id}`);
 }
 
 const addDefaultDocument = catchAsyncGen(function* () {

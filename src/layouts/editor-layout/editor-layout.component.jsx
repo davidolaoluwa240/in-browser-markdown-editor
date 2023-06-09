@@ -85,8 +85,8 @@ export const EditorLayout = () => {
 
   useEffect(() => {
     if (!document && documents.length) {
-      const { id, fileName } = documents[0];
-      navigate(`/${id}/${fileName}`, { replace: true });
+      const { id } = documents[0];
+      navigate(`/${id}`, { replace: true });
     }
   }, [document, documents]);
 
