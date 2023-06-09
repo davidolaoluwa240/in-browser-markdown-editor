@@ -5,7 +5,12 @@ import React from "react";
 import { NotSavedFlagBox } from "./not-saved-flag.styles";
 
 export const NotSavedFlag = (props) => {
-  return <NotSavedFlagBox title="Changes not saved" {...props} />;
+  return (
+    <NotSavedFlagBox
+      title="Changes not saved. (ctrl + s) to save changes"
+      {...props}
+    />
+  );
 };
 
 NotSavedFlag.defaultProps = {

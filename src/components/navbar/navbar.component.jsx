@@ -2,7 +2,7 @@
 import React from "react";
 
 // Hooks
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useUi, useAuth, useDocument } from "../../hooks";
 
 // Components
@@ -94,6 +94,22 @@ export const Navbar = () => {
 
     // Close Delete Document Modal
     handleCloseDeleteDocumentModal();
+  }, [document]);
+
+  useEffect(() => {
+    const saveOnKeyPress = (event) => {
+      const { key, ctrlKey } = event;
+      if (key === "s" && ctrlKey) {
+        event.preventDefault();
+        handleSaveFileChangesToCloud();
+      }
+    };
+
+    // Register Keypress Event On The Window
+    window.addEventListener("keydown", saveOnKeyPress);
+
+    // Un-Register Keypress Event On The Window When Component Un-Mount
+    return () => window.removeEventListener("keydown", saveOnKeyPress);
   }, [document]);
 
   return (

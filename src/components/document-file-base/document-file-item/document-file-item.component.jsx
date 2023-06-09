@@ -14,7 +14,7 @@ import {
 
 export const DocumentFileItem = ({ id, fileName, createdAt }) => {
   return (
-    <DocumentFileItemWrapper to={`/${id}/${fileName}`}>
+    <DocumentFileItemWrapper to={`/${id}`}>
       <DocumentFileIcon aria-label={`${fileName} markdown`} />
       <DocumentFileContent>
         <DocumentFileCreatedTime>

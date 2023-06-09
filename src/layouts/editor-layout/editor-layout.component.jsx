@@ -81,7 +81,7 @@ export const EditorLayout = () => {
 
     // Un-Register Keydown Event Listener On The Window
     return () => window.removeEventListener("keydown", handleKeyPress);
-  }, []);
+  }, [isMarkdownEditorFullScreen, isPreviewEditorFullScreen]);
 
   useEffect(() => {
     if (!document && documents.length) {
