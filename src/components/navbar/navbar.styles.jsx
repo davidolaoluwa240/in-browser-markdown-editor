@@ -114,8 +114,8 @@ export const NavbarAction = styled.div`
   align-items: center;
   margin-right: 2.4rem;
 
-  > ${ButtonBase} {
-    @media screen and (max-width: 900px) {
+  @media screen and (max-width: 900px) {
+    > ${ButtonBase} {
       display: none;
     }
   }

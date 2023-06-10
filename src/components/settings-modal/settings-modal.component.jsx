@@ -25,6 +25,7 @@ import {
   StyledSettingsModal,
   ModalHeading,
   ModalButton,
+  SettingsButtonGroup,
 } from "./settings-modal.styles";
 
 export const SettingsModal = ({ isOpen, onClose }) => {
@@ -137,7 +138,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         </SettingToggleWrapper>
       </SettingGroup>
 
-      <SettingToggleWrapper>
+      <SettingsButtonGroup>
         <ModalButton
           widthFull
           tertiary
@@ -154,7 +155,7 @@ export const SettingsModal = ({ isOpen, onClose }) => {
         >
           Reset Settings
         </ModalButton>
-      </SettingToggleWrapper>
+      </SettingsButtonGroup>
     </StyledSettingsModal>
   );
 };

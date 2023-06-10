@@ -19,7 +19,6 @@ export const PageLoaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #151619;
   height: 100vh;
 `;
 

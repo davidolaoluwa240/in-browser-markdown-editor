@@ -21,10 +21,12 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     font-size: 1.6rem;
+    font-weight: 400;
     line-height: 24px;
     box-sizing: border-box;
-    font-weight: 400;
+    min-height: 100vh;
     overflow-x: hidden;
+    background: #151619;
     font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
       Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";

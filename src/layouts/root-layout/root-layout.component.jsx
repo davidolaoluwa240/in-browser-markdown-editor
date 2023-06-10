@@ -35,6 +35,9 @@ import {
   SettingsIcon,
   DocumentDownloadIcon,
   AuthLogoutIcon,
+  DocumentSideBarMobileOverlay,
+  DocumentSideBarCloseIcon,
+  DocumentSideBarCloseIconContainer,
 } from "./root-layout.styles";
 
 const _RootLayout = () => {
@@ -42,7 +45,12 @@ const _RootLayout = () => {
   const [mainContentStyle, setMainContentStyle] = useState({
     width: window.outerWidth,
   });
-  const { dispatch, isSideBarOpen } = useUi();
+  const {
+    dispatch,
+    isSideBarOpen,
+    handleToggleMenuVisibility,
+    isTabletDevice,
+  } = useUi();
   const {
     startAddingDocument,
     handleDownloadMarkdownFile,
@@ -56,10 +64,10 @@ const _RootLayout = () => {
   /**
    * Open Settings Modal
    */
-  const handleOpenSettingsModal = useCallback(
-    () => setIsSettingsModalOpen(true),
-    []
-  );
+  const handleOpenSettingsModal = useCallback(() => {
+    setIsSettingsModalOpen(true);
+    handleToggleMenuVisibility();
+  }, []);
 
   /**
    * Close Settings Modal
@@ -101,7 +109,16 @@ const _RootLayout = () => {
       />
 
       <RootLayoutWrapper showSideBar={isSideBarOpen}>
+        <DocumentSideBarMobileOverlay onClick={handleToggleMenuVisibility} />
         <DocumentSideBar>
+          <DocumentSideBarCloseIconContainer
+            title="close sidebar"
+            showCloseIcon={isTabletDevice}
+            onClick={handleToggleMenuVisibility}
+          >
+            <DocumentSideBarCloseIcon />
+          </DocumentSideBarCloseIconContainer>
+
           <DocumentTitle>MY DOCUMENTS</DocumentTitle>
           <Button
             isLoading={isAddingDocument}

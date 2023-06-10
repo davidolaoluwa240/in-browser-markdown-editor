@@ -9,8 +9,7 @@ export const AuthenticationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: #151619;
+  min-height: 100vh;
 `;
 
 export const AuthenticationButton = styled(Button)`
@@ -26,9 +25,12 @@ export const AuthenticationContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
     font-size: 1.6rem;
     font-weight: 500;
+  }
+
+  @media screen and (max-width: 600px) {
+    min-width: 94%;
   }
 `;
 

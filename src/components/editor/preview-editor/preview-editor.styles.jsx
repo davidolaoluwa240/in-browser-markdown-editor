@@ -110,5 +110,73 @@ export const PreviewEditorPreview = styled.div.attrs({
       font-family: Roboto Mono, monospace;
       font-size: 1.4rem;
     }
+
+    @media screen and (max-width: 369px) {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      blockquote,
+      ol,
+      pre,
+      ul {
+        margin-bottom: 1.7rem;
+      }
+
+      h1 {
+        font-size: 2.9rem;
+        line-height: 59px;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        line-height: 33px;
+      }
+
+      h3 {
+        font-size: 2.1rem;
+        line-height: 38px;
+      }
+
+      h4 {
+        font-size: 1.7rem;
+        line-height: 23px;
+      }
+
+      h5 {
+        font-size: 1.3rem;
+        line-height: 28px;
+      }
+
+      h6 {
+        font-size: 1.1rem;
+        line-height: 15px;
+        color: #e46643;
+      }
+
+      button,
+      li,
+      p,
+      span {
+        font-size: 1.2rem;
+        line-height: 21px;
+      }
+
+      p {
+        margin-bottom: 1.3rem;
+      }
+
+      ul,
+      ol {
+        margin-left: 0.7rem;
+      }
+
+      blockquote,
+      pre {
+        padding: 2.1rem;
+      }
+    }
   }
 `;

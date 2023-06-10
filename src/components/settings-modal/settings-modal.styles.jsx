@@ -48,6 +48,11 @@ export const SettingToggleGroup = styled.div`
 export const SettingToggleWrapper = styled.div`
   display: flex;
   align-items: center;
+`;
+
+export const SettingsButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
 
   ${ModalButton} {
     &:not(:last-child) {
@@ -55,11 +60,26 @@ export const SettingToggleWrapper = styled.div`
     }
     margin-top: 1rem;
   }
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+
+    ${ModalButton} {
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+      margin-top: 0.6rem;
+    }
+  }
 `;
 
 export const StyledSettingsModal = styled(Modal)`
   .ReactModal__Content {
     max-width: 600px;
+
+    @media screen and (max-width: 400px) {
+      height: 90%;
+    }
   }
 `;
 

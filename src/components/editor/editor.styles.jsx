@@ -2,7 +2,6 @@
 import styled from "styled-components";
 
 export const EditorContent = styled.div`
-  background: #151619;
   height: calc(100% - 42px);
   padding: 2rem 2.5rem;
   padding-bottom: 4rem;

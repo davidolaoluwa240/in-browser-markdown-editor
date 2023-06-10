@@ -11,6 +11,10 @@ import {
   DownloadIcon,
 } from "../../components/navbar/navbar.styles";
 import { ButtonBase } from "../../components/button/button.styles";
+import {
+  ModalCloseIcon,
+  ModalCloseIconContainer,
+} from "../../components/modal/modal.styles";
 
 // Animations
 const rotation = keyframes`
@@ -23,12 +27,15 @@ const rotation = keyframes`
     }
   `;
 
-export const RootLayoutWrapper = styled.div`
-  display: flex;
-  flex-wrap: nowrap;
-  transition: transform 0.4s ease-in;
-  transform: ${({ showSideBar }) =>
-    showSideBar ? "translateX(0%)" : "translateX(-250px)"};
+export const DocumentSideBarMobileOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: hsla(213, 4%, 51%, 0.4);
+  display: none;
 `;
 
 export const DocumentSideBar = styled.aside`
@@ -40,6 +47,35 @@ export const DocumentSideBar = styled.aside`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  @media screen and (max-width: 900px) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    transition: transform 0.3s ease-in;
+  }
+`;
+
+export const RootLayoutWrapper = styled.div`
+  display: flex;
+  flex-wrap: nowrap;
+  transition: transform 0.4s ease-in;
+  transform: ${({ showSideBar }) =>
+    showSideBar ? "translateX(0%)" : "translateX(-250px)"};
+
+  @media screen and (max-width: 900px) {
+    transform: none;
+
+    ${DocumentSideBar} {
+      transform: ${({ showSideBar }) =>
+        showSideBar ? "translateX(0%)" : "translateX(-100%)"};
+    }
+
+    ${DocumentSideBarMobileOverlay} {
+      display: ${({ showSideBar }) => (showSideBar ? "block" : "none")};
+    }
+  }
 `;
 
 export const DocumentTitle = styled.h6`
@@ -96,4 +132,6 @@ export const SettingsIcon = styled(AiOutlineSetting)`
 export {
   NavbarAuthLogoutIcon as AuthLogoutIcon,
   DownloadIcon as DocumentDownloadIcon,
+  ModalCloseIconContainer as DocumentSideBarCloseIconContainer,
+  ModalCloseIcon as DocumentSideBarCloseIcon,
 };

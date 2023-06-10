@@ -18,15 +18,15 @@ export const EditorLayout = () => {
     scrollWith,
     handleUpdateEditorFullScreen,
   } = useUi();
-  const [editorPanelBorderClass, setEditorPanelBorderClass] = useState(
-    "editor-panel--border-right"
-  );
   const {
     documents,
     document,
     isLoading: isDocumentLoading,
     loadingType: documentLoadingType,
   } = useDocument();
+  const [editorPanelBorderClass, setEditorPanelBorderClass] = useState(
+    "editor-panel--border-right"
+  );
   const markdownEditorRef = useRef();
   const previewEditorRef = useRef();
   const navigate = useNavigate();

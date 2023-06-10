@@ -9,9 +9,6 @@ import { useUi, useAuth, useDocument } from "../../hooks";
 import { Fragment } from "react";
 import { DocumentNameEditor, Button, DeleteDocumentModal } from "../";
 
-// Utils
-import { downloadMarkdownFile } from "../../utils";
-
 // Style
 import {
   NavbarWrapper,
@@ -30,7 +27,7 @@ import {
 
 export const Navbar = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { dispatch, isSideBarOpen, setSideBarVisibility } = useUi();
+  const { dispatch, isSideBarOpen, handleToggleMenuVisibility } = useUi();
   const { logoutUser } = useAuth();
   const {
     document,
@@ -38,17 +35,10 @@ export const Navbar = () => {
     loadingType,
     startUpdatingDocument,
     startDeletingDocument,
+    handleDownloadMarkdownFile,
   } = useDocument();
   const isUpdatingDocument = isLoading && loadingType === "updating";
   const isDeletingDocument = isLoading && loadingType === "deleting";
-
-  /**
-   * Handle Toggle Menu Visibility
-   */
-  const handleToggleMenuVisibility = useCallback(
-    () => dispatch(setSideBarVisibility(!isSideBarOpen)),
-    [isSideBarOpen]
-  );
 
   /**
    * Handle Logout User
@@ -76,14 +66,6 @@ export const Navbar = () => {
   const handleCloseDeleteDocumentModal = useCallback(
     () => setIsDeleteModalOpen(false),
     []
-  );
-
-  /**
-   * Handle Download Markdown File
-   */
-  const handleDownloadMarkdownFile = useCallback(
-    () => downloadMarkdownFile(document),
-    [document]
   );
 
   /**

@@ -21,7 +21,13 @@ import { History } from "../utils";
 
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
-  const { isLoading, loadingType, startFetchingUiSettings } = useUi();
+  const {
+    isLoading,
+    loadingType,
+    startFetchingUiSettings,
+    handleUpdateEditorFullScreen,
+    isTabletDevice,
+  } = useUi();
   const { startFetchingDocuments, documents } = useDocument();
   const [theme, setTheme] = useState(DARK_THEME);
   const location = useLocation();
@@ -48,6 +54,13 @@ const App = () => {
       dispatch(startFetchingDocuments());
     }
   }, [currentUser, documents]);
+
+  useEffect(() => {
+    // If On Tablet Or Mobile Phone And FetchingUiSettings Is False, Then Enable Markdown FullScreen By Default
+    isTabletDevice &&
+      !isFetchingUiSettings &&
+      handleUpdateEditorFullScreen("markdown", "on");
+  }, [isTabletDevice, isFetchingUiSettings]);
 
   useEffect(() => {
     // Update The History Object

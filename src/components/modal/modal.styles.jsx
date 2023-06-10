@@ -21,6 +21,8 @@ export const StyledReactModalExhanced = styled(ReactModalExhanced)`
   position: fixed;
   inset: 0px;
   animation: ${animateModalIn} 0.3s linear;
+  z-index: 3;
+  overflow: auto;
 
   .ReactModal__Content {
     top: 50% !important;
@@ -32,6 +34,11 @@ export const StyledReactModalExhanced = styled(ReactModalExhanced)`
     transform: translate(-50%, -50%) !important;
     background: #151619 !important;
     border: none !important;
+
+    @media screen and (max-width: 600px) {
+      max-width: 94%;
+      width: 94%;
+    }
   }
 `;
 
@@ -53,7 +60,7 @@ export const ModalDescription = styled.p`
 `;
 
 export const ModalButton = styled(Button)`
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const ModalCloseIconContainer = styled.div`

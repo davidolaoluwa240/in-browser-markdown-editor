@@ -3,6 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
+// Utils
+import { downloadMarkdownFile } from "../utils";
+
 // Redux
 import { documentSA } from "../store";
 
@@ -43,6 +46,14 @@ export const useDocument = () => {
     [documents]
   );
 
+  /**
+   * Handle Download Markdown File
+   */
+  const handleDownloadMarkdownFile = useCallback(
+    () => downloadMarkdownFile(document),
+    [document]
+  );
+
   useEffect(() => {
     // Get Single Document
     setDocument(documents.find((document) => document.id === documentId));
@@ -51,6 +62,7 @@ export const useDocument = () => {
   return {
     dispatch,
     updateDoc,
+    handleDownloadMarkdownFile,
     documentId,
     documents,
     document,

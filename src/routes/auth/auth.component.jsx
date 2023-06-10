@@ -37,6 +37,7 @@ const _Auth = () => {
           disabled={isGoogleProviderLoading || isGithubProviderLoading}
           isLoading={isGoogleProviderLoading}
           tertiary
+          widthFull
           onClick={handleLoginWithOAuth.bind(null, "google")}
         >
           <GoogleIcon />
@@ -47,6 +48,7 @@ const _Auth = () => {
           disabled={isGoogleProviderLoading || isGithubProviderLoading}
           isLoading={isGithubProviderLoading}
           secondary
+          widthFull
           onClick={handleLoginWithOAuth.bind(null, "github")}
         >
           <GithubIcon />

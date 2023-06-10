@@ -1,6 +1,7 @@
 // Hooks
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 // Redux
 import { uiSA } from "../store";
@@ -14,10 +15,12 @@ const {
   selectLoadingType,
   selectError,
   setEditorFullScreen,
+  setSideBarVisibility,
 } = uiSA;
 
 // Ui Hook
 export const useUi = () => {
+  const isTabletDevice = useMediaQuery("only screen and (max-width: 900px)");
   const dispatch = useDispatch();
   const isSideBarOpen = useSelector(selectIsSideBarOpen);
   const isLoading = useSelector(selectIsLoading);
@@ -31,25 +34,44 @@ export const useUi = () => {
    * @param {string} editorType
    * @param {string} value
    */
-  const handleUpdateEditorFullScreen = useCallback((editorType, value) => {
-    const otherEditorType = editorType === "markdown" ? "preview" : "markdown";
-    dispatch(
-      setEditorFullScreen({
-        [editorType]: value,
-        [otherEditorType]: "off",
-      })
-    );
-  }, []);
+  const handleUpdateEditorFullScreen = useCallback(
+    (editorType, value) => {
+      const otherEditorType =
+        editorType === "markdown" ? "preview" : "markdown";
+      const otherEditorValue = isTabletDevice
+        ? value === "on"
+          ? "off"
+          : "on"
+        : "off";
+      dispatch(
+        setEditorFullScreen({
+          [editorType]: value,
+          [otherEditorType]: otherEditorValue,
+        })
+      );
+    },
+    [isTabletDevice]
+  );
+
+  /**
+   * Handle Toggle Menu Visibility
+   */
+  const handleToggleMenuVisibility = useCallback(
+    () => dispatch(setSideBarVisibility(!isSideBarOpen)),
+    [isSideBarOpen]
+  );
 
   return {
     dispatch,
     handleUpdateEditorFullScreen,
+    handleToggleMenuVisibility,
     isSideBarOpen,
     isLoading,
     loadingType,
     scrollWith,
     editorFullScreen,
     error,
+    isTabletDevice,
     ...uiSA,
   };
 };
