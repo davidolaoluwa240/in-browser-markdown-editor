@@ -67,7 +67,7 @@ const _RootLayout = () => {
   const handleOpenSettingsModal = useCallback(() => {
     setIsSettingsModalOpen(true);
     handleToggleMenuVisibility();
-  }, []);
+  }, [isSideBarOpen]);
 
   /**
    * Close Settings Modal
