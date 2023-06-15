@@ -16,7 +16,7 @@ import {
   GoogleIcon,
 } from "./auth.styles";
 
-const _Auth = () => {
+export const Auth = preventIfAuth(() => {
   const { dispatch, startOAuth, isLoading, loadingType } = useAuth();
   const isGoogleProviderLoading = isLoading && loadingType === "google";
   const isGithubProviderLoading = isLoading && loadingType === "github";
@@ -57,7 +57,4 @@ const _Auth = () => {
       </AuthenticationContainer>
     </AuthenticationWrapper>
   );
-};
-
-// Prevent Access If User Is Authenticated
-export const Auth = preventIfAuth(_Auth);
+});
