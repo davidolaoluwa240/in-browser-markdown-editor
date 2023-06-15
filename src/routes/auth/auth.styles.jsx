@@ -10,6 +10,7 @@ export const AuthenticationWrapper = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  background: #151619;
 `;
 
 export const AuthenticationButton = styled(Button)`
