@@ -19,6 +19,9 @@ import { Routes } from "../routes.component";
 // Utils
 import { History } from "../utils";
 
+// Style
+import { GlobalStyle } from "../index.styles";
+
 const App = () => {
   const { dispatch, onInitializeAuth, checkedAuth, currentUser } = useAuth();
   const {
@@ -87,6 +90,9 @@ const App = () => {
 
       {/* Register Toast Container  */}
       <ToastContainer />
+
+      {/* Register Global Style */}
+      <GlobalStyle />
     </ThemeProvider>
   );
 };

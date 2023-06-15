@@ -40,7 +40,7 @@ import {
   DocumentSideBarCloseIconContainer,
 } from "./root-layout.styles";
 
-const _RootLayout = () => {
+export const RootLayout = preventIfNotAuth(() => {
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
   const [mainContentStyle, setMainContentStyle] = useState({
     width: window.outerWidth,
@@ -96,7 +96,7 @@ const _RootLayout = () => {
     window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      // Remove Event Listener When Component Un-Mount
+      // Un-Register Resize Event On The Window When Component Un-Mount
       window.removeEventListener("resize", handleWindowResize);
     };
   }, []);
@@ -148,7 +148,4 @@ const _RootLayout = () => {
       </RootLayoutWrapper>
     </Fragment>
   );
-};
-
-// Prevent Access If User Is Not Authenticated
-export const RootLayout = preventIfNotAuth(_RootLayout);
+});

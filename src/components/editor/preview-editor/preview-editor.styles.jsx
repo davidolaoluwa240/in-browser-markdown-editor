@@ -1,6 +1,9 @@
 // Modules
 import styled from "styled-components";
 
+// Utils
+import { getThemeColor } from "../../../utils";
+
 export const PreviewEditorPreview = styled.div.attrs({
   className: "markdown-body",
 })`
@@ -21,7 +24,7 @@ export const PreviewEditorPreview = styled.div.attrs({
     h4,
     h5,
     h6 {
-      color: #f8f9fa;
+      color: ${getThemeColor("editorHeaderTitleColor")};
       font-family: Roboto Slab, serif;
       font-weight: 700;
     }
@@ -74,7 +77,7 @@ export const PreviewEditorPreview = styled.div.attrs({
       font-weight: 400;
       font-size: 1.5rem;
       line-height: 24px;
-      color: #ced4da;
+      color: ${getThemeColor("editorColor")};
     }
 
     p {
@@ -94,7 +97,7 @@ export const PreviewEditorPreview = styled.div.attrs({
     blockquote,
     pre {
       padding: 2.4rem;
-      background: #343a40;
+      background: ${getThemeColor("editorBlockquoteColor")};
       border-radius: 4px;
     }
 
@@ -102,11 +105,11 @@ export const PreviewEditorPreview = styled.div.attrs({
     blockquote p {
       font-weight: 700;
       font-family: Roboto Slab, serif;
-      color: #f8f9fa;
+      color: ${getThemeColor("editorHeaderTitleColor")};
     }
 
     pre code {
-      color: #f8f9fa;
+      color: ${getThemeColor("editorHeaderTitleColor")};
       font-family: Roboto Mono, monospace;
       font-size: 1.4rem;
     }
@@ -153,7 +156,6 @@ export const PreviewEditorPreview = styled.div.attrs({
       h6 {
         font-size: 1.1rem;
         line-height: 15px;
-        color: #e46643;
       }
 
       button,

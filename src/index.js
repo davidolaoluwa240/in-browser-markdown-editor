@@ -17,9 +17,6 @@ import "./utils/firebase/firebase-config.util";
 // Store
 import store from "./store/store";
 
-// Styles
-import { GlobalStyle } from "./index.styles";
-
 // Global Config
 marked.use(mangle(), gfmHeadingId({ prefix: "in-browser-editor-" }));
 
@@ -31,7 +28,6 @@ root.render(
       <BrowserRouter>
         <App />
         <Analytics />
-        <GlobalStyle />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

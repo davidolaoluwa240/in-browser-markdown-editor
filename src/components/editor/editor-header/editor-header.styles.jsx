@@ -4,8 +4,11 @@ import styled, { css } from "styled-components";
 // Components
 import { MdOutlineFullscreen, MdOutlineFullscreenExit } from "../../";
 
+// Utils
+import { getThemeColor } from "../../../utils";
+
 export const EditorHeaderGroup = styled.div`
-  background: #212529;
+  background: ${getThemeColor("editorHeaderBg")};
   width: 100%;
   height: 42px;
   display: flex;
@@ -24,12 +27,12 @@ export const EditorHeaderTitle = styled.p`
   font-family: "Commissioner", sans-serif;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: #f8f9fa;
+  color: ${getThemeColor("editorHeaderTitleColor")};
   margin-right: 0.7rem;
 `;
 
 export const editorIconStyle = css`
-  color: rgb(124, 129, 135);
+  color: ${getThemeColor("editorHeaderIconColor")};
   font-size: 2.5rem;
   cursor: pointer;
   margin-right: 1.8rem;

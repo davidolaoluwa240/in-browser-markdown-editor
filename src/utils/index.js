@@ -10,3 +10,4 @@ export * from "./firebase-looper/firebase-looper.util";
 export * from "./create-new-document/create-new-document.util";
 export * from "./download-markdown-file/download-markdown-file.util";
 export * from "./history/history.util";
+export * from "./get-theme-color/get-theme-color.util";

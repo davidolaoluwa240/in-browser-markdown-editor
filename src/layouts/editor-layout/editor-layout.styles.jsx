@@ -1,6 +1,9 @@
 // Modules
 import styled from "styled-components";
 
+// Utils
+import { getThemeColor } from "../../utils";
+
 export const EditorLayoutWrapper = styled.div`
   width: 100%;
   height: calc(100vh - 72px);
@@ -19,6 +22,6 @@ export const EditorPanel = styled.div`
   overflow: hidden;
 
   &.editor-panel--border-right {
-    border-right: 1px solid rgba(255, 255, 255, 0.6);
+    border-right: 1px solid ${getThemeColor("editorPanelBorderColor")};
   }
 `;
