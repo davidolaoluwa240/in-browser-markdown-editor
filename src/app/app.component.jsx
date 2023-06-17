@@ -1,5 +1,5 @@
 // Modules
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 
 // Hooks
 import { useEffect, useState } from "react";
@@ -80,8 +80,13 @@ const App = () => {
     []
   );
 
+  const themeProviderValue = useMemo(
+    () => ({ ...theme, handleUpdateTheme }),
+    [theme]
+  );
+
   return (
-    <ThemeProvider theme={{ ...theme, handleUpdateTheme }}>
+    <ThemeProvider theme={themeProviderValue}>
       {/* Register Page Loader Spinner */}
       {(!checkedAuth || isFetchingUiSettings) && <PageLoader />}
 
