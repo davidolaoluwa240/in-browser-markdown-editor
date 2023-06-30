@@ -3,7 +3,7 @@ import React from "react";
 
 // Hooks
 import { useState, useContext, useCallback, useEffect } from "react";
-import { useUi, useDocument } from "../../hooks";
+import { useUi, useDocument, useAuth } from "../../hooks";
 
 // Contexts
 import { ThemeContext } from "styled-components";
@@ -57,6 +57,7 @@ export const RootLayout = preventIfNotAuth(() => {
     isLoading: isDocumentLoading,
     loadingType: documentLoadingType,
   } = useDocument();
+  const { handleLogoutUser } = useAuth();
   const { theme, handleUpdateTheme } = useContext(ThemeContext);
   const isAddingDocument =
     isDocumentLoading && documentLoadingType === "adding";
@@ -137,7 +138,7 @@ export const RootLayout = preventIfNotAuth(() => {
               <DocumentDownloadIcon />
             </Button>
             <SettingsIcon onClick={handleOpenSettingsModal} />
-            <AuthLogoutIcon />
+            <AuthLogoutIcon title="logout" onClick={handleLogoutUser} />
           </DocumentFooter>
         </DocumentSideBar>
 

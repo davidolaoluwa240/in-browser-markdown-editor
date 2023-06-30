@@ -1,4 +1,5 @@
 // Hooks
+import { useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Redux
@@ -11,6 +12,7 @@ const {
   selectIsLoading,
   selectError,
   selectLoadingType,
+  logoutUser,
 } = authSA;
 
 // Auth Hook
@@ -22,6 +24,11 @@ export const useAuth = () => {
   const error = useSelector(selectError);
   const loadingType = useSelector(selectLoadingType);
 
+  /**
+   * Handle Logout User
+   */
+  const handleLogoutUser = useCallback(() => dispatch(logoutUser()), []);
+
   return {
     dispatch,
     isLoading,
@@ -29,6 +36,7 @@ export const useAuth = () => {
     checkedAuth,
     error,
     loadingType,
+    handleLogoutUser,
     ...authSA,
   };
 };

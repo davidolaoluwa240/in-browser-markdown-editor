@@ -28,7 +28,7 @@ import {
 export const Navbar = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const { dispatch, isSideBarOpen, handleToggleMenuVisibility } = useUi();
-  const { logoutUser } = useAuth();
+  const { handleLogoutUser } = useAuth();
   const {
     document,
     isLoading,
@@ -39,11 +39,6 @@ export const Navbar = () => {
   } = useDocument();
   const isUpdatingDocument = isLoading && loadingType === "updating";
   const isDeletingDocument = isLoading && loadingType === "deleting";
-
-  /**
-   * Handle Logout User
-   */
-  const handleLogoutUser = useCallback(() => dispatch(logoutUser()), []);
 
   /**
    * Handle Save File Changes To Cloud
